@@ -1,0 +1,219 @@
+{\rtf1\mac\ansicpg10000\cocoartf824\cocoasubrtf420
+{\fonttbl\f0\fswiss\fcharset77 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+\paperw11900\paperh16840\margl1440\margr1440\vieww9000\viewh8400\viewkind0
+\pard\tx560\tx1120\tx1680\tx2240\tx2800\tx3360\tx3920\tx4480\tx5040\tx5600\tx6160\tx6720\ql\qnatural\pardirnatural
+
+\f0\fs24 \cf0 CREATE TABLE gacl_phpgacl (\
+name VARCHAR(230) NOT NULL,\
+value VARCHAR(230) NOT NULL,\
+PRIMARY KEY (name)\
+);\
+\
+DELETE FROM gacl_phpgacl WHERE name='version';\
+\
+INSERT INTO gacl_phpgacl (name,value) VALUES ('version','3.3.7');\
+\
+DELETE FROM gacl_phpgacl WHERE name='schema_version';\
+\
+INSERT INTO gacl_phpgacl (name,value) VALUES ('schema_version','2.1');\
+\
+CREATE TABLE gacl_acl (\
+id INTEGER NOT NULL DEFAULT 0,\
+section_value VARCHAR(230) NOT NULL DEFAULT 'system',\
+allow INTEGER NOT NULL DEFAULT 0,\
+enabled INTEGER NOT NULL DEFAULT 0,\
+return_value TEXT,\
+note TEXT,\
+updated_date INTEGER NOT NULL DEFAULT 0,\
+PRIMARY KEY (id)\
+);\
+\
+ALTER TABLE gacl_acl ADD INDEX gacl_enabled_acl (enabled);\
+\
+ALTER TABLE gacl_acl ADD INDEX gacl_section_value_acl (section_value);\
+\
+ALTER TABLE gacl_acl ADD INDEX gacl_updated_date_acl (updated_date);\
+\
+CREATE TABLE gacl_acl_sections (\
+id INTEGER NOT NULL DEFAULT 0,\
+value VARCHAR(230) NOT NULL,\
+order_value INTEGER NOT NULL DEFAULT 0,\
+name VARCHAR(230) NOT NULL,\
+hidden INTEGER NOT NULL DEFAULT 0,\
+PRIMARY KEY (id)\
+);\
+\
+ALTER TABLE gacl_acl_sections ADD UNIQUE INDEX gacl_value_acl_sections (value);\
+\
+ALTER TABLE gacl_acl_sections ADD INDEX gacl_hidden_acl_sections (hidden);\
+\
+DELETE FROM gacl_acl_sections WHERE id=1 AND value='system';\
+\
+INSERT INTO gacl_acl_sections (id,value,order_value,name) VALUES (1,'system',1,'System');\
+\
+DELETE FROM gacl_acl_sections WHERE id=2 AND value='user';\
+\
+INSERT INTO gacl_acl_sections (id,value,order_value,name) VALUES (2,'user',2,'User');\
+\
+CREATE TABLE gacl_aco (\
+id INTEGER NOT NULL DEFAULT 0,\
+section_value VARCHAR(150) NOT NULL DEFAULT '0',\
+value VARCHAR(150) NOT NULL,\
+order_value INTEGER NOT NULL DEFAULT 0,\
+name VARCHAR(255) NOT NULL,\
+hidden INTEGER NOT NULL DEFAULT 0,\
+PRIMARY KEY (id)\
+);\
+\
+ALTER TABLE gacl_aco ADD UNIQUE INDEX gacl_section_value_value_aco (section_value, value);\
+\
+ALTER TABLE gacl_aco ADD INDEX gacl_hidden_aco (hidden);\
+\
+CREATE TABLE gacl_aco_map (\
+acl_id INTEGER NOT NULL DEFAULT 0,\
+section_value VARCHAR(150) NOT NULL DEFAULT '0',\
+value VARCHAR(150) NOT NULL,\
+PRIMARY KEY (acl_id, section_value, value)\
+);\
+\
+CREATE TABLE gacl_aco_sections (\
+id INTEGER NOT NULL DEFAULT 0,\
+value VARCHAR(230) NOT NULL,\
+order_value INTEGER NOT NULL DEFAULT 0,\
+name VARCHAR(230) NOT NULL,\
+hidden INTEGER NOT NULL DEFAULT 0,\
+PRIMARY KEY (id)\
+);\
+\
+ALTER TABLE gacl_aco_sections ADD UNIQUE INDEX gacl_value_aco_sections (value);\
+\
+ALTER TABLE gacl_aco_sections ADD INDEX gacl_hidden_aco_sections (hidden);\
+\
+CREATE TABLE gacl_aro (\
+id INTEGER NOT NULL DEFAULT 0,\
+section_value VARCHAR(150) NOT NULL DEFAULT '0',\
+value VARCHAR(150) NOT NULL,\
+order_value INTEGER NOT NULL DEFAULT 0,\
+name VARCHAR(255) NOT NULL,\
+hidden INTEGER NOT NULL DEFAULT 0,\
+PRIMARY KEY (id)\
+);\
+\
+ALTER TABLE gacl_aro ADD UNIQUE INDEX gacl_section_value_value_aro (section_value, value);\
+\
+ALTER TABLE gacl_aro ADD INDEX gacl_hidden_aro (hidden);\
+\
+CREATE TABLE gacl_aro_map (\
+acl_id INTEGER NOT NULL DEFAULT 0,\
+section_value VARCHAR(150) NOT NULL DEFAULT '0',\
+value VARCHAR(150) NOT NULL,\
+PRIMARY KEY (acl_id, section_value, value)\
+);\
+\
+CREATE TABLE gacl_aro_sections (\
+id INTEGER NOT NULL DEFAULT 0,\
+value VARCHAR(230) NOT NULL,\
+order_value INTEGER NOT NULL DEFAULT 0,\
+name VARCHAR(230) NOT NULL,\
+hidden INTEGER NOT NULL DEFAULT 0,\
+PRIMARY KEY (id)\
+);\
+\
+ALTER TABLE gacl_aro_sections ADD UNIQUE INDEX gacl_value_aro_sections (value);\
+\
+ALTER TABLE gacl_aro_sections ADD INDEX gacl_hidden_aro_sections (hidden);\
+\
+CREATE TABLE gacl_axo (\
+id INTEGER NOT NULL DEFAULT 0,\
+section_value VARCHAR(150) NOT NULL DEFAULT '0',\
+value VARCHAR(150) NOT NULL,\
+order_value INTEGER NOT NULL DEFAULT 0,\
+name VARCHAR(255) NOT NULL,\
+hidden INTEGER NOT NULL DEFAULT 0,\
+PRIMARY KEY (id)\
+);\
+\
+ALTER TABLE gacl_axo ADD UNIQUE INDEX gacl_section_value_value_axo (section_value, value);\
+\
+ALTER TABLE gacl_axo ADD INDEX gacl_hidden_axo (hidden);\
+\
+CREATE TABLE gacl_axo_map (\
+acl_id INTEGER NOT NULL DEFAULT 0,\
+section_value VARCHAR(150) NOT NULL DEFAULT '0',\
+value VARCHAR(150) NOT NULL,\
+PRIMARY KEY (acl_id, section_value, value)\
+);\
+\
+CREATE TABLE gacl_axo_sections (\
+id INTEGER NOT NULL DEFAULT 0,\
+value VARCHAR(230) NOT NULL,\
+order_value INTEGER NOT NULL DEFAULT 0,\
+name VARCHAR(230) NOT NULL,\
+hidden INTEGER NOT NULL DEFAULT 0,\
+PRIMARY KEY (id)\
+);\
+\
+ALTER TABLE gacl_axo_sections ADD UNIQUE INDEX gacl_value_axo_sections (value);\
+\
+ALTER TABLE gacl_axo_sections ADD INDEX gacl_hidden_axo_sections (hidden);\
+\
+CREATE TABLE gacl_aro_groups (\
+id INTEGER NOT NULL DEFAULT 0,\
+parent_id INTEGER NOT NULL DEFAULT 0,\
+lft INTEGER NOT NULL DEFAULT 0,\
+rgt INTEGER NOT NULL DEFAULT 0,\
+name VARCHAR(255) NOT NULL,\
+value VARCHAR(255) NOT NULL,\
+PRIMARY KEY (id, value)\
+);\
+\
+ALTER TABLE gacl_aro_groups ADD INDEX gacl_parent_id_aro_groups (parent_id);\
+\
+ALTER TABLE gacl_aro_groups ADD UNIQUE INDEX gacl_value_aro_groups (value);\
+\
+ALTER TABLE gacl_aro_groups ADD INDEX gacl_lft_rgt_aro_groups (lft, rgt);\
+\
+CREATE TABLE gacl_groups_aro_map (\
+group_id INTEGER NOT NULL DEFAULT 0,\
+aro_id INTEGER NOT NULL DEFAULT 0,\
+PRIMARY KEY (group_id, aro_id)\
+);\
+\
+ALTER TABLE gacl_groups_aro_map ADD INDEX gacl_aro_id (aro_id);\
+\
+CREATE TABLE gacl_aro_groups_map (\
+acl_id INTEGER NOT NULL DEFAULT 0,\
+group_id INTEGER NOT NULL DEFAULT 0,\
+PRIMARY KEY (acl_id, group_id)\
+);\
+\
+CREATE TABLE gacl_axo_groups (\
+id INTEGER NOT NULL DEFAULT 0,\
+parent_id INTEGER NOT NULL DEFAULT 0,\
+lft INTEGER NOT NULL DEFAULT 0,\
+rgt INTEGER NOT NULL DEFAULT 0,\
+name VARCHAR(255) NOT NULL,\
+value VARCHAR(255) NOT NULL,\
+PRIMARY KEY (id, value)\
+);\
+\
+ALTER TABLE gacl_axo_groups ADD INDEX gacl_parent_id_axo_groups (parent_id);\
+\
+ALTER TABLE gacl_axo_groups ADD UNIQUE INDEX gacl_value_axo_groups (value);\
+\
+ALTER TABLE gacl_axo_groups ADD INDEX gacl_lft_rgt_axo_groups (lft, rgt);\
+\
+CREATE TABLE gacl_groups_axo_map (\
+group_id INTEGER NOT NULL DEFAULT 0,\
+axo_id INTEGER NOT NULL DEFAULT 0,\
+PRIMARY KEY (group_id, axo_id)\
+);\
+\
+ALTER TABLE gacl_groups_axo_map ADD INDEX gacl_axo_id (axo_id);\
+\
+CREATE TABLE gacl_axo_groups_map (\
+acl_id INTEGER NOT NULL DEFAULT 0,\
+group_id INTEGER NOT NULL DEFAULT 0,\
+PRIMARY KEY (acl_id, group_id)\
+);}

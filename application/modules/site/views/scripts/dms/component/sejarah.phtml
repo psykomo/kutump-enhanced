@@ -1,0 +1,15 @@
+<h3>SEJARAH<span class="alt"> PERATURAN</span></h3>
+<hr>
+
+	<?php foreach ($this->aData as $data){?>
+		<div style="padding-top:5px"></div>
+		<?if($data['node']==$this->catalogGuid) {?><strong>> 
+			<a href="<?echo KUTU_ROOT_URL;?>/pages/g/<?php echo $data['node'];?>"><span style="font-size:14px;"><?php echo $data['title']; ?></span></a>
+			</strong>
+		<?php } else {?>
+			<a href="<?echo KUTU_ROOT_URL;?>/pages/g/<?php echo $data['node'];?>"><?php echo $data['title']; ?></a>
+		<?}?>
+		<br><?php echo $data['subTitle']; ?>
+		<div style="padding-top:5px"></div>
+	<?php }?>
+	<div style="padding-bottom:5px"></div>

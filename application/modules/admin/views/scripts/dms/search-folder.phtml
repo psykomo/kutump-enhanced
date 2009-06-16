@@ -1,0 +1,220 @@
+<hr class="space">
+<h2 class="alt">Search Folder</h2>
+<hr>
+<form id="frmSearch" name="frmSearch" method="GET">
+	<input id="sQuery" name="sQuery" size=30 value='<?echo $this->sQuery;?>'>
+	<input type="hidden" id="sLimit" name="sLimit" value="10">
+	<input type="hidden" id="sOffset" name="sOffset" value="<?echo $this->sOffset;?>">
+	<input type="hidden" id="relatedGuid" name="relatedGuid" value="<?echo $this->relatedGuid;?>">
+	<input type="submit" id="btnGoSearch" value="Search">
+</form>
+<hr class="space">
+<!--<ul class="sf-menu">
+	<li class="current">
+		<a href="#">Select</a>
+		<ul>
+			<li><a href="#">None</a></li>
+			<li><a href="#">All</a></li>
+		</ul>
+	</li>
+	<li>
+		<a href="#">Relate As</a>
+		<ul>
+			<li><a href="#" id="lkAddOther">Item</a></li>
+			<li><a href="#" id="lkAddHistory">History</a></li>
+			<li><a href="<?echo KUTU_ROOT_URL;?>/admin/dms_catalog/new/node/<?echo $this->currentNode;?>/profile/kutu_peraturan">Dasar Hukum</a></li>
+		</ul>
+	</li>	
+</ul>-->
+<link rel="stylesheet" href="<?echo KUTU_ROOT_URL;?>/lib/jquery/pagination.css" />
+<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.pagination.js"></script>
+<script>
+
+$(document).ready(function(){
+	
+	$('ul.sf-menu').superfish();
+	
+	var relatedGuid = "<?echo $this->relatedGuid;?>";
+	
+	getCheckedCheckBox = function (elementId)
+			{
+				var content = [];
+				var aGuid = new Array();
+				var iCount=0;
+				$('#' + elementId + ' input').each(function(){
+					var el = $(this);
+					if ( (el.attr('type').toLowerCase() == 'radio'))
+					{
+						if ( this.checked )
+						{
+							content.push([
+								'"', el.attr('name'), '": ',
+								'value="', ( this.value ), '"',
+								( this.disabled ? ', disabled' : '' )
+							].join(''));
+							aGuid[iCount]=this.value;
+							iCount++;
+						}
+					}
+					else
+					{
+						content.push([
+							'"', el.attr('name') + ' '+el.attr('value'), '": ',
+							( this.checked ? 'checked' : 'not checked' ), 
+							( this.disabled ? ', disabled' : '' )
+						].join(''));
+						if ( this.checked )
+						{
+							aGuid[iCount]=el.attr('value');
+							iCount++;
+						}
+					}
+					
+				});
+				return aGuid;
+			}
+			
+	getOnlyOneCheckBox = function (elementId)
+			{
+				var aGuid = getCheckedCheckBox(elementId);
+
+				if(aGuid.length>1)
+				{
+					alert('You can select ONLY ONE User to edit');
+				}
+				else
+				{	
+					if(aGuid.length==0)
+						alert('You must select ONE User to edit')
+					else
+						return aGuid[0];
+				}
+				return false;
+			}
+	
+	
+	var isFirstTime = 1;
+	
+	// First Parameter: number of items
+	// Second Parameter: options object
+	var myPageIndex = 0;
+	var itemsPerPage = 10;
+	var currentQuery = $("#sQuery").val();
+	
+	/*$("#catalogPagination").pagination(<?php echo $this->aData['totalCount'];?>, 
+	{items_per_page:<?php echo $this->aData['limit'];?>, callback:handlePaginationClick}
+	);*/
+	
+	var tmpCurrentPage = $("#sOffset").val()/itemsPerPage;
+	
+	$("#catalogPagination").pagination(<?php echo count($this->hits);?>, 
+	{items_per_page:<?php echo count($this->hits);?>, callback:handlePaginationClick, current_page:tmpCurrentPage}
+	);
+	
+	function handlePaginationClick(new_page_index, pagination_container) 
+	{
+		if(!isFirstTime)
+		{
+			myPageIndex = new_page_index;
+			//myStart = (<?php echo $this->aData['limit'];?> * myPageIndex);
+			myStart = (itemsPerPage * myPageIndex);
+		
+			$("#sOffset").val(myStart);
+			$("#sQuery").val(currentQuery);
+			//alert($("#sQuery").val());
+			$("#frmSearch").submit();
+		}
+		isFirstTime = 0;
+		return false;
+	}
+	
+	$('input#sQuery').bind('keypress', function(e) {
+	        if(e.keyCode==13){
+	                // Enter pressed... do anything here...
+					$("#sOffset").val(0);
+					$("#frmSearch").submit();
+					return false;
+	        }
+	});
+	$('input#btnGoSearch').bind('click', function(e) {
+			$("#sOffset").val(0);
+			$("#frmSearch").submit();
+			return false;
+	});
+	
+	$("#lkAddHistory").click(function(){ 
+		var aGuid = getCheckedCheckBox("frmCatalogs");
+		if(aGuid.length==0)
+		{
+			alert('Nothing is selected.');
+			return false;
+		}
+		if (confirm("Are you sure you want to relate "+ aGuid.length +' catalogs as HISTORY')) 
+		{
+			var listGuid = '';
+			for (var i = 0; i < aGuid.length; i++){ 
+			         listGuid += "/guid/" + aGuid[i] ; 
+			      }
+			window.location = "<?echo KUTU_ROOT_URL;?>/admin/dms_relation/new"+listGuid+"/relatedGuid/"+relatedGuid+"/relateAs/RELATED_HISTORY";
+		}
+		return false;
+		
+	});
+	$("#lkAddOther").click(function(){ 
+		var aGuid = getCheckedCheckBox("frmCatalogs");
+		if(aGuid.length==0)
+		{
+			alert('Nothing is selected.');
+			return false;
+		}
+		if (confirm("Are you sure you want to relate "+ aGuid.length +' catalogs as OTHER')) 
+		{
+			var listGuid = '';
+			for (var i = 0; i < aGuid.length; i++){ 
+			         listGuid += "/guid/" + aGuid[i] ; 
+			      }
+			window.location = "<?echo KUTU_ROOT_URL;?>/admin/dms_relation/new"+listGuid+"/relatedGuid/"+relatedGuid+"/relateAs/RELATED_ITEM";
+		}
+		return false;
+		
+	});
+	
+});
+
+</script>
+<h2 class="alt">Search Result: <?php echo count($this->hits);?> Record(s)</h2>
+<hr class="space">
+<form id="frmCatalogs" name="frmCatalogs">
+<?php foreach ($this->hits as $hit) { ?>
+	<div class='span-2'><input type='checkbox' name='catalogGuid' id='catalogGuid' value='<?php echo $hit->guid;?>'>&nbsp;<IMG src='<?php echo KUTU_ROOT_URL.'/common/images/fb/note.png' ?>' width=24 height=24 border=0 align=absmiddle /></div>
+	<div class='span-22 last'>
+		<p>
+			<?php if(false){?>
+				<a href="<?php echo KUTU_ROOT_URL;?>/browser/downloadfile/guid/<?php echo $hit->guid;?>"><div class="searchResultTitle">File: <?php try {echo $hit->title;} catch (Exception $e) {echo '';}?></div></a>
+			<?php } else { ?>
+					<a href="<? echo KUTU_ROOT_URL;?>/admin/dms/explore/node/<?php echo $hit->guid;?>">
+					<?php 
+					try 
+					{
+						$w = new Admin_Dms_FolderBreadcrumbs($hit->guid);
+						//echo $hit->title;
+						echo $w->render();
+						} 
+					
+					catch (Exception $e) {echo 'No-Title';}?></a>
+			<?php }?>
+			
+		</p>
+	</div>
+	<hr>
+
+<?php }; ?>
+</form>
+<div class="span-24 last">
+	<table width='100%'>
+		<tr>
+			<td width=35%>&nbsp;</td>
+			<td align=right><div id='catalogPagination' class="pagination"></div></td>
+		</tr>
+	</table>
+</div>

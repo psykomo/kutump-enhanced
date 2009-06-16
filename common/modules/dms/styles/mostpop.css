@@ -1,0 +1,276 @@
+/*
+$Id: mostPop.css,v 1.12 2006/12/18 22:27:02 cookn Exp $
+(c)2006 - 2007 The New York Times Company 
+*/
+
+
+
+@import url(general.css);
+
+
+div#shell div#page div#navigation {
+	height: 25px;
+	_height: 25px;
+	border-bottom: none;
+	margin-bottom: 0;
+	}
+
+div#shell div#page #adxLeaderboard {
+	text-align: center;
+	margin: 0 0 0 0;
+	_margin: 0 0 0 0;
+	padding: 5px 0 5px 0;
+	_padding: 5px 0 5px 0;
+	border-bottom: none !important;
+	}
+
+
+div#shell div#page div#main {
+	border-top: none !important;
+	margin: 0 0 0 0;
+	padding: 0;
+	background: transparent url(/images/mostPop/mp_sf_background.gif) repeat-y left top;
+	}
+
+
+
+div#shell div#page div#main:after {
+	content: ".";
+	display: block;
+	height: 0;
+	clear: both;
+	visibility: hidden;
+	}
+
+/* Hides from IE-mac \*/
+* html #main {
+	height: 1%;
+	}
+/* End hide from IE-mac */
+
+
+
+.off {
+	display: none;
+	}
+
+.tsIcon {
+	padding-right: 4px;
+	}
+
+.pickIcon {
+	padding-right: 4px;
+	}
+
+.summary {
+	margin-left: 15px;
+	margin-right: 5px;
+	_margin-top: 10px;
+	}
+
+.small {
+	font-family: Arial, sans-serif;
+	font-size: 86%;
+	margin-left: 7px;
+	margin-bottom: 12px;
+	}
+
+
+div#shell div#page div#main div#columns div#aColumn {
+	width: 247px;
+	float: left;
+	margin-top: 4px;
+	border-top: 1px solid #e2e2e2;
+	_border-top: none;
+	border-right: 1px solid #e2e2e2;
+	text-align: left;
+	}
+
+
+div#shell div#page div#main div#columns div#bColumn {
+	width: 238px;
+	float: left;
+	margin-top: 4px;
+	border-top: 1px solid #e2e2e2;
+	_border-top: none;
+	border-right: 1px solid #e2e2e2;
+	text-align: left;
+	}
+
+div#shell div#page div#main div#columns div#cColumn {
+	width: 235px;
+	float: left;
+	border-top: 1px solid #e2e2e2;
+	_border-top: none;
+	margin-top: 4px;
+	text-align: left;
+	}
+
+
+div#shell div#page div#main div#columns div#dColumn {
+	width: 247px;
+	float: right;
+	margin-top: 4px;
+	border-top: 1px solid #e2e2e2;
+	_border-top: none;
+	border-left: 1px solid #e2e2e2;
+	text-align: left;
+	}
+
+
+div#shell div#page div#mpSubNav div#columns h3,
+div#shell div#page div#mpSubNav div#columns h3 a:link,
+div#shell div#page div#mpSubNav div#columns h3 a:visited {
+	color: #000;
+	font-weight: normal;
+	font-size: 96%;
+	text-transform: uppercase;
+	margin: 0 0 0 0;
+	padding: 5px 1px 5px 0;
+	border-bottom: none !important;
+	_border-bottom: 1px #d2d2d2 solid;
+	}
+
+
+div#shell div#page div#main div#columns div#aColumn ol {
+	margin: 0px 0 0 10px;
+	padding-top: 0px;
+	padding-left: 25px;
+	_padding-left: 30px;
+	padding-right: 7px;
+	_padding-right: 7px;
+	padding-bottom: 5px;
+	background: none;
+	}
+
+
+div#shell div#page div#main div#columns div#bColumn ol {
+	margin: 0px 0 0 7px;
+	padding-top: 0x;
+	padding-left: 25px;
+	_padding-left: 30px;
+	padding-right: 7px;
+	_padding-right: 7px;
+	padding-bottom: 5px;
+	background: none;
+	}
+
+
+div#shell div#page div#main div#columns div#cColumn ol {
+	margin: 0px 0 0 7px;
+	padding-top: 0px;
+	padding-left: 25px;
+	_padding-left: 30px;
+	padding-right: 7px;
+	_padding-right: 7px;
+	padding-bottom: 5px;
+	background: none;
+	}
+
+
+div#shell div#page div#main div#columns div#dColumn ol {
+	margin: 0px 0 0 7px;
+	padding-top: 0px;
+	padding-left: 25px;
+	_padding-left: 30px;
+	padding-right: 10px;
+	_padding-right: 7px;
+	padding-bottom: 5px;
+	background: none;
+	}
+
+
+
+
+ol li {
+	padding-left: -5px;
+	padding-bottom: 8px;
+	}
+
+div#aColumn ol li a,
+div#aColumn ol li a:visited,
+div#bColumn ol li a,
+div#bColumn ol li a:visited,
+div#cColumn ol li a,
+div#cColumn ol li a:visited,
+div#dColumn ol li a,
+div#dColumn ol li a:visited {
+	margin: 0 0 0 0;
+	padding: 5px 1px 5px 0;
+	border-bottom: none;
+	text-align: center;
+	font-size: 100%;
+	color: #004276;
+	background: none;
+	text-decoration: none;
+	text-transform: none;
+	}
+
+div#aColumn ol li a:hover,
+div#bColumn ol li a:hover,
+div#cColumn ol li a:hover,
+div#dColumn ol li a:hover {
+	margin: 0 0 0 0;
+	padding: 5px 1px 5px 0;
+	border-bottom: none;
+	text-align: center;
+	font-size: 100%;
+	color: #004276;
+	background: none;
+	text-decoration: underline;
+	text-transform: none;
+	}
+
+
+div#shell div#page div#main div#columns div#aColumn .more {
+	margin-left: 10px;
+	font-family: Arial, sans-serif;
+	font-size: 86%;
+	padding-bottom: 0;
+	border-bottom: none;
+	color: #004276;
+	text-transform: none;
+	}
+
+div#shell div#page div#main div#columns div#bColumn .more {
+	margin-left: 7px;
+	font-family: Arial, sans-serif;
+	font-size: 86%;
+	padding-bottom: 0;
+	border-bottom: none;
+	color: #004276;
+	text-transform: none;
+	}
+
+div#shell div#page div#main div#columns div#cColumn .more {
+	margin-left: 7px;
+	font-family: Arial, sans-serif;
+	font-size: 86%;
+	padding-bottom: 0;
+	border-bottom: none;
+	color: #004276;
+	text-transform: none;
+	}
+
+div#shell div#page div#main div#columns div#dColumn .more {
+	margin-left: 7px;
+	font-family: Arial, sans-serif;
+	font-size: 86%;
+	padding-bottom: 0;
+	border-bottom: none;
+	color: #004276;
+	text-transform: none;
+	}
+
+	div#shell div#page div#main div#columns div#dColumn .moreTest {
+	margin-left: 7px;
+	font-family: Arial, sans-serif;
+	font-size: 86%;
+	padding-bottom: 0;
+	border-bottom: none;
+	color: #004276;
+	text-transform: none;
+	}
+
+
+

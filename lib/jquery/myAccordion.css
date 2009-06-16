@@ -1,0 +1,30 @@
+.myAccordion-declencheur{
+padding: 5px;
+cursor:pointer;
+background:#aed2f6;
+background: white;
+border:1px solid #e5e5e5;
+border-top-width: 0px;
+border-left-width: 0px;
+border-right-width: 0px;
+margin-bottom: 0px;
+}
+.myAccordion-declencheur-actif{
+background:#71c8cf;
+background:white;
+}
+.myAccordion-declencheur *{
+color: #7e7e7e;
+color:#2266bb;
+margin:0;
+font-weight:normal;
+}
+.myAccordion-declencheur-actif *{
+color: #fff;
+color:#2266bb;
+font-weight:bold;
+}
+.myAccordion-content{
+}
+.myAccordion-content-actif{
+}

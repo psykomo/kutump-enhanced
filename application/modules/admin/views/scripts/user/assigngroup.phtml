@@ -1,0 +1,133 @@
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#commentForm").validate({
+		rules: {
+			fullname: "required",
+			lastname: "required",
+			username: {
+				required: true,
+				minlength: 2,
+				remote: "<?php echo KUTU_ROOT_URL;?>/api/user/isusernameavailable/"
+			},
+			password: {
+				required: true,
+				minlength: 5
+			},
+			passwordConfirm: {
+				required: true,
+				minlength: 5,
+				equalTo: "#password"
+			},
+			email1: {
+				required: true,
+				email: true,
+				remote: "emails.php"
+			},
+			dateformat: "required",
+			terms: "required"
+		},
+		messages: {
+			fullname: "Enter your fullname",
+			lastname: "Enter your lastname",
+			username: {
+				required: "Enter a username",
+				minlength: jQuery.format("Enter at least {0} characters"),
+				remote: jQuery.format("{0} is already in use")
+			},
+			password: {
+				required: "Provide a password",
+				rangelength: jQuery.format("Enter at least {0} characters")
+			},
+			passwordConfirm: {
+				required: "Repeat your password",
+				minlength: jQuery.format("Enter at least {0} characters"),
+				equalTo: "Enter the same password as above"
+			},
+			email: {
+				required: "Please enter a valid email address",
+				minlength: "Please enter a valid email address",
+				remote: jQuery.format("{0} is already in use")
+			},
+			dateformat: "Choose your preferred dateformat",
+			terms: " "
+		}
+		
+		
+	});
+});
+</script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#menu').flickrmenu();
+		$('#add').click(function() {  
+		    return !$('#select1 option:selected').remove().appendTo('#assignedGroups');  
+		   });  
+		$('#remove').click(function() {  
+			return !$('#assignedGroups option:selected').remove().appendTo('#select1');  
+		});
+		
+		$("#groupSubmit").click(function(){ 
+			$("#assignedGroups").each(function(){
+				$("#assignedGroups option").attr("selected","selected"); });
+			
+			//alert('hi');
+		});
+		
+		var message = "<?echo $this->message;?>";
+		if(message!="")
+		{
+			alert (message);
+		}
+	});
+</script>
+<hr class="space">
+<h2 class="alt">User Management: Assign Groups</h2>
+<div id="menu" >
+	  <ul>
+		<li>
+	      <span class="head_menu">
+	        <a href="<?echo KUTU_ROOT_URL;?>/admin/user/browse">Show All Users</a>
+	      </span>
+	    </li>
+	  </ul>
+	</div>
+<hr class="space">
+<form class="cmxform1" id="frmAssignGroup" method="post" action="">
+	<fieldset>
+		<legend>Group(s) Details: <?echo $this->rowUser->firstname.' '.$this->rowUser->lastname;?> (<?echo $this->rowUser->username;?>)</legend>
+		<table>
+			<tr valign="top">
+				<td width="200">
+					<div>Available Group(s)</div>
+					<br>
+					<select multiple id="select1"> 
+						<? foreach ($this->availableGroups as $group) {?> 
+					    	<option value="<? echo $group['value'];?>"><? echo $group['value'];?></option>
+						<?};?>
+					   </select> 
+					 	<br>
+					   <a href="#" id="add">add &gt;&gt;</a>
+				</td>
+				<td>
+					<div>Assigned Group(s)</div>
+					<br>
+					<select multiple id="assignedGroups" name="assignedGroups[]">
+						<? foreach ($this->currentGroups as $group) {?> 
+					    	<option value="<? echo $group;?>"><? echo $group;?></option>
+						<?};?>
+					</select><br>  
+					   <a href="#" id="remove">&lt;&lt; remove</a>
+				</td>
+			</tr>
+		</table>
+		<p>
+			<input class="submit" type="submit" value="Save"/ id="groupSubmit">
+		</p>
+	</fieldset>
+	<div>  
+	    
+	  </div>  
+	  <div>  
+	   
+	  </div>
+</form>

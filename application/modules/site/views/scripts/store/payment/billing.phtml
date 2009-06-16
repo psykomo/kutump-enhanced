@@ -1,0 +1,53 @@
+<h2 class="alt">Edit Billing Info</h2>
+<hr>
+<div class="span-10">
+	<a href="<? echo KUTU_ROOT_URL;?>/site/myaccount">My Account</a> || 
+	<!-- <input type="button" value= "My Account" onclick="javascript:history.back();" /> -->
+	<a href="<? echo KUTU_ROOT_URL;?>/site/store_payment/list">Oder History</a> || 
+	<a href="<? echo KUTU_ROOT_URL;?>/site/store_payment/transaction">Transaction History</a> || 
+	<a href="<? echo KUTU_ROOT_URL;?>/site/store_payment/document">Documents</a>
+</div>
+<div class="span-14 last" align="right">
+
+</div>
+
+<hr>
+<form method="post">
+<? foreach($this->rowset as $row) :?>
+<input type="hidden" name="userId" value="<?=$row->userId; ?>" >
+<input type="hidden" name="createdDate" value="<?=$row->createdDate; ?>" >
+<input type="hidden" name="createdBy" value="<?=$row->createdBy; ?>" >
+<input type="hidden" name="modifiedDate" value="<?=$row->modifiedDate; ?>" >
+<input type="hidden" name="modifiedBy" value="<?=$row->modifiedBy; ?>" >
+
+<div class="span-5">Tax Number</div>
+<div class="span-5"><input type="text" name="taxNumber" value="<?=$row->taxNumber; ?>" ></div> 
+
+<div class="span-5">Tax Company</div>
+<div class="span-5"><input type="text" name="taxCompany" value="<?=$row->taxCompany; ?>" ></div> 
+<div class="span-5">Tax Address</div>
+<div class="span-5"><input type="text" name="taxAddress" value="<?=$row->taxAddress; ?>" ></div> 
+
+<div class="span-5">Tax City</div>
+<div class="span-5"><input type="text" name="taxCity" value="<?=$row->taxCity; ?>" ></div> 
+<div class="span-5">Tax Province</div>
+<div class="span-5"><input type="text" name="taxProvince" value="<?=$row->taxProvince; ?>" ></div> 
+<div class="span-5">Tax ZIP</div><div class="span-5"><input type="text" name="taxZip" value="<?=$row->taxZip; ?>" ></div> 
+
+<div class="span-5">Tax Country ID</div>
+<div class="span-5"><input type="text" name="taxCountryId" value="<?=$row->taxCountryId; ?>" ></div>
+<hr />
+<?
+$remain =  ($row->creditLimit) - ($this->outstandingAmount);
+$limit = '<div class="span-5">Limit</div><div class="span-5">'.$row->creditLimit.'</div>
+		<div class="span-5">Otstanding Amount</div><div class="span-5">'.$this->outstandingAmount.'</div>
+		<div class="span-5">Limit Remain</div><div class="span-5">'.$remain.'</div><hr />';
+($row->isPostPaid == 1)?$value=$limit:$value='';
+?>
+<?=$value?>
+<?endforeach;?>
+<div class="span-19">
+<input type="reset" value="reset">
+<input type="submit" name="save" value="save">
+</div>
+</form>

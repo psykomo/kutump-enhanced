@@ -1,0 +1,99 @@
+<hr class="space">
+<h2 class="alt">Search</h2>
+<hr>
+<form id="frmSearch" name="frmSearch" method="GET">
+	<input id="Query" name="Query" size=30 value='<?echo $this->Query;?>'>
+	<input type="hidden" id="sLimit" name="sLimit" value="10">
+	<input type="hidden" id="sOffset" name="sOffset" value="<?echo $this->sOffset;?>">
+	<input type="hidden" id="relatedGuid" name="relatedGuid" value="<?echo $this->relatedGuid;?>">
+	<input type="submit" id="btnGoSearch" value="Search">
+</form>
+<hr class="space">
+<link rel="stylesheet" href="<?echo KUTU_ROOT_URL;?>/lib/jquery/pagination.css" />
+<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.pagination.js"></script>
+<script>
+$(document).ready(function(){
+	
+	var isFirstTime = 1;
+	
+	// First Parameter: number of items
+	// Second Parameter: options object
+	var myPageIndex = 0;
+	var itemsPerPage = <?echo $this->itemsPerPage;?>;
+	var currentOffset = <?echo $this->sOffset;?>;
+	var limit = <?echo $this->sLimit;?>;
+	var currentNode = "<?echo $this->currentNode;?>";
+	var totalItems = <?echo $this->numCount;?>;
+	var sort = "<?echo $this->sort;?>";
+	
+	
+	var tmpCurrentPageIndex = currentOffset/itemsPerPage;
+	
+	$("#catalogPagination").pagination(totalItems, 
+	{items_per_page:itemsPerPage, callback:handlePaginationClick, current_page:tmpCurrentPageIndex}
+	);
+	
+	function handlePaginationClick(new_page_index, pagination_container) 
+	{
+		if(!isFirstTime)
+		{
+			myPageIndex = new_page_index;
+			var nextOffset = (itemsPerPage * myPageIndex);
+		
+			$("#sOffset").val(nextOffset);
+			//$("#frmSearch").submit();
+			
+			var url = "<?echo KUTU_ROOT_URL;?>/site/store_payment/search?Query=<?=$this->Query;?>"+currentNode+"&sOffset="+nextOffset+"&sLimit="+limit+"&sort="+sort+"";
+			window.location = url;
+		}
+		isFirstTime = 0;
+		return false;
+	}
+	
+	
+});
+</script>
+<?
+if($this->numCount == 0){
+?>
+Hasil pencarian : 0
+<?
+}else{
+?>
+Hasil Pencarian : <?=$this->numCount;?>
+<hr>
+    <div class="span-1">No&nbsp;</div>
+    <div class="span-3">Invoice&nbsp;</div>
+    <div class="span-4">date&nbsp;</div>
+    <div class="span-4">Payment Date&nbsp;</div>
+    <div class="span-3">Total Document&nbsp;</div>
+    <div class="span-3">Total Amount&nbsp;</div>
+    <div class="span-3">Method&nbsp;</div>
+    <div class="span-3 last">Status&nbsp;</div>
+<hr />
+<? if(!empty($_POST['searchid'])):?>
+    <?=header('Location: '.$this->url(array('controller'=>'store_payment', 
+            'action'=>'detail', 'id'=>$_POST['searchid'])));?>
+<? endif; ?>
+<? $i = $this->sOffset + 1; ?>
+<? foreach($this->listOrder as $value): ?>
+    <div class="span-1"><a href="<? echo $this->url(array('controller'=>'store_payment', 
+        'action'=>'detail', 'id'=>$value['orderId']));?>"><?=$i;?></a>&nbsp;</div>
+    <div class="span-3"><?=$value['invoiceNumber']; ?>&nbsp;</div>
+    <div class="span-4"><?=$value['datePurchased']; ?>&nbsp;</div>
+    <div class="span-4"><?=$value['dateOrderFinished']; ?>&nbsp;</div>
+    <div class="span-3"><?=$value['orderTotal']; ?>&nbsp;</div>
+    <div class="span-3"><?=$value['countTotal']; ?>&nbsp;</div>
+    <div class="span-3"><?=$value['paymentMethod']; ?>&nbsp;</div>
+    <div class="span-3 last"><?=$value['orderStatus']; ?>&nbsp;</div>
+    <hr />
+<? $i++; endforeach;  ?>
+<table width='100%'>
+	<tr>
+		<td width=35%>&nbsp;</td>
+		<td align=right><div id='catalogPagination' class="pagination"></div></td>
+	</tr>
+</table>
+<?
+}
+?>

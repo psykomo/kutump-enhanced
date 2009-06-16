@@ -1,0 +1,70 @@
+jcart-relay.php (confignya harus dirubah)
+slidemenu yang dikiri, url imagenya harus dirubah di cssnya
+
+jcart-config.php (confignya dirubah: $jcart['path'] = 'http://localhost/kutump-enhanced/lib/jcart/';)
+
+
+
+java -Xms512M -Xmx1024M -Dsolr.solr.home=multicore -jar start.jar
+
+generate custom blueprint css:
+./compress.rb -o /Users/n/tmp/css --column_width=23 --gutter_width=4 --column_count=37
+
+
+DESAIN DATABASE COUPON/PROMO
+
+1. Coupon Code (misal:CAJJD8988)
+2. Coupon Name (misal: Promo Tahun Baru)
+3. Coupon Description (misal: Diskon 50% utk setiap pembelian)
+4. Discount (isinya pilihan: Percentage or Fixed Amount)
+5. Amount (jika discountnya percentage, maka isinya dianggap sebagai percentage, kalo Fixed amount berarti dianggap total USD. Misal diskon
+fixed USD 100.00)
+6. Apply to Product (bisa diisi ALL PRODUCT, atau pilih product yang didiskon dari list yang tersedia, atau pilih dari kategori product)
+7. valid from
+8. valid to
+9. Minimum purchase amount (jika pengunjung berbelanja dengan jumlah minimum tertentu, baru dia bisa pake coupon ini)
+10. Use per coupon (satu coupon tertentu dapat dipake berapa kali)
+11. Use per customer (satu coupon boleh dipake berapa kali oleh tiap customer)
+12. Apply to Customer (boleh pilih customer mana atau group mana yang bisa pake coupon ini)
+13. Status (active atau disabled)
+
+
+
+ISSUE:
+
+1.Promo. Kira-kira mungkin ada promo ngga? kalo ada promonya seperti apa?
+Saat ini, Promo yang akan kita implementasikan adalah promo diskon harga untuk total pembelian.
+TIDAK ADA PROMO. EMANG JUALAN APAAN....
+
+2.Bagaimana penanganan kalo ada member yang ingin bayar belakangan? apakah ini diperbolehkan?
+Misalnya member ini adalah client retainer LGS.
+CLIENT LGS BOLEH BAYAR BELAKANGAN. ADA MAKSIMAL LIMIT TRANSAKSI PER BULAN.
+
+3.Apakah kita perlu menangani pembelian offline? artinya, member akan melakukan pembayaran via internet banking atau transfer tunai, kemudian
+member tersebut akan melakukan konfirmasi dengan pihak LGS.
+YA
+
+1. currency yang akan dipakai? IDR tidak ada (USD, SGD, JPY, EUR, AUD, CAD, dst)
+USD
+
+2. apakah multicurrency? (bisa dipilih)
+HANYA USD
+
+3. Untuk pajak, apakah hanya PPN 10% atau ada skema lain? 
+HANYA PPN SAJA. 
+MUNGKIN ADA RULE KAPAN KITA APPLY SI PPN INI
+
+4. Nomor invoice yang dipakai untuk LGS online apakah harus mengikuti pola tertentu (yang sudah ada)? 
+AKAN DIBUATKAN STANDARNYA DARI PAK ARIEF
+
+5. Untuk Post-paid customers apakah ada credit limit? ADA USD 10,000.00
+6. ADA OFFLINE PAYMENT UTK NON CLIENT LGS.
+
+7. FULLNAME DIPISAH JADI FIRST DAN LAST (BUT NOT REQUIRED)
+
+8. CEK KEMUNGKINAN MEMBUAT EXCERPTS PER DOCUMENTS (NON LAW AND REGULATION).
+
+9. tanya paypal, kalo taxnya termasuk akan dipotong sebagai bagian dari fee transaksi atau tidak???
+
+
+Rencana tindak lanjut, halaman 35 ditambahin narasi.

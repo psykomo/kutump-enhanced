@@ -1,0 +1,8 @@
+<h3>DOWNLOADABLE<span class="alt"> FILE(S)</span></h3>
+<hr>
+<?php foreach ($this->rowsetRelatedItem as $row){?>
+	<div style="padding-top:5px"></div>
+	<a href="<?php echo KUTU_ROOT_URL;?>/download/<?php echo $row->itemGuid;?>"><?php echo Kutu_Core_Util::getCatalogAttributeValue($row->itemGuid, 'fixedTitle'); ?> (<?php echo Kutu_Core_Util::getCatalogAttributeValue($row->itemGuid, 'docMimeType'); ?>)</a>
+	- <a href="<?php echo KUTU_ROOT_URL;?>/site/download/sample/guid/<?php echo $row->itemGuid;?>">View Sample Page</a>
+	<div style="padding-top:5px"></div>
+<?php } ?>

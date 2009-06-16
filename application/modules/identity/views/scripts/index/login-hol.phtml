@@ -1,0 +1,59 @@
+<div id="maincontent">
+
+<p><?php echo $this->content ?></p>
+
+</div>
+
+<div id="sidecontent">
+
+<div align="center">Sign in to Hukumonline with your<br>
+<img src="<?php echo KUTU_ROOT_URL; ?>/common/modules/identity/images/holid2.jpg" height="25" border="0" align="middle"> Account
+</div><br>
+<form id="kutu_loginform" action="<?php echo KUTU_ROOT_URL;?>/identity/login" method="post">
+<table align="center">
+<tbody>
+<tr>
+	<td><label for="identity">Username</label></td>
+	<td><input name="username" id="username" tabindex="1" value="" type="text"></td>
+</tr>
+<tr>
+	<td><label for="password">Password</label></td>
+	<td><input id="password" name="password" tabindex="2" type="password"></td>
+</tr>
+<tr>
+	<td>&nbsp;</td>
+</tr>
+<tr>
+	<td colspan="2"><input id="rememberMe" name="rememberMe" )="" tabindex="3" type="checkbox">&nbsp;<label for="rememberMe">Remember me for 14 days</label></td>
+</tr>
+<tr>
+	<td>&nbsp;</td>
+</tr>
+<tr>
+	<td>
+	<input tabindex="4" value="Sign in" type="submit" id="submit">
+	</td>
+</tr>
+<tr>
+	<td colspan=2>
+<strong><?echo $this->errorMessage;?></strong>
+	</td>
+</tr>
+</tbody>
+</table>
+</form>
+<br><a href="<?php echo KUTU_ROOT_URL;?>/app/servers/identity/account/account_recover_initiate" title="Recover Account">Forget your ID or password ?</a>	
+<h2>Don't have a Hukumonline! ID?</h2>
+
+Signing up is easy.
+<ul>
+<li><a href="<?php echo KUTU_ROOT_URL;?>/app/servers/identity/account/signup" title="Sign Up">Sign Up</a></li>
+</ul>
+
+</div>
+<!--<br class="clearboth">-->
+<div id="sidecontent2">
+<h3>One Hukumonline!ID. Upcoming!</h3>
+Use your single ID for Hukumonline English, Hukumpedia, Forum hukumpedia.
+</div>
+

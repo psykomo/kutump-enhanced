@@ -1,0 +1,42 @@
+<script type="text/javascript">
+	$(document).ready(function(){
+		
+		var message = "<?echo $this->message;?>";
+		if(message!="")
+		{
+			alert (message);
+		}
+		
+		$("#frmNewFolder").validate();
+		
+	});
+</script>
+<hr class="space">
+<h2 class="alt">Folder Management: Add New Folder into <?echo $this->nodeTitle;?></h2>
+<div id="menu" >
+	  <ul>
+		<li>
+	      <span class="head_menu">
+	        <a href="<?echo KUTU_ROOT_URL;?>/admin/dms/explore/node/<?echo $this->node;?>">Back to Folder</a>
+	      </span>
+	    </li>
+	  </ul>
+	</div>
+<hr class="space">
+<form class="" id="frmNewFolder" method="post" action="">
+	<fieldset>
+		<legend>Folder Info</legend>
+		<p>
+			<label for="title">Folder Title</label>
+			<input type="hidden" id="node" name="node" value="<?echo $this->node;?>">
+			<input id="title" name="title" class="required" size="50" value="<?echo $this->row->title;?>" />
+		</p>
+		<p>
+			<label for="description">Description</label>
+			<textarea id="description" name="description" class="" cols=35 rows="1"><?echo $this->row->description;?></textarea>
+		</p>
+		<p>
+			<input class="submit" type="submit" value="Save"/>
+		</p>
+	</fieldset>
+</form>

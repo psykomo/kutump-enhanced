@@ -1,0 +1,8 @@
+<?php for($i=0; $i<count($this->aPath);$i++) { ?>
+	<?php if($i != count($this->aPath)-1) {?>
+		<a href="<?php echo $this->aPath[$i]['url']; ?>"><?php echo $this->aPath[$i]['title'];?></a> >
+	<?php } else {?>
+		<a href="<?php echo $this->aPath[$i]['url']; ?>"><?php echo $this->aPath[$i]['title'];?></a>
+	<?php }?>
+
+<?php } ?>

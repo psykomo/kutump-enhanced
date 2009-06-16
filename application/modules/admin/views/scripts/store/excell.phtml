@@ -1,0 +1,39 @@
+<?php
+header("Pragma: public");
+header("Cache-Control: no-store, no-cache, must-revalidate");
+header("Cache-Control: pre-check=0, post-check=0, max-age=0");
+header("Pragma: no-cache");
+header("Expires: 0");
+header("Content-Transfer-Encoding: none");
+header("Content-Type: application/vnd.ms-excel;");
+header("Content-type: application/x-msexcel");
+header("Content-Disposition: attachment; filename=".$this->ctrl.date('Ymd').".xls");
+?>
+<table>
+<tr>
+		<td class="span-1">No</td>
+        <td class="span-5">Description</td>
+        <td class="span-3">Payment Method</td>
+        <td class="span-3">Purchasing Date</td>
+		<td class="span-2">Order Status</td>
+        <td class="span-2">Order Total</td>
+        <td class="span-2">Total Count</td>
+</tr>
+
+<? $i=$this->offset+1; foreach($this->rows as $row): ?>
+<tr>
+      <td class="span-1" valign="top"><?=$i?></td>
+       <td class="span-5" valign="top">User ID : <?=$row['userId'];?><br />
+        Invoice : <?=$row['invoiceNumber'];?><br />
+        First Name :<?=$row['firstname'];?><br />
+        Last Name : <?=$row['lastname'];?><br />
+        Company : <?=$row['company'];?><br />&nbsp;
+        </td>
+       <td class="span-3" valign="top"><?=$row['paymentMethod'];?>&nbsp;</td>
+       <td class="span-3" valign="top"><?=$row['datePurchased'];?>&nbsp;</td>
+       <td class="span-2" valign="top"><?=$row['ordersStatus'];?>&nbsp;</td>
+       <td class="span-2" valign="top"><?=$row['orderTotal'];?>&nbsp;</td>
+       <td class="span-2" valign="top"><?=$row['countTotal'];?>&nbsp;</td>
+</tr>
+<? $i++; endforeach;?>
+</table>

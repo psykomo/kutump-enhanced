@@ -1,0 +1,10 @@
+<h3>PERATURAN<span class="alt"> PELAKSANA</span></h3>
+<hr>
+<?php foreach ($this->rowsetPelaksana as $data){?>
+	<div style="padding-top:5px"></div>
+	
+	<a href="<?echo KUTU_ROOT_URL;?>/pages/g/<?php echo $data->relatedGuid;?>"><?php echo Kutu_Core_Util::getCatalogAttributeValue($data->relatedGuid,'fixedTitle') ?></a>
+	<br><?php echo Kutu_Core_Util::getCatalogAttributeValue($data->relatedGuid,'fixedSubTitle') ?>
+	
+	<div style="padding-top:5px"></div>
+<?php }?>

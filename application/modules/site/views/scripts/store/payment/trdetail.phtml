@@ -1,0 +1,84 @@
+<h2 class="alt">Transaction Detail</h2>
+<hr>
+<div class="span-17">
+	<a href="<? echo KUTU_ROOT_URL;?>/site/myaccount">My Account</a> || 
+	<!-- <input type="button" value= "My Account" onclick="javascript:history.back();" /> -->
+	<a href="<? echo KUTU_ROOT_URL;?>/site/store_payment/order">Order History</a> || 
+	<a href="<? echo KUTU_ROOT_URL;?>/site/store_payment/transaction">Transaction History</a> || 
+	<a href="<? echo KUTU_ROOT_URL;?>/site/store_payment/billing">Edit Billing Info</a> || 
+	<a href="<? echo KUTU_ROOT_URL;?>/site/store_payment/document">Documents</a>
+&nbsp;</div>
+<hr />
+Transaction : 
+<? foreach($this->listOrder as $value): ?>
+    <div class="span-11">Order ID : <?=$value['orderId'];  ?> &nbsp;</div>
+    <div class="span-11 last">Invoice : <?=$value['invoiceNumber'];  ?> &nbsp;</div>
+
+    <div class="span-11">User ID : <?=$value['userId'];  ?> &nbsp;</div>
+    <div class="span-11 last">Tax Number : <?=$value['taxNumber'];  ?> &nbsp;</div>
+
+    <div class="span-11">Tax Company : <?=$value['taxCompany'];  ?> &nbsp;</div>
+    <div class="span-11">Tax Address : <?=$value['taxAddress'];  ?> &nbsp;</div>
+
+    <div class="span-11">Tax City : <?=$value['taxCity'];  ?> &nbsp;</div>
+    <div class="span-11">Tax Zip : <?=$value['taxZip'];  ?> &nbsp;</div>
+
+    <div class="span-11">Tax Province : <?=$value['taxProvince'];  ?> &nbsp;</div>
+    <div class="span-11">Tax Country : <?=$value['taxCountryId'];  ?> &nbsp;</div>
+
+    <div class="span-11">Telephone : <?=$value['telephone'];  ?> &nbsp;</div>
+
+    <div class="span-11">Payment Method :<?=$value['paymentMethod'];  ?> &nbsp;</div>
+    <div class="span-11">Payment Menthode Note : <?=$value['paymentMethodNote'];  ?> &nbsp;</div>
+
+    <div class="span-11">Last Modified : <?=$value['lastModified'];  ?> &nbsp;</div>
+    <div class="span-11">Date Purchased : <?=$value['datePurchased'];  ?> &nbsp;</div>
+
+    <div class="span-11">Order Status : <?=$value['orderStatus'];  ?> &nbsp;</div>
+    <div class="span-11">Date Order Finished :<?=$value['dateOrderFinished'];  ?> &nbsp;</div>
+
+    <div class="span-11">Currency : <?=$value['currency'];  ?> &nbsp;</div>
+    <div class="span-11">Currency Value : <?=$value['currencyValue'];  ?> &nbsp;</div>
+
+    <div class="span-11">Total Order : <?=$value['orderTotal'];  ?> &nbsp;</div>
+    <div class="span-11">Total Orde Tax : <?=$value['orderTax'];  ?> &nbsp;</div>
+
+    <div class="span-11">Paypal IPN ID : <?=$value['paypalIpnId'];  ?> &nbsp;</div>
+    <div class="span-11">IP Address : <?=$value['ipAddress'];  ?> &nbsp;</div>
+<? endforeach;  ?>
+<hr />
+Detail : 
+<div class="span-2">No.&nbsp;</div>
+<div class="span-3">Product ID&nbsp;</div>
+<div class="span-3">Item ID&nbsp;</div>
+<div class="span-4">Item Name&nbsp;</div>
+<div class="span-2">Price&nbsp;</div>
+<div class="span-2">Final Price&nbsp;</div>
+<div class="span-1">Tax&nbsp;</div>
+<div class="span-3">Quantity&nbsp;</div>
+<hr />
+<? $i=1; foreach($this->listOrderDetail as $valueDetail): ?>
+<div class="span-2"><?=$i?>&nbsp;</div>
+<div class="span-3"><?=$valueDetail['orderProductId']; ?> &nbsp;</div>
+<div class="span-3"><?=$valueDetail['itemId']; ?> &nbsp;</div>
+<div class="span-4"><?=$valueDetail['documentName']; ?> &nbsp;</div>
+<div class="span-2"><?=number_format($valueDetail['price'],2); ?> &nbsp;</div>
+<div class="span-2"><?=number_format($valueDetail['finalPrice'],2); ?> &nbsp;</div>
+<div class="span-1"><?=number_format($valueDetail['tax'],2); ?> &nbsp;</div>
+<div class="span-3"><?=number_format($valueDetail['qty'],2); ?> &nbsp;</div>
+<hr />
+<?  $i++; endforeach;  ?>
+<hr />
+Payment History :
+<div class="span-2">No.&nbsp;</div>
+<div class="span-3">Date&nbsp;</div>
+<div class="span-3">Status&nbsp;</div>
+<div class="span-4">Note&nbsp;</div>
+<hr />
+<? $i=1; foreach($this->rowsetHistory as $valueHistory): ?>
+<div class="span-2"><?=$i?>&nbsp;</div>
+<div class="span-3"><?=$valueHistory['dateCreated']; ?> &nbsp;</div>
+<div class="span-3"><?=$valueHistory['ordersStatus']; ?> &nbsp;</div>
+<div class="span-4"><?=$valueHistory['note']; ?> &nbsp;</div>
+<hr />
+<?  $i++; endforeach;  ?>

@@ -1,0 +1,245 @@
+/***************************************************************************
+*                                                                          *
+* contented5 - An open source xhtml/css website template by Contented      *
+* Designs.  You're free to modify it and use it for any purpose without    *
+* cost or obligation. We'd prefer that you leave the link to our website   *
+* in the footer but it's not required.                                     *
+*                                                                          *
+* If you have comments or questions, please contact us at                  *
+* http://www.ContentedDesigns.com. Thanks!                                 *
+*                                                                          *
+* Version: 1.01 (May 17, 2006)                                             *
+***************************************************************************/
+
+* {
+	padding:0;
+	margin:0;
+}
+
+body {
+	color: #666666;
+	background-color:#FFFFFF;
+	font-family: "Trebuchet MS", Verdana, Helvetica, Arial, sans-serif;
+	font-size:83%;
+	margin:20px auto;
+	width:780px;
+	padding-left:10px;
+	padding-right:10px;
+}
+
+h1, h2, h3, h4, h5, h6, p, pre, blockquote, label, ul, ol, dl, 
+fieldset, address { margin:0.75em 0;}
+
+h1 {font-size:167%;}
+
+h2 {font-size:139%;}
+
+h3 {font-size:120%;}
+
+h4 {font-size:100%;}
+
+li, dd { 
+	margin-left:2em;
+}
+
+a {
+	color: #CC0000;
+	background-color: #FFFFFF;
+	font-weight: normal;
+	text-decoration: none;
+}
+
+a:hover {
+	color: #CC0000;
+	background-color: #FFFFFF;
+	font-weight: normal;
+	text-decoration: underline;
+}
+
+#contact {
+	padding:0px 0px 0px 0px;
+	float:right;
+}
+
+#contact a {
+	color: #CC0000;
+	background-color:#FFFFFF;
+	font-weight:bold;
+	text-decoration:none;
+}
+
+#contact a:hover {
+	color: #CC0000;
+	background-color:#FFFFFF;
+	text-decoration:underline;
+}
+
+#header {
+	clear:both;
+	color: #CC0000;
+	background-color:#FFFFFF;
+	padding:5px 0px 10px 0px;
+	margin:0px 0px 0px 0px;
+}
+
+
+#title {
+	color: #CC0000;
+	background-color:#FFFFFF;
+	font-size:200%;
+	font-weight:bold;
+	padding:0px 0px 0px 0px;
+	margin:0px 0px 0px 0px;
+	float:left;
+}
+
+#slogan {
+	color:#666666;
+	background-color:#FFFFFF;
+	font-size:83%;
+	font-weight:normal;
+	font-style:normal;
+	padding:0px 20px 0px 0px;
+	margin:0px 0px 0px 0px;
+	float:left;
+	width:35%;
+}
+
+ul#nav {
+	line-height:125%;
+	height:3em;
+	float:right;
+	margin: 0px 0px 0px 0px;
+	padding: 10px 0px 0px 0px;
+	list-style: none;
+	text-align: center;
+	width:60%;
+}
+
+ul#nav li {
+	margin: 0px 0px 0px 0px;
+	padding: 0px 0px 0px 20px;
+	float: right;
+}
+
+ul#nav li a {
+	display: block;
+	font-size: small;
+	color: #CC0000;
+	background-color:#FFFFFF;
+	font-weight: normal;
+	text-decoration: none;
+}
+
+ul#nav li a:hover { 
+	border-bottom:3px solid #CC0000;
+}
+
+ul#nav a.selected { 
+	border-bottom:3px solid #CC0000;
+}
+
+#path {
+	width:760px;
+	clear:both;
+	float:left;
+	font-size:11px;
+	font-weight:normal;
+	margin:4px 0px 5px 0px;
+	border-top:5px solid #666666;
+}
+
+#path a {
+	font-weight:normal;
+}
+
+#maincontent {
+	font-size:100%;
+	padding:0px 5px 5px 0px;
+	margin:0px 0px 0px 0px;
+	width:500px;
+	float:left;
+}
+
+#maincontent2 {
+	font-size:100%;
+	padding:0px 5px 0px 0px;
+	margin:0px 0px 0px 0px;
+	width:750px;
+	float:left;
+}
+
+#sidecontent {
+	font-family:Arial, sans-serif;
+	color: #666666;
+	background-color:#FFFFFF;
+	font-size:11px;
+	padding:10px 10px 20px 10px;
+	margin:0px 0px 10px 0px;
+	width:225px;
+	float:right;
+	border: #999999 solid thin;
+}
+
+#sidecontent2 {
+	font-family:Arial, sans-serif;
+	color: #666666;
+	background-color:#FFFFFF;
+	font-size:11px;
+	padding:10px 10px 20px 10px;
+	margin:0px 0px 10px 0px;
+	width:225px;
+	float:right;
+	border: #999999 solid thin;
+}
+
+.clearboth { clear: both; }
+
+#sidecontent a {
+	color: #CC0000;
+	background-color:#FFFFFF;
+}
+
+#sidecontent h2 { margin:0.75em 0.25em 0.25em 0em;}
+
+#sidecontent ul { margin:0.25em 0.25em 0.25em 0.25em;}
+
+#footer {
+	height:40px;
+	color:#666666;
+	background-color:#FFFFFF;
+	border-top:5px solid #666666;
+	font-size:75%;
+	line-height:1.5em;
+	width: 760px;
+	clear:both;
+}
+
+#footer	a {
+	color:#CC0000;
+	background-color:#FFFFFF;
+	text-decoration: none;
+}
+
+#footer	a:hover {
+	color:#CC0000;
+	background-color:#FFFFFF;
+	font-weight: normal;
+	text-decoration: underline;
+}
+
+#copyrightdesign {
+	color:#666666;
+	background-color:#FFFFFF;
+	padding:5px 20px 5px 0px;
+	width: 580px;
+	float:left;
+}
+
+#footercontact {
+	color:#CC0000;
+	background-color:#FFFFFF;
+	padding:5px 0px 5px 0px;
+	float:right;
+}
+

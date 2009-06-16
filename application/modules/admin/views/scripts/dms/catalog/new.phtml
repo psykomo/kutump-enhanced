@@ -1,0 +1,68 @@
+<script type="text/javascript">
+	$(document).ready(function(){
+		
+		var message = "<?echo $this->message;?>";
+		if(message!="")
+		{
+			alert (message);
+		}
+		
+		$("#catalogInputForm").validate({
+			rules: {
+				fixedTitle: "required"
+				
+			},
+			messages: {
+				fixedTitle: "Enter Title"
+				
+			}
+
+
+		});
+		
+	});
+</script>
+<hr class="space">
+<h2 class="alt">Catalog Management: Add New Catalog into <?echo $this->nodeTitle;?></h2>
+<div id="menu" >
+	  <ul>
+		<li>
+	      <span class="head_menu">
+	        <a href="<?echo KUTU_ROOT_URL;?>/admin/dms/explore/node/<?echo $this->node;?>">Back to Folder</a>
+	      </span>
+	    </li>
+	  </ul>
+	</div>
+<hr class="space">
+<span class="style1">Adding New Catalog</span>
+<form id="catalogInputForm" name="catalogInputForm" method="POST">
+	<table width="100%">
+		<?php 
+		foreach ($this->aRenderedAttributes['baseForm'] as $a)
+		{
+		?>	
+		<tr>
+			<td width="200"><?php echo $a['description']; ?></td>
+			<td><?php echo $a['form']; ?></td>
+		</tr>
+		<?php
+		}
+		?>
+	</table>
+	<table width="100%">
+		<?php 
+		foreach ($this->aRenderedAttributes['attributeForm'] as $a)
+		{
+		?>	
+		<tr>
+			<td width="200"><?php echo $a['description']; ?></td>
+			<td><?php echo $a['form']; ?></td>
+		</tr>
+		<?php
+		}
+		?>
+	</table>
+	<input type="submit" name="save" id="save" value="Save">
+	<!--<input type="button" name="saveAsDraft" id="saveAsDraft" value="Save as Draft">-->
+	<input type="button" name="savePublish" id="savePublish" value="Save and Publish">
+</form>

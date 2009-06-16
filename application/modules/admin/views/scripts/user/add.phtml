@@ -1,0 +1,108 @@
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#frmAddUser").validate({
+		rules: {
+			firstname: "required",
+			username: {
+				required: true,
+				minlength: 2,
+				remote: "<?php echo KUTU_ROOT_URL;?>/api/user/isusernameavailable/"
+			},
+			password: {
+				required: true,
+				minlength: 5
+			},
+			passwordConfirm: {
+				required: true,
+				minlength: 5,
+				equalTo: "#password"
+			},
+			email1: {
+				required: true,
+				email: true,
+				remote: "emails.php"
+			},
+			dateformat: "required",
+			terms: "required"
+		},
+		messages: {
+			firstname: "Enter your firstname",
+			username: {
+				required: "Enter a username",
+				minlength: jQuery.format("Enter at least {0} characters"),
+				remote: jQuery.format("{0} is already in use")
+			},
+			password: {
+				required: "Provide a password",
+				rangelength: jQuery.format("Enter at least {0} characters")
+			},
+			passwordConfirm: {
+				required: "Repeat your password",
+				minlength: jQuery.format("Enter at least {0} characters"),
+				equalTo: "Enter the same password as above"
+			},
+			email: {
+				required: "Please enter a valid email address",
+				minlength: "Please enter a valid email address",
+				remote: jQuery.format("{0} is already in use")
+			},
+			dateformat: "Choose your preferred dateformat",
+			terms: " "
+		}
+		
+		
+	});
+});
+</script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#menu').flickrmenu();
+	});
+</script>
+<hr class="space">
+<h2 class="alt">User Management: Add New User</h2>
+<div id="menu" >
+	  <ul>
+		<li>
+	      <span class="head_menu">
+	        <a href="<?echo KUTU_ROOT_URL;?>/admin/user/browse">Show All Users</a>
+	      </span>
+	    </li>
+	  </ul>
+	</div>
+<hr class="space">
+<form class="cmxform1" id="frmAddUser" method="post" action="">
+	<fieldset>
+		<legend>Login Info</legend>
+		<p>
+			<label for="username">Username</label>
+			<input id="username" name="username" class="required" minlength="2" />
+		</p>
+		<p>
+			<label for="password">Password</label>
+			<input id="password" name="password" type="password" class="required" maxlength="50" value="" />
+		</p>
+		<p>
+			<label for="passwordConfirm">Confirm Password</label>
+			<input id="passwordConfirm" name="passwordConfirm" type="password" class="required" maxlength="50" value="" />
+		</p>
+		<p>
+			<label for="email">E-Mail (required)</label>
+			<input id="email" name="email" class="required email" />
+		</p>
+	</fieldset>
+	<fieldset>
+		<legend>User Details</legend>
+		<p>
+			<label for="firstname">Firstname (required, at least 2 characters)</label>
+			<input id="firstname" name="firstname" class="required" minlength="2" />
+		</p>
+		<p>
+			<label for="lastname">Lastname</label>
+			<input id="lastname" name="lastname" class="" />
+		</p>
+	</fieldset>
+	<p>
+		<input class="submit" type="submit" value="Save"/>
+	</p>
+</form>

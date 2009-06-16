@@ -1,0 +1,719 @@
+/*
+$Id: styles.css 14342 2009-02-05 02:09:45Z santep $
+(c)2006 - 2007 The New York Times Company 
+*/
+@import url(/css/app/lib/cropper/cropper.css);
+@import url(/css/app/lib/shadow/drop_shadow.css);
+
+button.appButton,
+button.appButtonSmall {
+  vertical-align:middle;
+  font-size: 11px;
+  font-weight: bold;
+  margin:0;
+  padding: 0 12px 0 0;
+  height:28px;
+  color: white;
+  text-decoration: none;
+  text-align:center; 
+  border: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background:url(/images/apps/buttons/rightcap.png) right no-repeat; 
+  cursor:pointer;
+  width:auto;
+}
+
+button.appButtonSmall {
+  font-size: 11px;
+  padding: 0 8px 0 0;
+  height:19px;
+  background:url(/images/apps/buttons/rightcapsmall.png) right no-repeat; 
+}
+
+button.appButton::-moz-focus-inner,
+button.appButtonSmall::-moz-focus-inner {
+  padding:0;
+  border:0
+}
+
+button.appButton:focus,
+button.appButtonSmall:focus {
+  outline: 1px dotted;
+}
+
+button.appButton span,
+button.appButtonSmall span { 
+  display:block; 
+  white-space:nowrap; 
+  padding:0 0 0 12px;
+  height:28px; 
+  line-height:28px;
+  background:url(/images/apps/buttons/leftcap.png) left no-repeat; 
+}
+
+button.appButtonSmall span  {
+  padding:0 0 0 8px;
+  height:19px; 
+  line-height:19px;
+  background:url(/images/apps/buttons/leftcapsmall.png) left no-repeat; 
+}
+
+button.altSmall {
+  color:#004276;
+  font-weight:normal;
+  background:url(/images/apps/buttons/rightcapsmall_line.png) right no-repeat; 
+}
+
+button.altSmall span {
+  background:url(/images/apps/buttons/leftcapsmall_line.png) left no-repeat; 
+}
+
+/*FIXME remove when this is added in ie files*/
+button.appButton,
+button.appButtonSmall {
+   *width:auto;
+   *overflow:visible;
+   _width:auto; 
+   _overflow:visible;
+ }
+
+button.appButton span,
+button.appButtonSmall span { 
+   _margin-top:1px; 
+ }
+
+html body {
+  margin-left:0;
+  margin-right:0
+}
+
+#TP_tools_replacement {
+  width:973px;
+  clear:both;
+  overflow:hidden;
+  margin:0 auto;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size:12px;
+  margin-bottom:5px;
+}
+
+#TP_container {
+  text-align: left;
+  border-top: 2px solid black;
+  border-bottom: 1px solid #808080;
+  margin-bottom: 10px;
+  line-height:normal !important;
+  
+}
+
+#TP_container h3 {
+  font-size:16px;
+}
+
+#TP_container a,
+#TP_restore_button a {
+  color:#004276;
+  text-decoration:none;
+  cursor:pointer;
+}
+
+#TP_restore_button a {
+  font-size:12px;
+}
+
+#TP_container a:hover {
+  color:#004276;
+  text-decoration:underline;
+}
+
+#TP_container img {
+  vertical-align:middle;
+}
+
+#TP_container a img {
+  border:none;
+}
+
+#TP_container hr {
+  clear:both;
+}
+
+#TP_container p {
+  font-size:12px;
+  line-height:1.3em !important;
+}
+
+#TP_container small {
+  line-height:1.2em !important;
+}
+
+#TP_container p, 
+#TP_container h1, 
+#TP_container h2, 
+#TP_container h3, 
+#TP_container h4, 
+#TP_container h5, 
+#TP_container h6 {
+  margin:0 0 .8em;
+}
+
+#TP_container #TP_user .display_name a {
+  color:black;
+}
+
+#TP_container hr {
+  margin:8px 0;
+  border:0;
+  background:#ccc;
+  height:1px;
+}
+
+.TP_env p.error {
+  color:#a81817;
+  margin-bottom:0;
+  font-size:10px;
+  position:relative;
+}
+
+#TP_container .right {
+  float:right;
+}
+#TP_container .column {
+  float: left;
+  width: 296px;
+  margin:0 24px 0 0;
+}
+
+#TP_container .column .text {
+  width:200px;
+  display:block;
+}
+
+#TP_container .column.last {
+  margin-right:0 !important;
+  width:294px;
+}
+#TP_container .row {
+  margin-bottom:10px;
+}
+#TP_container .row:last-child {
+  margin-bottom:0;
+}
+
+#TP_container .wrap {
+  overflow: hidden;
+  clear:both;
+  zoom:1;
+}
+#TP_container .inset {
+  margin:0 !important;
+  padding:12px 20px;
+}
+#TP_container { 
+  width : 100%; 
+  height : 35px;
+  z-index : 10000;
+  background: white;
+}
+#TP_container_shadow {
+  width : 100%;
+  height : 16px;
+  z-index : 9999;
+  font-size:0;
+}
+body > #TP_container { 
+  position : fixed;
+  top: 0;
+  left: 0;
+}
+body > #TP_container_shadow {
+  position : fixed;
+  top: 30px;
+  left: 0;
+}
+
+body > #TP_container_shadow {
+  background: url('/images/global/shadow/drop_shadow/s.png') repeat-x center;
+}
+
+/* FIX ME .module*/ 
+#TP_container .module, #TP_container .TP_module {
+  border-top: 1px solid #ccc;
+  padding-top: 10px;
+  background: none;
+  overflow: hidden;
+}
+#TP_container .module.first {
+  border: 0;
+  padding-top: 0
+}
+
+#TP_container input {
+  vertical-align:middle;
+}
+
+#TP_container .editor_field,
+#TP_container input.text {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 12px;
+  padding: 1px;
+  border:1px solid #ccc;
+}
+
+#TP_container .editor_field {
+  margin-right:5px;
+}
+
+.TP_env input.error {
+  /*TODO background image*/
+}
+
+#TP_inner {
+  width: 970px;
+  border-left:1px solid #ccc;
+  border-right:1px solid #ccc;
+  margin: 0 auto;
+  position: relative;
+  background-color: white;
+  height: 35px; /* padding:2px;*/
+}
+#TP_container #TP_user {
+}
+#TP_user  .TP_avatar {
+  margin: -3px 5px 0 -3px;
+}
+
+#TP_container #TP_people {
+  float:right;
+}
+#TP_container .toggleTab {
+  width: 148px;
+  padding: 6px 6px 0 6px;
+}
+#TP_container .TP_groove {
+  width:40px;
+  height:4px;
+  margin:0 auto;
+  background-image:url('/images/apps/timespeople/handle.gif');
+  background-repeat: no-repeat;
+}
+
+#TP_container .toggleTab.active {
+  width:156px;
+  padding:0;
+}
+#TP_container .toggleTab.active.left_arrow {
+  background-repeat:no-repeat;
+  background-position:right center;
+  padding-right:9px;
+  background-image: url('/images/apps/timespeople/tab-tip-right.gif');
+}
+#TP_container .toggleTab.active.right_arrow {
+  background-repeat:no-repeat;
+  background-position:left center;
+  padding-left:9px;
+  background-image: url('/images/apps/timespeople/tab-tip-left.gif');
+}
+#TP_container .toggleTab.active h4 {
+  height:20px;
+  padding: 9px 6px 6px;
+  background-color:#808080;
+  color:white !important;
+  text-align:center;
+}
+#TP_feed_tab.toggleTab.active h4 {
+  text-align:left;
+}
+
+#TP_container .toggleTab h4 {
+  margin:0;
+}
+
+#TP_container .toggleTab.firstrun {
+/*  padding:7px 6px 6px;*/
+  text-align:center;
+}
+
+#TP_container h2 {
+  margin: 0 !important;
+  font-size: 24px;
+  padding-top: 3px;
+  font-weight: bold;
+}
+#TP_container h4 {
+  font-size: 12px;
+  font-weight: bold;
+  margin: 0 0 1em;
+}
+#TP_user h3 {
+  margin: 0 !important;
+  font-size: 12px;
+  padding-top: 3px;
+}
+#TP_container .toolbar_button {
+  font-size: 10px;
+}
+#TP_container, #TP_feed {
+  font-family: Arial, Helvetica, sans-serif;
+  color: #333;
+}
+
+#TP_feed {
+  background-color: white;
+  height: 21px;
+  padding: 3px 0px 11px;
+  overflow: hidden;
+  border-bottom:0;
+}
+.timespeople_panel {
+  border: 1px solid #ccc;
+  border-width: 0 1px;
+  width: 654px;
+  position: absolute;
+  left: 157px;
+  top: 0px;
+  background:#EDF2F5;
+  border-width: 0 1px 1px;
+  z-index:1000;
+}
+
+#TP_container .TP_panel_container {
+  /*regain z-index over flash by forcing an invisible scrollbar*/
+  width:655px;
+  overflow-x:hidden;
+}
+
+#TP_container  #TP_feed_tab {
+  width:654px;
+  position: absolute;
+  left: 159px;
+  top: 0px;
+}
+
+#TP_container .timestamp {
+  color: #666;
+  text-transform: uppercase;
+  font-size: 10px;
+  text-align: right;
+  padding-right: 5px
+}
+#TP_user .TP_avatar {
+  margin-top:-3px;
+  margin-left:-3px;
+}
+
+#TP_user .TP_avatar,
+#TP_profile .TP_avatar,
+#TP_profile #previewArea {
+  overflow: hidden;
+  float: left;
+  display: inline;
+  margin-right:6px;
+  margin-bottom:6px;
+}
+
+#TP_feed span {
+  vertical-align: middle;
+}
+#TP_feed.tease { 
+  /*height:28px;*/ border-bottom-width:1px;
+  border-color: #CCC;
+}
+#TP_feed.open {
+  border-bottom: 1px solid;
+  border-color: #CCC;
+  top:35px;
+  padding:0 0 15px 0;
+}
+#TP_feed.open .TP_feed_content,
+#TP_feed_monitor .TP_feed_content {
+  height:100%;
+  overflow:auto;
+}
+#TP_user_image {
+  margin-right: 10px;
+}
+#TP_feed h2 {
+  font-size: 18px;
+  font-family: Georgia, serif;
+  font-weight: normal;
+  margin-bottom: 10px;
+}
+.TP_avatar {
+  background-color: #ccc;
+}
+.TP_feed_content {
+  background:white;
+  overflow:auto;
+}
+#TP_container table {
+  border-spacing:0;
+}
+.TP_feed_content table {
+  width: 620px;
+}
+.open .TP_feed_content table {
+  width: 637px;
+}
+
+.open .TP_feed_content td {
+  border-bottom: 1px solid #ccc;
+}
+
+.TP_feed_content td {
+  padding: 6px 0px 6px 10px;
+  background: none;
+  font-size: 13px;
+}
+.TP_feed_content .TP_story {
+}
+.TP_feed_content h5 {
+  font-family: Georgia, serif;
+  font-weight: normal;
+  margin: 0;
+}
+.TP_feed_content li * {
+  font-size: 1em;
+}
+.TP_feed_content a:visited {
+  color: #004276;
+}
+#TP_container #TP_search_term {
+  width: 237px;
+  margin-right:5px;
+  display:inline;
+}
+
+body > #TP_container #TP_search_term {
+/*  position:fixed; /* fixes disappearing cursor bug*/*/
+}
+#TP_search_button {
+/*  position:relative;*/
+/*  left: 248px;*/
+/*  margin-bottom:10px;*/
+  width:50px;
+}
+#TP_recommend_button a  {
+/*  background-image:url(/images/apps/timespeople/timespeople16x16.gif);*/
+  background-repeat:no-repeat;
+  padding:0pt 0pt 3px 20px;
+}
+#TP_feed #TP_feed_handle {
+  display:none;
+}
+#TP_feed.open #TP_feed_handle {
+  display:block;
+  position: absolute;
+  bottom: 0;
+  z-index: 1000;
+  width: 100%;
+  padding: 6px 0;
+  background-color: #e2e2e2;
+  cursor: ns-resize;
+}
+#TP_container .scrollbox {
+  height: 123px;
+  width:100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  border: 1px solid #ddd;
+  background: white;
+}
+.TP_status {
+  color: #999;
+  font-size: 10px;
+}
+.TP_story {
+  font-size:13px;
+}
+.scrollbox table {
+  width: 100%;
+}
+
+#TP_feed_monitor {
+  height:194px;
+  border-top:1px solid #ccc;
+}
+.TP_control {
+  margin-bottom: 10px;
+  overflow:hidden;
+  clear:both;
+}
+#TP_container .label_container {
+  width: 85px;
+  float: left;
+  display: inline;
+  margin-right: 5px;
+  padding-top:3px;
+}
+#TP_container .control_container {
+  /*padding-left:85px;*/
+  float:right;
+  padding-bottom:6px;
+}
+#TP_container label {
+  font-size:11px;
+  color:#333;
+  font-weight:bold;
+}
+#TP_container label.inline {
+  float:none;
+  display:inline;
+  font-weight: normal;
+}
+#TP_feed_toggle {
+  border-left: 1px solid #ccc;
+  position: absolute;
+  right: 161px;
+  top: 5px;
+  z-index: 1000;
+  width: 28px;
+  height: 25px;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-image: url('/images/apps/timespeople/arrow-down.gif');
+  cursor: pointer;
+}
+#TP_feed_toggle.open {
+  background-image: url('/images/apps/timespeople/arrow-up.gif');
+}
+
+#TP_firstname, #TP_lastname {
+  width: 128px;
+}
+#TP_photo_url {
+  width: 203px;
+}
+#TP_firstname {
+  margin-right: 10px;
+}
+#TP_location {
+  width: 273px;
+}
+#TP_sharing_buttons {
+  float: right;
+}
+#TP_container fieldset {
+  border: 0;
+  padding: 0;
+}
+#TP_container .step_number {
+  font-size: 32px;
+  line-height: 1;
+  vertical-align: top;
+  color: #333;
+  float: left;
+}
+#TP_container .column.last {
+  margin-right: 0;
+}
+
+#TP_first_run {
+  margin-top: 12px;
+  font-size: 16px;
+}
+
+#TP_container.firstrun, #TP_container.firstrun #TP_inner {
+  height: auto !important;
+  position: static !important;
+}
+body.firstrun {
+  padding-top: 0;
+  margin-top: 0;
+}
+.firstrun #TP_activate_button {
+  display: block;
+  margin: 20px auto;
+  font-size: 16px;
+  float: none;
+}
+
+#TP_container .highlight {
+  background-color:#F8F8D4;
+}
+
+#TP_container .scrollbox table {
+  margin:6px 0;
+  table-layout:fixed;
+  border-collapse:collapse;
+}
+
+#TP_container .scrollbox td {
+  padding:2px 6px;
+  overflow:hidden;
+}
+
+.TP_avatar_cell {
+  text-align:right;
+  width:20px;
+}
+
+.TP_displayname_cell {
+  width:110px;
+}
+
+.TP_location_cell {
+  width:65px;
+}
+
+.TP_button_cell {
+  width:26px;
+  text-align:center;
+}
+
+#TP_container .imageWell {
+  width:296px;
+  background: #999;
+  margin-bottom:10px;
+}
+
+#TP_container .imgCrop_wrap {
+  margin:0 auto;
+}
+
+#TP_search_results {
+margin-top:6px;
+margin-bottom:12px;
+}
+
+#TP_friends_pane {
+  margin-bottom:12px;
+}
+
+#TP_spinner {
+  position:absolute;
+  top:6px;
+  right:-30px;
+}
+
+#TP_minimize_button {
+  border-left:1px solid #CCCCCC;
+  color:#999999;
+  cursor:pointer;
+  font-size:18px;
+  font-weight:bold;
+  padding:7px 9px 6px;
+  position:absolute;
+  right:0;
+  text-align:center;
+  top:0;
+  width:15px;
+}
+
+.TP_tile_ad {
+  float:right;
+  margin-bottom:10px;
+}
+
+#TP_feed_tab .TP_tile_ad {
+  margin-right:40px;
+  margin-top:1px;
+  margin-bottom:0;
+  float:none;
+  position:absolute;
+  right:0;
+}
+
+#TP_location-inplaceeditor {
+  display:inline;
+}

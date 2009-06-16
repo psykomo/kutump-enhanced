@@ -1,0 +1,47 @@
+<ul class="sf-menu">
+	<li class="current">
+		<a href="<?echo KUTU_ROOT_URL;?>/pages">Home</a>
+	</li>
+	<li>
+		<?if(empty($this->username)){?> 
+			<a href="<?echo KUTU_ROOT_URL;?>/pages/g/lgs4a1d7b209f3df">LGS Legal Database</a> 
+		<?}
+		else { //echo "Hello, ". $this->username;?>
+			 <a href="<?echo KUTU_ROOT_URL;?>/dms">Lgs Legal Database</a>
+		<?}?>
+	</li>
+	<li>
+		<a href="<?echo KUTU_ROOT_URL;?>/pages/g/lgs4a1d77eb99e7a">News & Opportunities</a>
+	</li>
+	<li>
+		<a href="<?echo KUTU_ROOT_URL;?>/pages/g/lgs4a1d79ad94802">LGS Profile</a>
+		<?echo $this->action('getmenuchildren','component','site',array('node'=>'lgs4a1d79ad94802'))?>
+	</li>	
+	<li>
+		<a href="#">What Others Say About LGS</a>
+	</li>
+	<li>
+		<a href="#">LGS News</a>
+		
+	</li>
+	<li>
+		<a href="#">LGS Newsletters</a>
+		
+	</li>
+	<li>
+		<a href="#">LGS Awards</a>
+		
+	</li>
+	<li>
+		<a href="#">More &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+		<ul>
+			<li><a href="#">Message from the Board</a></li>
+			<li><a href="<?echo KUTU_ROOT_URL;?>/pages/g/lgs4a1d7937a6f9b">Indonesia Under Review</a></li>
+			<li><a href="#">Who's Who in Indonesia</a></li>
+			<li><a href="#">Important Addresses</a></li>
+			<li><a href="#">Important Public Documents And Articles</a></li>
+			<li><a href="#">Q & A With LGS Partners</a></li>
+			<li><a href="#">Important Addresses</a></li>
+		</ul>
+	</li>
+</ul>

@@ -1,0 +1,233 @@
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#menu').flickrmenu();
+		
+		$("#lkAssignGroup").click(function(){ 
+			assignGroup();
+		});
+		$("#lkDeleteUser").click(function(){ 
+			var aGuid = getCheckedCheckBox("frmUserPager");
+			if (confirm("Are you sure you want to delete "+ aGuid.length +' users')) 
+			{
+				var listGuid = '';
+				for (var i = 0; i < aGuid.length; i++){ 
+				         listGuid += "/guid/" + aGuid[i] ; 
+				      }
+				window.location = "<?echo KUTU_ROOT_URL;?>/admin/user/delete"+listGuid;
+			}
+			
+		});
+		$("#lkChangePassword").click(function(){ 
+			var guid = getOnlyOneCheckBox("frmUserPager");
+			//alert(guid);
+			if(guid)
+				window.location = "<?echo KUTU_ROOT_URL;?>/admin/user/changepassword/guid/"+guid;
+		});
+		
+		function assignGroup()
+		{
+			var guid = getOnlyOneCheckBox("frmUserPager");
+			//alert(guid);
+			if(guid)
+				window.location = "<?echo KUTU_ROOT_URL;?>/admin/user/assigngroup/guid/"+guid;
+		}
+		getCheckedCheckBox = function (elementId)
+				{
+					var content = [];
+					var aGuid = new Array();
+					var iCount=0;
+					$('#' + elementId + ' input').each(function(){
+						var el = $(this);
+						if ( (el.attr('type').toLowerCase() == 'radio'))
+						{
+							if ( this.checked )
+							{
+								content.push([
+									'"', el.attr('name'), '": ',
+									'value="', ( this.value ), '"',
+									( this.disabled ? ', disabled' : '' )
+								].join(''));
+								aGuid[iCount]=this.value;
+								iCount++;
+							}
+						}
+						else
+						{
+							content.push([
+								'"', el.attr('name') + ' '+el.attr('value'), '": ',
+								( this.checked ? 'checked' : 'not checked' ), 
+								( this.disabled ? ', disabled' : '' )
+							].join(''));
+							if ( this.checked )
+							{
+								aGuid[iCount]=el.attr('value');
+								iCount++;
+							}
+						}
+						
+					});
+					return aGuid;
+				}
+		
+		getOnlyOneCheckBox = function (elementId)
+				{
+					var aGuid = getCheckedCheckBox(elementId);
+					
+					if(aGuid.length>1)
+					{
+						alert('You can select ONLY ONE User to edit');
+					}
+					else
+					{	
+						if(aGuid.length==0)
+							alert('You must select ONE User to edit')
+						else
+							return aGuid[0];
+					}
+					return false;
+				} 
+		
+		displayFormOri = function (elementId)
+					{
+						var content = [];
+						$('#' + elementId + ' input').each(function(){
+							var el = $(this);
+							if ( (el.attr('type').toLowerCase() == 'radio'))
+							{
+								if ( this.checked )
+									content.push([
+										'"', el.attr('name'), '": ',
+										'value="', ( this.value ), '"',
+										( this.disabled ? ', disabled' : '' )
+									].join(''));
+							}
+							else
+								content.push([
+									'"', el.attr('name') + ' '+el.attr('value'), '": ',
+									( this.checked ? 'checked' : 'not checked' ), 
+									( this.disabled ? ', disabled' : '' )
+								].join(''));
+						});
+						alert(content.join('\n'));
+					}
+			displayForm = function (elementId)
+					{
+						var content = [];
+						var aGuid = new Array();
+						var iCount=0;
+						$('#' + elementId + ' input').each(function(){
+							var el = $(this);
+							if ( (el.attr('type').toLowerCase() == 'radio'))
+							{
+								if ( this.checked )
+								{
+									content.push([
+										'"', el.attr('name'), '": ',
+										'value="', ( this.value ), '"',
+										( this.disabled ? ', disabled' : '' )
+									].join(''));
+									aGuid[iCount]=this.value;
+									iCount++;
+								}
+							}
+							else
+							{
+								content.push([
+									'"', el.attr('name') + ' '+el.attr('value'), '": ',
+									( this.checked ? 'checked' : 'not checked' ), 
+									( this.disabled ? ', disabled' : '' )
+								].join(''));
+								if ( this.checked )
+								{
+									aGuid[iCount]=el.attr('value');
+									iCount++;
+								}
+							}
+							
+						});
+						
+						if(aGuid.length>1)
+						{
+							alert('You can select ONLY ONE User to edit');
+						}
+						else
+						{	
+							if(aGuid.length==0)
+								alert('You must select ONE User to edit')
+							else
+								window.location = "<?echo KUTU_ROOT_URL;?>/admin/user/edit/guid/"+aGuid[0];
+						}
+					}
+		
+	});
+</script>	
+<hr class="space">
+<h2 class="alt">User Management</h2>
+<div class="span-15 colborder">
+  	<div id="menu" >
+		  <ul>
+			<li>
+		      <span class="head_menu">
+		        <a href="#">Select</a>
+		        <img src="<?echo KUTU_ROOT_URL;?>/common/images/arrow.png" width="18" height="15" align="top" class="arrow" />
+		      </span>
+		      <div class="sub_menu">
+		        <a href="#">None</a>
+		        <a href="#">All</a>
+		      </div>
+		    </li>
+		    <li>
+		      <span class="head_menu">
+		        <a href="<?echo KUTU_ROOT_URL;?>/admin/user/add">New</a>
+		      </span>
+		    </li>
+			<li>
+		      <span class="head_menu">
+		        <a href="javascript:void(0);" onclick="displayForm('frmUserPager');return true;">Edit</a>
+		      </span>
+		    </li>
+			<li>
+		      <span class="head_menu">
+		        <a href="javascript:void(0);" id="lkDeleteUser" name="lkDeleteUser">Delete</a>
+		      </span>
+		    </li>
+		    <li>
+		      <span class="head_menu">
+		        <a href="#">View</a>
+		        <img src="<?echo KUTU_ROOT_URL;?>/common/images/arrow.png" width="18" height="15" align="top" class="arrow" />
+		      </span>
+		      <div class="sub_menu">
+		        <a href="#">All</a>
+		        <a href="#">Active</a>
+		        <a href="#">Inactive</a>
+				<a href="#">Banned</a>
+		      </div>
+		    </li>
+			<li>
+		      <span class="head_menu">
+		        <a href="#">More</a>
+		        <img src="<?echo KUTU_ROOT_URL;?>/common/images/arrow.png" width="18" height="15" align="top" class="arrow" />
+		      </span>
+		      <div class="sub_menu">
+				<a href="javascript:void(0);" id="lkChangePassword" name="lkChangePassword">Change Password</a>
+		        <a href="javascript:void(0);" id="lkAssignGroup" name="lkAssignGroup">Assign Group(s)</a>
+		        <a href="#">Show Orders</a>
+				<a href="#">Delete Users</a>
+		      </div>
+		    </li>
+		  </ul>
+		</div>
+	<hr class="space">
+	<form id='frmUserPager'>
+	<?php echo $this->userPager;?>
+	</form>
+</div>
+<div class="span-8 last">
+  <h6>This box is aligned with the sidebar</h6>
+  <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.</p>
+</div>
+
+
+
+
+

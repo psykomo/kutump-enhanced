@@ -1,0 +1,27 @@
+#jcart, #jcart input { font-size:12px; }
+#jcart * { margin:0; padding:0; font-family:arial, tahoma, verdana, sans-serif; }
+#jcart table { width:100%; border:0; background:#fff; border-collapse:collapse; }
+#jcart tr {  }
+#jcart th, #jcart td { padding:5px; border:0; border:solid 1px #ccc; vertical-align:top; text-align:left; font-weight:normal; }
+#jcart td.empty { text-align:center; }
+
+#jcart p.jcart-error { text-align:center; padding:5px; }
+
+#jcart strong#jcart-title {  }
+#jcart th { background:#ccffcc }
+#jcart td.jcart-item-qty { width:25%; }
+#jcart td.jcart-item-name { width:50%; font-weight:bold; }
+#jcart td.jcart-item-price { width:25%; font-weight:bold; text-align:right; }
+
+#jcart td.jcart-item-price span { display:block; }
+
+#jcart a.jcart-remove { font-size:11px; font-weight:normal; }
+
+#jcart span#jcart-subtotal { }
+#jcart span#jcart-subtotal strong {  }
+
+#jcart input.jcart-button { padding:2px; margin:2px;}
+
+#jcart input#jcart-checkout { float:right; }
+
+

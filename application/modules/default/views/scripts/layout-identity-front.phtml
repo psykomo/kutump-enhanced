@@ -1,0 +1,81 @@
+<html dir="ltr" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<link rel="stylesheet" href="<?echo KUTU_ROOT_URL;?>/common/modules/identity/styles/fb.css" type="text/css">
+
+<!--[if IE]><script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/js/excanvas.js"></script><![endif]-->
+<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.js"></script>
+<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.roundcorners.2.js"></script>
+<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.flickrmenu.js"></script>
+
+<script type="text/javascript" language="javascript">
+	//  Developed by Roshan Bhattarai 
+	//  Visit http://roshanbh.com.np for this script and more.
+	//  This notice MUST stay intact for legal use
+	// http://roshanbh.com.np/examples/floating-message-jquery/
+	$(document).ready(function()
+	{
+		$('#message_box').hide();
+		//scroll the message box to the top offset of browser's scrool bar
+		$(window).scroll(function()
+		{
+	  		$('#message_box').animate({top:$(window).scrollTop()+"px" },{queue: false, duration: 100});  
+		});
+	    //when the close button at right corner of the message box is clicked 
+		$('#close_message').click(function()
+		{
+	  		//the messagebox gets scrool down with top property and gets hidden with zero opacity 
+			$('#message_box').animate({ top:"+=15px",opacity:0 }, "slow");
+		});
+	});
+</script>
+
+
+<title>Admin Panel</title>
+</head>
+<body>
+	<div id="message_box">Loading...</div>
+	<table width='100%' cellpadding="0" cellspacing="0">
+		<tr valign="top">
+			<td height="50" style="background-image:url('<?php echo KUTU_ROOT_URL;?>/common/modules/identity/images/linear_shim.png');">
+					<table width='100%' cellpadding="0" cellspacing="0">
+						<tr>
+							<td><img src="<?echo KUTU_ROOT_URL;?>/spacer.gif" width="8px"></td>
+							<td bgcolor="3b5998" id="lt_menubar">
+
+								<table width='100%' cellpadding="0" cellspacing="0" height="75">
+									<tr>
+										<td width="10%">
+											<div class="lt_menu_main_title" style="font-size:24px">Identity</div>
+										</td>
+									</tr>
+								</table>
+
+							</td>
+							<td><img src="<?echo KUTU_ROOT_URL;?>/spacer.gif" width="8px"></td>
+						</tr>
+					</table>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td height="300" style="background-image:url('<?php echo KUTU_ROOT_URL;?>/common/modules/identity/images/radial_behind_content.jpg');">
+				<table width='100%' cellpadding="0" cellspacing="0">
+					<tr>
+						<td><img src="<?echo KUTU_ROOT_URL;?>/spacer.gif" width="22px"></td>
+						<td>
+							<?php echo $this->layout()->content; ?>
+						</td>
+						<td><img src="<?echo KUTU_ROOT_URL;?>/spacer.gif" width="22px"></td>
+					</tr>
+				</table>
+					
+			</td>
+		</tr>
+	</table>
+	
+<script>
+	$('#lt_menubar').bg(['0', '0', '7px', '7px']);
+</script>
+</body>
+</html>

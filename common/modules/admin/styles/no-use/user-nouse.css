@@ -1,0 +1,65 @@
+.tbl1 {
+	border-style: solid;
+	border-color: #CCCCCC;
+	border-left-width: 1px;
+	border-right-width: 1px;
+	border-top-width: 1px;
+	border-bottom-width: 1px;
+	
+}
+.tbl1a {
+	border-style: solid;
+	border-color: #CCCCCC;
+	border-left-width: 0px;
+	border-right-width: 1px;
+	border-top-width: 0px;
+	border-bottom-width: 0px;
+}
+.tbl_tab_menu{
+	border-style: solid;
+	border-color: #CCCCCC;
+	border-left-width: 1px;
+	border-right-width: 1px;
+	border-top-width: 1px;
+	border-top-color: #898989;
+	border-bottom-width: 1px;
+}
+.row_list{
+	border-style: solid;
+	border-color: #e1e1e1;
+	border-left-width: 0px;
+	border-right-width: 0px;
+	border-top-width: 0px;
+	border-bottom-width: 1px;
+}
+
+/* FLICKR MENU */
+
+ul, li{margin:0; border:0; list-style:none; padding:0;}
+ul{height:21px;}
+/*#menu { margin:0 auto; width:600px; margin-top:30px; border-bottom:dotted 1px #E5E5E5; }*/
+#menu { margin:0; width:100%; margin-top:5px; border-bottom:dotted 0px #E5E5E5;}
+#menu a { color:#0066CC; text-decoration:none; }
+#menu a:hover { text-decoration:underline; }	
+#menu li { display:inline; position:relative; }
+#menu li span { position:relative; z-index:999; padding:4px 4px 4px 6px;  border-bottom:none; line-height:18px; }	
+/*#menu li span a { font-weight:bold; padding:0 6px 0px 2px;  }*/
+#menu li span a { font-weight:bold;}	
+#menu li span.over { padding:4px 3px 4px 5px;  border-top:solid 1px #E5E5E5; border-left:solid 1px #E5E5E5;  border-right:solid 1px #999999; border-bottom:solid 1px #fff;  }
+*+html #menu li span.over {  border-top:solid 2px #E5E5E5; padding-bottom:3px; } /* IE6 */
+#menu li span.over a { }
+#menu li span.over a:hover { text-decoration:none; }
+#menu li span.active { padding:4px 3px 4px 5px;  border-top:solid 1px #E5E5E5; border-left:solid 1px #E5E5E5;  border-right:solid 1px #999999; border-bottom:solid 1px #fff;  }
+*+html #menu li span.active {  border-top:solid 2px #E5E5E5; padding-bottom:3px; }
+#menu li span.active a { }
+#menu li span.active a:hover { text-decoration:none; }	
+#menu img.arrow { /*margin-left:4px;*/ cursor:pointer; }
+#menu div.sub_menu { z-index:999;display:none; position:absolute; left:0; top:0px; margin-top:18px; border-top:solid 1px #E5E5E5; border-left:solid 1px #E5E5E5; border-right:solid 1px #999999; border-bottom:solid 1px #999999; padding:4px; top:2px; width:160px; background:#FFFFFF; }
+* html #menu div.sub_menu { margin-top:23px; } /* IE6 */
+*+html #menu div.sub_menu { margin-top:23px; } /* IE7 */
+#menu div.sub_menu a:link, 
+#menu div.sub_menu a:visited, 
+#menu div.sub_menu a:hover{ display:block; font-size:11px; padding:4px;}	
+#menu a.item_line { border-top:solid 1px #E5E5E5; padding-top:6px !important; margin-top:3px; }
+
+/* END FLICKR MENU */

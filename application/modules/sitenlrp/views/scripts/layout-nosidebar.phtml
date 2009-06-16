@@ -1,0 +1,174 @@
+<!--
+design by styleshout(http://www.styleshout.com/)
+adapted to SilveStripe by SilverStriped (http://silverstriped.com)
+-->
+<!--<xml version="1.0" encoding="UTF-8">-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" >
+
+  <head>
+		<base href="http://www.nlrp.org/" />
+		<title><?echo $this->pageTitle;?></title>
+<meta name="generator" http-equiv="generator" content="SilverStripe 2.3.0 - http://www.silverstripe.com" />
+<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+<meta http-equiv="Content-Language" content="en"/>
+
+	<!-- Framework CSS -->
+		<!--<link rel="stylesheet" href="<?echo KUTU_ROOT_URL;?>/common/styles/blueprint/screen.css" type="text/css" media="screen, projection">
+		<link rel="stylesheet" href="<?echo KUTU_ROOT_URL;?>/common/styles/blueprint/print.css" type="text/css" media="print">-->
+		<link rel="stylesheet" type="text/css" href="<?echo KUTU_ROOT_URL;?>/common/modules/nlrp/css/blueprint.css" />
+	  <!--[if IE]><link rel="stylesheet" href="<?echo KUTU_ROOT_URL;?>/common/styles/blueprint/ie.css" type="text/css" media="screen, projection"><![endif]-->
+
+		<link rel="shortcut icon" href="/favicon.ico" />
+	<link rel="stylesheet" type="text/css" href="<?echo KUTU_ROOT_URL;?>/common/modules/nlrp/css/layout.css" />
+<link rel="stylesheet" type="text/css" href="<?echo KUTU_ROOT_URL;?>/common/modules/nlrp/css/typography.css" />
+<link rel="stylesheet" type="text/css" href="<?echo KUTU_ROOT_URL;?>/common/modules/nlrp/css/form.css" />
+<link rel="stylesheet" href="<?echo KUTU_ROOT_URL;?>/common/modules/nlrp/css/superfish.css" type="text/css" media="screen, projection">
+
+<!--[if IE]><script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/js/excanvas.js"></script><![endif]-->
+<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.js"></script>
+<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.roundcorners.2.js"></script>
+<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/splitter.js"></script>
+<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.cookie.js"></script>
+<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.flickrmenu.js"></script>
+<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.validate.js"></script>
+<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/superfish.js"></script>
+
+<script type="text/javascript">
+	$(document).ready(function(){
+		
+	});
+</script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		 $('ul.sf-menu').superfish();
+
+
+	});
+</script>
+</head>
+<body>
+<div id="wrap">
+	<div id="top-bg"></div>
+	<!--<div id="header">			
+				
+		<h1 id="logo-text"><a href="index.html" title="">NLRP<span>National Legal Reform Program</span></a></h1>		
+		<p id="slogan">put your site slogan here...</p>		
+			
+		<div id="header-links">
+		<p>
+			<a href="index.html">Home</a> | 
+			<a href="index.html">Contact</a> | 
+			<a href="index.html">Site Map</a>			
+		</p>		
+		</div>						
+	</div>-->
+		
+	<div id="header-photo"></div>
+
+	<div  id="nav">
+		<?echo $this->action('mainmenu','pages_component','sitenlrp')?>
+		<!--<ul class="sf-menu">
+			<li class="">
+				<a href="<?echo KUTU_ROOT_URL;?>/pages">Home</a>
+			</li>
+
+			<li>
+				<a href="<?echo KUTU_ROOT_URL;?>/pages/g/lgs4a1bb86c12807/h/1">About Us</a>
+				<?echo $this->sMenuAboutUs;?>
+			</li>
+			<li>
+				<a href="#">Programs</a>
+				<?echo $this->sMenuPrograms;?>
+			</li>	
+			<li>
+				<a href="<?echo KUTU_ROOT_URL;?>/pages/g/nlrp4a1c354d26b45/h/1">Media Room</a>
+				<?echo $this->sMenuMediaRoom;?>
+			</li>
+			<li>
+				<a href="#">Procurement</a>
+			</li>
+			<li>
+				<a href="#">Partnerships</a>
+				<ul>
+					<li><a href="#">menu item</a></li>
+					<li><a href="#">menu item</a></li>
+					<li><a href="#">menu item</a></li>
+					<li><a href="#">menu item</a></li>
+					<li><a href="#">menu item</a></li>
+				</ul>
+			</li>
+			<li>
+				<a href="#">Links</a>
+			</li>
+		</ul>-->
+	</div>			
+	<div id="content-wrap">
+			
+		<?php echo $this->layout()->content; ?>
+
+							
+	</div>
+		
+	<div id="footer-wrap">
+		<div id="footer-columns">
+	
+			<div class="col3">
+				<h3>Our Programs</h3>
+				<ul>
+					<li><a href="http://www.nlrp.org/programs/">Enhanced Planning through Management and Budgetary Reform</a></li>
+					<li><a href="http://www.nlrp.org/programs/">Enhanced Public Accountability through National Surveys and Assessments</a></li>
+					<li><a href="http://www.nlrp.org/programs/">Enhanced Professionalism through Capacity Building, Career Planning and Training</a></li>
+					<li><a href="http://www.nlrp.org/programs/">Enhanced Legal Certainty through Legal Information</a></li>
+					<li><a href="http://www.nlrp.org/programs/">Enhanced Integrity and Transparency through Anti-Corruption Initiatives</a></li>
+				</ul>
+			</div>
+
+			<div class="col3-center">&nbsp;</div>
+			<!--<div class="col3-center">
+				<h3>Sed purus</h3>
+				<ul>
+					<li><a href="index.html">consequat molestie</a></li>
+					<li><a href="index.html">sem justo</a></li>
+					<li><a href="index.html">semper</a></li>
+					<li><a href="index.html">magna sed purus</a></li>
+					<li><a href="index.html">tincidunt</a></li>
+				</ul>
+			</div>-->
+
+			<div class="col3">
+				<h3>Contact Us</h3>
+				<ul>
+					<li><span style="color:#666666;"><br>
+					National Legal Reform Program (NLRP)
+					<br>Gedung Setiabudi 2 Lantai 2 Suite 207D
+					<br>Jl. H.R. Rasuna Said Kav. 62
+					<br>Jakarta 12920
+					<br>INDONESIA
+					<br>Phone : +62 21 52906813
+					<br>Fax : +62 21 52906824
+					<br>&nbsp;</span>
+					</li>
+
+				</ul>
+			</div>
+
+		</div>	
+	
+		<div id="footer-bottom">		
+			
+			<p>
+			&copy; 2009 <strong>NLRP - National Legal Reform Project</strong> <!--| 
+			Adapted by: <a href="http://www.silverstriped.com/">SilverStriped</a> |
+			Powered by: <a href="http://www.silverstripe.com/">SilverStripe open source CMS</a> |-->
+</p>		
+			
+		</div>	
+
+<!-- footer ends-->
+</div>
+<!-- wrap ends here -->
+</div>
+
+</body>
+</html>

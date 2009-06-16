@@ -1,0 +1,37 @@
+<?if(count($this->rowsetMenu)>0) {?>
+<ul class="sf-menu">
+	<li class="current">
+		<a href="<?echo KUTU_ROOT_URL;?>/pages/">Home</a>
+	</li>
+	<?foreach($this->rowsetMenu as $row) {?>
+		<li>
+			<a href="<?echo KUTU_ROOT_URL;?>/pages/g/<?echo $row->guid;?>"><?echo $row->title;?></a>
+			<?
+				$rowsetMenu = $this->bpmCms->getMenu($row->guid);
+				if(count($rowsetMenu)>0) {?>
+					<ul class="sf-menu">
+					<?foreach($rowsetMenu as $row) {?>
+						<li>
+							<a href="<?echo KUTU_ROOT_URL;?>/pages/g/<?echo $row->guid;?>"><?echo $row->title;?></a>
+						</li>
+					<?}?>
+					</ul>
+			<?}?>
+		</li>
+	<?}?>
+	<li>
+		<a href="<?echo KUTU_ROOT_URL;?>/pages/g/search">Search</a>
+	</li>
+	<li class="current">
+		<a href="#">Language</a>
+			<ul>
+				<li class="current">
+					<a href="<?echo KUTU_ROOT_URL;?>/pages/">Indonesia</a>
+				</li>
+				<li class="current">
+					<a href="<?echo KUTU_ROOT_URL;?>/pages/">English</a>
+				</li>
+			</ul>
+	</li>
+</ul>
+<?}?>

@@ -1,0 +1,8 @@
+<h3>DASAR<span class="alt"> HUKUM</span></h3>
+<hr>
+<?php foreach ($this->rowsetDasarHukum as $row){?>
+	<div style="padding-top:5px"></div>
+	<a href="<?php echo KUTU_ROOT_URL;?>/pages/g/<?php echo $row->itemGuid;?>"><?php echo Kutu_Core_Util::getCatalogAttributeValue($row->itemGuid, 'fixedTitle'); ?> (<?php echo Kutu_Core_Util::getCatalogAttributeValue($row->itemGuid, 'docMimeType'); ?>)</a>
+	<br><?php echo Kutu_Core_Util::getCatalogAttributeValue($row->itemGuid,'fixedSubTitle') ?>
+	<div style="padding-top:5px"></div>
+<?php } ?>

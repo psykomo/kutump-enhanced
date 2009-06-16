@@ -1,0 +1,150 @@
+<link rel="stylesheet" href="<?echo KUTU_ROOT_URL;?>/lib/jquery/pagination.css" />
+<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.pagination.js"></script>
+<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/js/smooth.scroller.js"></script>
+<div id='aku'></div>
+<a name='a' id='a'></a>
+<?//echo $this->url();?>
+<?echo 'Number of record(s): '.$this->aData['totalCount'];?>
+<hr class="space">
+<div id='catalogContent'>
+	
+</div>
+<table width='100%'>
+	<tr>
+		<td width=35%>&nbsp;</td>
+		<td align=right><div id='catalogPagination' class="pagination"></div></td>
+	</tr>
+</table>
+<script>
+
+$(document).ready(function(){
+	
+	var isFirstTime = 1;
+	
+	function showGrowl()
+	{
+		/*$('#growl').jGrowl("Retrieving page "+(myPageIndex+1)+'...', { 
+			speed: 500,
+			sticky: true
+		
+		});*/
+	}
+	function closeGrowl()
+	{
+		/*$('div.jGrowl-notification').children('div.close').trigger('click');*/
+	}
+	
+	// First Parameter: number of items
+	// Second Parameter: options object
+	var myPageIndex = 0;
+	
+	$("#catalogPagination").pagination(<?php echo $this->aData['totalCount'];?>, 
+	{items_per_page:<?php echo $this->aData['limit'];?>, callback:handlePaginationClick}
+	);
+	
+	function handlePaginationClick(new_page_index, pagination_container) 
+	{
+		myPageIndex = new_page_index;
+		myStart = (<?php echo $this->aData['limit'];?> * myPageIndex);
+		
+		if(true)
+		{
+			//$.get('<?echo KUTU_ROOT_URL;?>/api/catalog/getcatalogsinfolder/folderGuid/2/start/0/limit/20', '', showResult, "text");
+			if($('#tblCatalogPager-'+myPageIndex).length==0)
+			{
+				showGrowl();
+				$.getJSON('<?echo KUTU_ROOT_URL;?>/api/catalog/getcatalogsinfolder/folderGuid/<?php echo $this->aData['folderGuid'];?>/start/'+myStart+'/limit/<?php echo $this->aData['limit'];?>', '', testJson);
+			}
+			else
+				showCatalogContent();
+		}
+		return false;
+	}
+	
+	function testJson(res)
+	{
+		size = res.catalogs.length;
+		var tblRow = "<a name='a-"+myPageIndex+"' ></a>"+'<div class="tblCatalogPager" id="tblCatalogPager-'+myPageIndex+'">';
+		for(i=0;i<size;i++)
+		{
+			tblRow += 
+				
+				"<div class='span-1'><IMG src='<?php echo KUTU_ROOT_URL.'/common/images/fb/note.png' ?>' width=24 height=24 border=0 align=absmiddle /></div>"
+				+ "<div class='span-10'>"
+					+"<p><a href='<? echo KUTU_ROOT_URL;?>/dms/catalog/"+res.catalogs[i].guid+"/node/"+res.folderGuid+"'>"+res.catalogs[i].title+"</a>"
+					+"<br>"+res.catalogs[i].subTitle+"<br><strong>Price: USD 20.0</strong></p>"		
+				+"</div>"
+				+"<div class='span-4 last'>"
+					+"<form method='post' action='' class='jcart' id='jcart-"+res.catalogs[i].guid+"'>"
+						+"<fieldset style='border:0;'>"
+							+"<div style='display:none'>"
+							+"<input type='hidden' name='my_item_id' value='"+res.catalogs[i].guid+"' />"
+							+"<input type='hidden' name='my_item_name' value='"+res.catalogs[i].title+"' />"
+							+"<input type='hidden' name='my_item_price' value='20.00' />"
+							+"<input type='text' name='my_item_qty' value='1' size='3' />"
+							+"</div>"
+							+"<input type='submit' name='my_add_button' value='add to cart' class='button' />"
+						+"</fieldset>"
+					+"</form>"	
+				+"</div><hr>";
+				
+			
+				
+		}
+		tblRow += "</div>";
+		$(tblRow).appendTo("#catalogContent");
+		showCatalogContent();
+		closeGrowl();
+		for(i=0;i<size;i++)
+		{
+			$("#jcart-"+res.catalogs[i].guid).submit(function(){
+				
+				setupSubmit($(this));
+				// PREVENT DEFAULT FORM ACTION
+				return false;
+
+				});
+			}
+		
+		
+	}
+	function testJsonORI(res)
+	{
+		size = res.catalogs.length;
+		var tblRow = "<a name='a-"+myPageIndex+"' ></a>"+'<table width="100%" class="tblCatalogPager" id="tblCatalogPager-'+myPageIndex+'">';
+		for(i=0;i<size;i++)
+		{
+			tblRow += 
+				
+				"<tr valign=top>"
+				+"<td width=25><a href='<? echo KUTU_ROOT_URL;?>/dms/catalog/"+res.catalogs[i].guid+"/node/"+res.folderGuid+"'><IMG src='<?php echo KUTU_ROOT_URL.'/common/images/doc-s.png' ?>' border=0 align=absmiddle /></a></td>"
+				+"<td><a href='<? echo KUTU_ROOT_URL;?>/dms/catalog/"+res.catalogs[i].guid+"/node/"+res.folderGuid+"'>"+res.catalogs[i].title+"</a>"
+				+"<div>"+res.catalogs[i].subTitle+"</div>"
+				+"<div class='' style='padding-top:8px'></div>"
+				+"</td>"
+				+"</tr>";
+				
+		}
+		tblRow += "</table>";
+		$(tblRow).appendTo("#catalogContent");
+		showCatalogContent();
+		closeGrowl();
+		
+		
+	}
+	function showCatalogContent()
+	{
+		$('.tblCatalogPager').hide();
+		$('#tblCatalogPager-'+myPageIndex).show();
+		if(!isFirstTime)
+			//window.location.hash = '#a-'+myPageIndex;
+			Scroller.scroll();
+		isFirstTime = 0;
+	}
+	
+	
+});
+
+
+
+</script>

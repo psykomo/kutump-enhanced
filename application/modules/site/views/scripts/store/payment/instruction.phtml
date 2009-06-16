@@ -1,0 +1,39 @@
+<? foreach($this->rowset as $row) :?>
+<div class="span-13">
+<strong>
+Congratulation your order has been recorded to our database.<br />
+Your order has been recorded as order number : <font color="blue"><?=$row->orderId;?></font>.<br />
+To continue the process,  please follow these stpes :
+<ol>
+	<li>Please Print this page. </li>
+	<li>Please Go to the Bank and transfer fund as enlisted below. </li>
+	<li>Please Please confirm your transfer with one of these method :
+		<ul>
+			<li>by email to payment@lgsonline.com </li>
+			<li>by call to our customer service at (+62 21) 831 5005, 831 5025. </li>
+			<li>by fax to (+62 21) 831 5015, 831 5025. </li>
+		</ul>
+	</li>
+	<li>Please be patient and wait for your order.</li>
+	<li>Your order will be in your place about 1-3 day(s) after confirmation.</li>
+</ol>
+<br />
+</strong>
+</div>
+<hr />
+<input type="button" value="print this page" onclick="javascript:window.print();">
+<fieldset>
+<legend>To be printed</legend>
+Order Id   : <?=$row->orderId; ?><br />
+Invoice    : <?=$row->invoiceNumber; ?> <br />
+Tax Number : <?=$row->taxNumber; ?> <br />
+Company : <?=$row->taxCompany; ?><br />
+Address : <?=$row->taxAddress; ?><br />
+City : <?=$row->taxCity; ?> <br />
+ZIP Code : <?=$row->taxZip; ?> <br />
+Province : <?=$row->taxProvince; ?>(<?=$row->taxCountryId; ?>)<br />
+Telp : <?=$row->telephone; ?> <br />
+Date : <?=$row->datePurchased; ?> <br />
+Total Fund Must be transfered : <strong><?=$row->orderTotal; ?></strong> <br />
+</fieldset>
+<? endforeach; ?>

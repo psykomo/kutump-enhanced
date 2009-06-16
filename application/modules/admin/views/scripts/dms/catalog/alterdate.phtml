@@ -1,0 +1,37 @@
+<script>
+	var message = "<?echo $this->message;?>";
+	if(message!="")
+	{
+		alert (message);
+	}
+</script>
+<hr class="space">
+<h2 class="alt">Catalog Management: Alter Date</h2>
+<ul class="sf-menu">
+	<li class="current">
+		<a href="<?echo $this->urlReferer;?>">Back to Origin Page</a>
+	</li>	
+</ul>
+<div class="span-24">
+	<h3><?echo $this->catalogTitle;?></h3>
+	<br>
+	<form class="" id="frmAlterDate" method="post" action="">
+		<fieldset>
+			<legend>Alter Date</legend>
+			<p>
+				<label for="createdDate">Created Date</label>
+				<input type="text" id="createdDate" name="createdDate" value="<?echo $this->row->createdDate;?>">
+				<br>
+				<label for="modifiedDate">Modified Date</label>
+				<input type="text" id="modifiedDate" name="modifiedDate" value="<?echo $this->row->modifiedDate;?>">
+				<input type="hidden" id="guid" name="guid" value="<?echo $this->row->guid;?>">
+			</p>
+			<p>
+				<label for="Save">&nbsp;</label>
+				<input class="submit" type="submit" value="Save"/>
+			</p>
+		</fieldset>
+	</form>
+	
+	
+</div>

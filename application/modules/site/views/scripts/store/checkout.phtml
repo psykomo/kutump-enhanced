@@ -1,0 +1,117 @@
+<?
+	// INITIALIZE JCART AFTER SESSION START
+	$cart =& $_SESSION['jCart']; if(!is_object($cart)) $cart = new jCart();
+	// INCLUDE CONFIG SO THIS SCRIPT HAS ACCESS USER FIELD NAMES
+	include(KUTU_ROOT_DIR.'/lib/jcart/jcart-config.php');
+	// INCLUDE DEFAULT VALUES SINCE WE NEED TO PASS THE VALUE OF THE UPDATE BUTTON BACK TO jcart.php IF UPDATING AN ITEM QTY
+	// IF NO VALUE IS SET IN CONFIG, THERE HAS TO BE A DEFAULT VALUE SINCE SIMPLY CHECKING FOR THE VAR ITSELF FAILS
+	include(KUTU_ROOT_DIR.'/lib/jcart/jcart-defaults.php');
+?>
+<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jcart/jcart-javascript.php"></script>
+<h2 class="alt">View Cart / Checkout</h2>
+<hr>
+<div class="span-24">
+	<h3>Please verify your purchased items, total charges and proceed to secure payment.</h3>
+</div>
+<hr>
+<div class="span-24" style="background:">
+	<div class="span-10">
+		<h4>Product Name</h4>
+	</div>
+	<div class="span-6">
+		<h4>Price</h4>
+	</div>
+	<div class="span-4">
+		<h4>Quantity</h4>
+	</div>
+	<div class="span-4 last">
+		<h4>Total</h4>
+	</div>
+</div>
+<hr>
+<?
+	$jcartId = $this->cart->items;
+	$jcartProductInfo = $this->cart->iteminfo;
+	
+	$iCart = 0;
+	for($iCart=0;$iCart<count($jcartId);$iCart++)
+	{
+?>
+		<div class="span-24" style="background:">
+			<div class="span-10">
+				<strong><?echo $jcartProductInfo[$jcartId[$iCart]];?></strong>
+				<br>
+				<?echo Kutu_Core_Util::getCatalogAttributeValue($jcartId[$iCart],'fixedSubTitle');	?>
+				<br><a href="<?echo KUTU_ROOT_URL;?>/site/store_cart/removeitem/id/<?echo $jcartId[$iCart];?>">remove</a>
+				<br>&nbsp;
+			</div>
+			<div class="span-6">
+				USD 20.00
+			</div>
+			<div class="span-4">
+				1
+			</div>
+			<div class="span-4 last">
+				USD 20.00
+			</div>
+		</div>
+		<hr>
+<?}?>
+<div class="span-24" style="background:">
+	<div class="span-4 prepend-16">
+		<h4>Sub Total</h4>
+	</div>
+	<div class="span-4 last">
+		<h4>USD <?echo number_format(count($jcartId)*20.00,2);?></h4>
+	</div>
+</div>
+<hr>
+<form name="formTax" method="post">
+<div class="span-24">
+	<h3>TAX INFORMATION</h3>
+	<div class="span-12 prepend-4">
+		<div class="span-5">Tax Number</div>
+		<div class="span-7"><input name="taxNumber" value="<?=$this->userInfo->taxNumber?>"></div>
+	</div>	
+	<div class="span-12 prepend-4">
+		<div class="span-5">Company Name</div>
+		<div class="span-7"><input name="taxCompany" value="<?=$this->userInfo->taxCompany?>"></div>
+	</div>
+	<div class="span-12 prepend-4">
+		<div class="span-5">Address</div>
+		<div class="span-7"><textarea name="taxAddress"><?=$this->userInfo->taxAddress?></textarea></div>
+	</div>
+	<div class="span-12 prepend-4">
+		<div class="span-5">City</div>
+		<div class="span-7"><input name="taxCity" value="<?=$this->userInfo->taxCity?>"></div>
+	</div>
+	<div class="span-12 prepend-4">
+		<div class="span-5">Zip</div>
+		<div class="span-7"><input name="taxZip" value="<?=$this->userInfo->taxZip?>"></div>
+	</div>
+	<div class="span-12 prepend-4">
+		<div class="span-5">Province</div>
+		<div class="span-7"><input name="taxProvince" value="<?=$this->userInfo->taxProvince?>"></div>
+	</div>
+	<div class="span-12 prepend-4">
+		<div class="span-5">Country</div>
+		<div class="span-7"><input name="taxCountry" value="<?=$this->userInfo->taxCountryId?>"></div>
+	</div>
+</div>
+<script type="text/javascript" language="javascript">
+function setSubmitAction(newUrl)
+{
+      var frm = document.formTax;
+      frm.action =newUrl;            
+      frm.submit();
+      return true;
+}
+</script>
+<hr>
+<h3>Please click below logo to continue the payment with your preferred payment source</h3>
+<div class="span-5"><a href="#"><IMG src="<?echo KUTU_ROOT_URL;?>/common/modules/site/images/US_AU_btn.gif" onClick="setSubmitAction('<?echo KUTU_ROOT_URL;?>/site/store_payment/index/type/paypal');"/></a></div>
+<div class="span-5"><a href="#"><IMG src="<?echo KUTU_ROOT_URL;?>/common/modules/site/images/logo-2co.gif" /></a></div>
+<div class="span-2 prepend-1"><h3><a href="#" onClick="setSubmitAction('<?echo KUTU_ROOT_URL;?>/site/store_payment/index/type/postpaid');">Postpaid</a></h3></div>
+<div class="span-3"><h3><a href="#" onClick="setSubmitAction('<?echo KUTU_ROOT_URL;?>/site/store_payment/index/type/manual');">Bank Transfer</a></h3></div>
+<div class="span-7 last"><h3>Or <a href="<?echo KUTU_ROOT_URL;?>/dms">continue browsing our database</a></h3></div>
+</form>

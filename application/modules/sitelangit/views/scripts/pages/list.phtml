@@ -1,0 +1,105 @@
+<br>
+<?echo $this->action('breadcrumbs','pages_component','site',array('node'=>$this->currentNode));?>
+<h2 class="alt"><?echo $this->listTitle;?></h2>
+<hr>
+<div class="span-16 prepend-1 colborder">
+	
+	<?
+		if($this->showHeadline)
+		{
+			
+	?>
+			<h3><?echo Kutu_Core_Util::getCatalogAttributeValue($this->catalogGuid, 'fixedTitle')?></h3>
+			<h3><?echo Kutu_Core_Util::getCatalogAttributeValue($this->catalogGuid, 'fixedSubTitle')?></h3>
+			<h4 class="alt"><?echo $this->row->modifiedDate?></h4>
+			<?echo Kutu_Core_Util::getCatalogAttributeValue($this->catalogGuid, 'fixedContent')?>
+			<a href="<?echo KUTU_ROOT_URL;?>/pages/g/<?echo $this->currentNode;?>/heading/0">View All Articles in <?echo $this->listTitle;?></a>
+	<? }?>
+	<?
+		if(!$this->showHeadline)
+		{
+	?>
+	
+	<link rel="stylesheet" href="<?echo KUTU_ROOT_URL;?>/lib/jquery/pagination.css" />
+	<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.pagination.js"></script>
+	<script>
+
+	$(document).ready(function(){
+
+		var isFirstTime = 1;
+
+		// First Parameter: number of items
+		// Second Parameter: options object
+		var myPageIndex = 0;
+		var itemsPerPage = <?echo $this->itemsPerPage;?>;
+		var currentOffset = <?echo $this->offset;?>;
+		var limit = <?echo $this->limit;?>;
+		var currentNode = "<?echo $this->currentNode;?>";
+		var totalItems = <?echo $this->totalItems;?>;
+		var sort = "<?echo $this->sort;?>";
+
+
+		var tmpCurrentPageIndex = currentOffset/itemsPerPage;
+
+		$("#catalogPagination").pagination(totalItems, 
+		{items_per_page:itemsPerPage, callback:handlePaginationClick, current_page:tmpCurrentPageIndex}
+		);
+
+		function handlePaginationClick(new_page_index, pagination_container) 
+		{
+			if(!isFirstTime)
+			{
+				myPageIndex = new_page_index;
+				var nextOffset = (itemsPerPage * myPageIndex);
+
+				$("#sOffset").val(nextOffset);
+				$("#frmSearch").submit();
+
+				var url = "<?echo KUTU_ROOT_URL;?>/pages/g/"+currentNode+"/offset/"+nextOffset+"/limit/"+limit+"/sort/"+sort+"/heading/0";
+				window.location = url;
+			}
+			isFirstTime = 0;
+			return false;
+		}
+
+
+	});
+
+	</script>
+	<h3 class="alt">Number of Articles: <?php echo $this->hits->response->numFound;?> Record(s)</h3>
+	<hr class="space">
+	<form id="frmCatalogs" name="frmCatalogs">
+	<?php foreach ($this->hits->response->docs as $hit) { ?>
+		<div class='span-1'><IMG src='<?php echo KUTU_ROOT_URL.'/common/images/fb/note.png' ?>' width=24 height=24 border=0 align=absmiddle /></div>
+		<div class='span-14 last'>
+			<p>
+				<?php if($hit->profile == 'kutu_doc'){?>
+					<a href="<?php echo KUTU_ROOT_URL;?>/browser/downloadfile/guid/<?php echo $hit->id;?>"><div class="searchResultTitle">File: <?php try {echo $hit->title;} catch (Exception $e) {echo '';}?></div></a>
+				<?php } else { ?>
+						<a href="<? echo KUTU_ROOT_URL;?>/pages/g/<?php echo $hit->id;?>/node/<?echo $this->currentNode;?>"><?php try {echo $hit->title;} catch (Exception $e) {echo 'No-Title';}?></a>
+				<?php }?>
+				<?php try {echo (@$hit->subTitle)?'<br>'.@$hit->subTitle:'';} catch (Exception $e) {echo '';}?>
+				<br>
+				Last modified on: <?php try {echo @$hit->modifiedDate;} catch (Exception $e) {echo '';}?>
+			</p>
+		</div>
+		<hr>
+	<?php }; ?>
+	</form>
+	<div class="span-15 last">
+		<table width='100%'>
+			<tr>
+				<td width=35%>&nbsp;</td>
+				<td align=right><div id='catalogPagination' class="pagination"></div></td>
+			</tr>
+		</table>
+	</div>
+	<?php } ?>
+</div>
+<div class="span-6 last">
+	<?//echo $this->widget1->render();?>
+	<?
+		if($this->showHeadline)
+			echo $this->action('document','pages_component','site',array("g"=>$this->catalogGuid));
+	?>
+</div>

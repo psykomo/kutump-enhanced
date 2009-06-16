@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Sample Page</title>
+
+  <!-- Framework CSS -->
+	<link rel="stylesheet" href="<?echo KUTU_ROOT_URL;?>/common/styles/blueprint/screen.css" type="text/css" media="screen, projection">
+	<link rel="stylesheet" href="<?echo KUTU_ROOT_URL;?>/common/styles/blueprint/print.css" type="text/css" media="print">
+  <!--[if IE]><link rel="stylesheet" href="<?echo KUTU_ROOT_URL;?>/common/styles/blueprint/ie.css" type="text/css" media="screen, projection"><![endif]-->
+
+	
+	<!-- Import fancy-type plugin for the sample page. -->
+	<link rel="stylesheet" href="<?echo KUTU_ROOT_URL;?>/common/styles/blueprint/plugins/fancy-type/screen.css" type="text/css" media="screen, projection">
+
+	<!--[if IE]><script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/js/excanvas.js"></script><![endif]-->
+	<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.js"></script>
+	<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.roundcorners.2.js"></script>
+	<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/splitter.js"></script>
+	<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.cookie.js"></script>
+	<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.flickrmenu.js"></script>
+	<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.validate.js"></script>
+	
+	<script type="text/javascript">
+		$(document).ready(function(){
+			
+		});
+	</script>
+
+</head>
+
+<body>
+	<div class="container">
+		<hr class="space">
+		<div class="span-5 colborder">
+		  <h1>LGS Online</h1>
+		</div>
+
+		<div class="span-9 colborder">
+		  <h6>Get more from Us</h6>
+
+		  <p><a href="<?echo KUTU_ROOT_URL;?>/site">Home</a> | <a href="#">Lgs Legal Database</a> | <a href="#">News</a> | <a href="#">LGS Profile</a></p>
+		</div>
+		
+		<div class="span-8 last">
+		  <h6>Don't Have an Account Still?</h6>
+		  <p><a href="#">View Cart</a> | <a href="#">User: Login/Sign up</a> | <a href="#">Help</a> | <a href="#">Contact Us</a></p>
+		</div>  
+		
+		<?php echo $this->layout()->content; ?>
+		
+	</div>
+</body>
+</html>

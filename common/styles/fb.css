@@ -1,0 +1,123 @@
+body{background:#fff;font-family:"lucida grande",tahoma,verdana,arial,sans-serif;font-size:11px;}
+p{font-family:"lucida grande", tahoma, verdana, arial, sans-serif;font-size:11px;text-align:left;}
+hr {background:#d3d3d3;color:#ddd;clear:both;float:none;width:100%;height:.1em;margin:0 0 1.0em;border:none;}
+h2 {font-size:2em;margin-bottom:0.2em;}
+hr.darker {background:#000;color:#000;clear:both;float:none;width:100%;height:.2em;margin:0 0 0;border:none;}
+hr.logininfo {background:#ddd;color:#ddd;clear:both;float:none;width:100%;height:.1em;margin:3em 0 1.0em;border:none;}
+/*iframe { margin:0; padding:0; height:100%; }
+iframe { display:block; width:100%; border:none; }*/
+
+/* ------------------------------------------------------------------------------------
+HEADER NAVIGATION MENU				 */
+
+#headerNavigation a{
+	color:white;font-weight:bold;
+	text-decoration:none;
+	padding:0px 7px 0px 7px;
+}
+
+/* FLICKR MENU */
+
+ul, li{margin:0; border:0; list-style:none; padding:0;}
+ul{height:21px;}
+/*#menu { margin:0 auto; width:600px; margin-top:30px; border-bottom:dotted 1px #E5E5E5; }*/
+#menu { margin:0; width:100%; margin-top:5px; border-bottom:solid 1px #E5E5E5;}
+#menu a { color:#0066CC; text-decoration:none; }
+#menu a:hover { text-decoration:underline; }	
+#menu li { display:inline; position:relative; }
+#menu li span { position:relative; z-index:999; padding:4px 4px 4px 6px;  border-bottom:none; line-height:18px; }	
+/*#menu li span a { font-weight:bold; padding:0 6px 0px 2px;  }*/
+#menu li span a { font-weight:bold;}	
+#menu li span.over { padding:4px 3px 4px 5px;  border-top:solid 1px #E5E5E5; border-left:solid 1px #E5E5E5;  border-right:solid 1px #999999; border-bottom:solid 1px #fff;  }
+*+html #menu li span.over {  border-top:solid 2px #E5E5E5; padding-bottom:3px; } /* IE6 */
+#menu li span.over a { }
+#menu li span.over a:hover { text-decoration:none; }
+#menu li span.active { padding:4px 3px 4px 5px;  border-top:solid 1px #E5E5E5; border-left:solid 1px #E5E5E5;  border-right:solid 1px #999999; border-bottom:solid 1px #fff;  }
+*+html #menu li span.active {  border-top:solid 2px #E5E5E5; padding-bottom:3px; }
+#menu li span.active a { }
+#menu li span.active a:hover { text-decoration:none; }	
+#menu img.arrow { /*margin-left:4px;*/ cursor:pointer; }
+#menu div.sub_menu { z-index:999;display:none; position:absolute; left:0; top:0px; margin-top:18px; border-top:solid 1px #E5E5E5; border-left:solid 1px #E5E5E5; border-right:solid 1px #999999; border-bottom:solid 1px #999999; padding:4px; top:2px; width:160px; background:#FFFFFF; }
+* html #menu div.sub_menu { margin-top:23px; } /* IE6 */
+*+html #menu div.sub_menu { margin-top:23px; } /* IE7 */
+#menu div.sub_menu a:link, 
+#menu div.sub_menu a:visited, 
+#menu div.sub_menu a:hover{ display:block; font-size:11px; padding:4px;}	
+#menu a.item_line { border-top:solid 1px #E5E5E5; padding-top:6px !important; margin-top:3px; }
+
+/* END FLICKR MENU */
+
+/* Floating Box always on TOP
+http://roshanbh.com.np/examples/floating-message-jquery/ */
+#message_box { 
+       position: absolute; 
+       top: 0; left: 0; 
+       z-index: 10; 
+	   background:#ffc;
+	   padding:5px;
+       border:1px solid #CCCCCC;
+       text-align:center; 
+       font-weight:bold; 
+       width:50px;
+		height:20px;
+      }	
+
+/*slide menu*/
+#slideMenu.closed{
+	left:-300px;
+}
+ 
+#slideMenu{
+	position:fixed;
+	left:0;
+	top:20px;
+	width:300px;
+	height:510px;
+	border:5px solid #dddddd;
+	border-left:0px;
+	background-color:#FFFFFF;
+	z-index:20;
+}
+ 
+#slideMenu a.toggleBtn{
+	position:absolute;
+	right:0;
+	top:0;
+	outline:none;
+	display:block;
+	height:87px;
+	width:27px;
+	border-width:1px 1px 1px 0px;
+	margin:0;
+	padding:0 5px 0;
+	color:#000;
+	text-decoration:none;
+	font:12px/25px Verdana, Arial, Helvetica, sans-serif;
+	background:url(/kutump-enhanced/arrow.gif) no-repeat;
+	z-index:20;
+}
+ 
+#slideMenu a.toggleBtnHighlight{
+	position:absolute;
+	right:0;
+	top:0;
+	outline:none;
+	display:block;
+	height:87px;
+	width:27px;
+	border-width:1px 1px 1px 0px;
+	margin:0;
+	padding:0 5px 0;
+	color:#000;
+	text-decoration:none;
+	font:12px/25px Verdana, Arial, Helvetica, sans-serif;
+	background:url(/kutump-enhanced/arrow.gif) no-repeat 0px -88px;
+	z-index:20;
+}
+ 
+.slideMenuContent{
+	height:500px;
+	padding:5px;
+	z-index:20;
+	overflow: auto;
+}

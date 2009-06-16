@@ -1,0 +1,64 @@
+<h2 class="alt">Review Your Order and Confirm Payment</h2>
+<hr>
+<div class="span-24">
+	<h3 style="color:red">ALL SALES FINAL. NO REFUNDS OR MERCHANDISE CREDIT</h3>
+	<h3>Please verify your purchased items, total charges and proceed with the payment.</h3>
+</div>
+<hr>
+<div class="span-24" style="background:">
+	<div class="span-10">
+		<h4>Product Name</h4>
+	</div>
+	<div class="span-6">
+		<h4>Price</h4>
+	</div>
+	<div class="span-4">
+		<h4>Quantity</h4>
+	</div>
+	<div class="span-4 last">
+		<h4>Total</h4>
+	</div>
+</div>
+<hr>
+<?
+	$jcartId = $this->cart->items;
+	$jcartProductInfo = $this->cart->iteminfo;
+	
+	$iCart = 0;
+	for($iCart=0;$iCart<count($jcartId);$iCart++)
+	{
+?>
+		<div class="span-24" style="background:">
+			<div class="span-10">
+				<strong><?echo $jcartProductInfo[$jcartId[$iCart]];?></strong>
+				<br>
+				<?echo Kutu_Core_Util::getCatalogAttributeValue($jcartId[$iCart],'fixedSubTitle');	?>
+				<br>&nbsp;
+			</div>
+			<div class="span-6">
+				USD 20.00
+			</div>
+			<div class="span-4">
+				1
+			</div>
+			<div class="span-4 last">
+				USD 20.00
+			</div>
+		</div>
+		<hr>
+<?}?>
+<div class="span-24" style="background:">
+	<div class="span-4 prepend-16">
+		<h4>Sub Total</h4>
+	</div>
+	<div class="span-4 last">
+		<h4>USD <?echo number_format(count($jcartId)*20.00,2);?></h4>
+	</div>
+</div>
+<hr>
+<form method=get action="<?echo KUTU_ROOT_URL;?>/site/paypal/pay"> 
+	<input type=hidden name=PayerID value=<?echo $this->payerId;?>> 
+	<input type=hidden name=token value= <?echo $this->token;?>> 
+	<input type=text name=amount value= <?echo $this->amount;?>> 
+	<input type=submit name=METHOD value="Pay now with Paypal"> 
+</form> 

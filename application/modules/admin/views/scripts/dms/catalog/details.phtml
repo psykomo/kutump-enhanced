@@ -1,0 +1,129 @@
+<script>
+	$(function()
+		{
+			var popoup_profiles =
+			{
+
+				window800:
+				{
+					height:800,
+					width:800,
+					status:1
+				},
+
+				window200:
+				{
+					height:200,
+					width:200,
+					status:1,
+					resizable:0
+				},
+
+				windowCenter:
+				{
+					height:300,
+					width:400,
+					center:1
+				},
+
+				windowNotNew:
+				{
+					height:600,
+					width:970,
+					center:1,
+					createnew:0,
+					toolbar:0,
+					scrollbars:1
+				}
+
+			};
+			
+	   		$(".popupwindow").popupwindow(popoup_profiles);
+	   	});
+</script>
+<hr class="space">
+<h2 class="alt">Catalog Management: Details</h2>
+<hr>
+<div class="span-15 colborder">
+	<?echo $this->widget2->render();?>
+	<h2 class="alt"><?echo $this->catalogTitle;?></h2>
+	<p><strong>Price: <?echo $this->rowCatalog->price;?></strong></p>
+	<hr>
+  	<h3><span class="alt"><?echo $this->catalogSubTitle;?></span> </h3>
+	<p><?echo $this->widget1->render();?></p>
+	<hr class="space">
+	
+	<?if(true){?>
+	<h3>Sejarah <span class="alt"></span></h3>
+	<hr>
+	<?echo $this->widgetSejarah->render();?>
+	<h3>Dasar <span class="alt">Hukum</span></h3>
+	<hr>
+	<?echo $this->widgetDasarHukum->render();?>
+	<h3>Peraturan <span class="alt">Pelaksana</span></h3>
+	<hr>
+	<?echo $this->widgetPelaksana->render();?>
+	
+	
+	
+</div>
+<div class="span-8 last">
+	<h3>Manage <span class="alt">Catalog</span></h3>
+	<hr>
+	<a href="<? echo KUTU_ROOT_URL;?>/admin/dms_catalog/edit/guid/<?echo $this->catalogGuid;?>">Edit</a>
+	<div style="padding-top:10px"></div>
+	<a href="<? echo KUTU_ROOT_URL;?>/admin/dms_upload/new/relatedGuid/<?echo $this->catalogGuid;?>">Upload Document(s)</a>
+	<div style="padding-top:10px"></div>
+	<a href="<? echo KUTU_ROOT_URL;?>/admin/dms_relation/search/relatedGuid/<?echo $this->catalogGuid;?>" class="popupwindow" rel="windowNotNew">Add Relation(s)</a>
+	<div style="padding-top:10px"></div>
+	<a href="<? echo KUTU_ROOT_URL;?>/admin/dms_catalog/copytofolder/guid/<?echo $this->catalogGuid;?>">Copy to Folder(s)</a>
+	<div style="padding-top:10px"></div>
+	<a href="#" onclick="deleteCatalog('<?php echo $this->catalogGuid;?>');return false;">Delete</a>
+	<hr class="space"><hr class="space">
+	
+	<script type="text/javascript">
+	function deleteUploadedFile(guid)
+	{
+		//alert(itemGuid + ' ' + relatedGuid +' '+ relateAs);
+
+		if(confirm ('Are you sure to remove this?'))
+		{
+			window.location = "<?php echo KUTU_ROOT_URL;?>/admin/dms_catalog/delete/guid/"+guid;
+		}
+
+		return false;
+	}
+	function deleteCatalog(guid)
+	{
+		if(confirm ('Are you sure to delete this?'))
+		{
+			window.location = "<?php echo KUTU_ROOT_URL;?>/admin/dms_catalog/delete/guid/"+guid;
+		}
+
+		return false;
+	}
+	</script>
+	<h3>Downloadable<span class="alt"> File(s)</span></h3>
+	<hr>
+	<?php foreach ($this->rowsetRelatedItem as $row){?>
+		<div style="padding-top:5px"></div>
+		<a href="<?php echo KUTU_ROOT_URL;?>/admin/dms/download/guid/<?php echo $row->itemGuid;?>/parent/<?php echo $row->relatedGuid;?>"><?php echo $this->getCatalogTitle($row->itemGuid); ?> (<?php echo Kutu_Core_Util::getCatalogAttributeValue($row->itemGuid, 'docMimeType'); ?>)</a>
+		<?php if($this->isAllowed($this->catalogGuid, 'update','content')){?>
+		- <a href="#" onclick="deleteUploadedFile('<?php echo $row->itemGuid;?>');return false;">Delete</a>
+		<?php }?>
+		<div style="padding-top:5px"></div>
+	<?php } ?>
+	<hr class="space"><hr class="space">
+	<h3>Available <span class="alt">Translation</span></h3>
+	<hr>
+	<?echo $this->widgetTranslation->render();?>
+	<?}?>
+	<hr class="space"><hr class="space">
+	<h3>Related <span class="alt">Folders</span></h3>
+	<hr>
+	<?echo $this->widget4->render();?>
+	<hr class="space"><hr class="space">
+	<h3>Related <span class="alt">Items</span></h3>
+	<hr>
+	<?echo $this->widget3->render();?>
+</div>

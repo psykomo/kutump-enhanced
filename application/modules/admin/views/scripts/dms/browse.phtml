@@ -1,0 +1,205 @@
+<style type="text/css">
+<!--
+.demo{
+	
+	background: #C3D9FF;
+	background: #67a7e3;
+	}
+	#MySplitter {
+		border: 1px 0px 0px 0px solid #669;
+		border-style: solid;
+		border-color: #C3D9FF;
+		border-left-width: 0px;
+		border-right-width: 0px;
+		border-top-width: 0px;
+		border-bottom-width: 0px;
+		min-width: 300px;	/* Splitter can't be too thin ... */
+		min-height: 300px;	/* ... or too flat */
+		height: 100%;
+	}
+	#LeftPane {
+		/*background: #ddf;*/
+		width: 150px;
+		min-width: 100px;
+		max-width: 500px;
+		overflow: auto;		/* Scroll bars appear as needed */
+	}
+	#TopPane {				/* Top nested in right pane */
+		/*background: #ccf;*/
+		height: 100%;		 /*Initial height */
+	/*	min-height: 75px;	/* Minimum height */
+		overflow: auto;	
+	}
+	#BottomPane {			/* Bottom nested in right pane */
+		background: #eef;
+		min-height: 100px;
+		overflow: auto;
+	}
+
+	/* Splitbar styles; these are the default class names */
+
+	.vsplitbar {
+		width: 5px;
+		background: #67a7e3 url(img/vgrabber.gif) no-repeat center;
+			background: #e5e5e5 url(img/vgrabber.gif) no-repeat center;
+	}
+	.vsplitbar:hover, .vsplitbar.active {
+		background: #c66 url(img/vgrabber.gif) no-repeat center;
+		opacity: 0.7;
+		filter: alpha(opacity=70); /* IE */
+		background: #c99;
+	}
+	.hsplitbar {
+		height: 6px;
+		background: #669 url(img/hgrabber.gif) no-repeat center;
+	}
+	.hsplitbar.active, .hsplitbar:hover {
+		background: #c66 url(img/hgrabber.gif) no-repeat center;
+	}
+	
+
+// -->
+</style>
+<link rel="stylesheet" href="<?echo KUTU_ROOT_URL;?>/lib/jquery/myAccordion.css" type="text/css">
+<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/myAccordion.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	// Vertical splitter. Set min/max/starting sizes for the left pane.
+	$("#MySplitter").splitter({
+		splitVertical: true,
+		outline: true,
+		sizeLeft: true,
+		anchorToWindow: true,
+		resizeToWidth: true,
+		accessKey: "I",
+		cookie:"splitbar1"
+	});
+});
+</script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('#menu').flickrmenu();
+		
+		$("#myAccordion").myAccordion({
+			speed: "fast", // @param : low, medium, fast
+			defautContent: 0 // @param : number
+		});
+	});
+</script>
+<hr class="space">
+<h2 class="alt">Document Management</h2>
+<div class="span-24">
+  	<div id="menu" >
+		  <ul>
+			<li>
+		      <span class="head_menu">
+		        <a href="#">Select</a>
+		        <img src="<?echo KUTU_ROOT_URL;?>/common/images/arrow.png" width="18" height="15" align="top" class="arrow" />
+		      </span>
+		      <div class="sub_menu">
+		        <a href="#">None</a>
+		        <a href="#">All</a>
+		      </div>
+		    </li>
+		    <li>
+		      <span class="head_menu">
+		        <a href="<?echo KUTU_ROOT_URL;?>/admin/user/add">New</a>
+		      </span>
+		    </li>
+			<li>
+		      <span class="head_menu">
+		        <a href="javascript:void(0);" onclick="displayForm('frmUserPager');return true;">Edit</a>
+		      </span>
+		    </li>
+			<li>
+		      <span class="head_menu">
+		        <a href="javascript:void(0);" id="lkDeleteUser" name="lkDeleteUser">Delete</a>
+		      </span>
+		    </li>
+		    <li>
+		      <span class="head_menu">
+		        <a href="#">View</a>
+		        <img src="<?echo KUTU_ROOT_URL;?>/common/images/arrow.png" width="18" height="15" align="top" class="arrow" />
+		      </span>
+		      <div class="sub_menu">
+		        <a href="#">All</a>
+		        <a href="#">Active</a>
+		        <a href="#">Inactive</a>
+				<a href="#">Banned</a>
+		      </div>
+		    </li>
+			<li>
+		      <span class="head_menu">
+		        <a href="#">More</a>
+		        <img src="<?echo KUTU_ROOT_URL;?>/common/images/arrow.png" width="18" height="15" align="top" class="arrow" />
+		      </span>
+		      <div class="sub_menu">
+				<a href="javascript:void(0);" id="lkChangePassword" name="lkChangePassword">Change Password</a>
+		        <a href="javascript:void(0);" id="lkAssignGroup" name="lkAssignGroup">Assign Group(s)</a>
+		        <a href="#">Show Orders</a>
+				<a href="#">Delete Users</a>
+		      </div>
+		    </li>
+		  </ul>
+		</div>
+	<hr class="space">
+	<div id="MySplitter">
+
+	  <div id="LeftPane">
+					<!-- myAccordion -->
+					<div id="myAccordion">
+						<!-- Element -->
+						<div class="myAccordion-declencheur"><h2>Categories</h2></div>
+
+						<div class="myAccordion-content">
+					    		<p>A category tree will be made available here</p>
+								</div>
+						<!-- Element -->
+						<div class="myAccordion-declencheur"><h2>Favourites</h2></div>
+						<div class="myAccordion-content">
+					    		<p>L'ajout d'éléments à myAccordion se résume à un simple « copier-coller » de quelques lignes de HTML. myAccordion s'occupe de tout le reste !</p>
+
+							<p>La seule chose à respecter concerne le nom des classes CSS qui doit rester tel quel, ainsi que l'ordre des div ( Les déclencheurs précèdent leur contenu propre. Le tout, englobé dans un div portant un identifiant unique ).</p>
+						</div>
+						<!-- Element -->
+						<div class="myAccordion-declencheur"><h2>Liberté</h2></div>
+						<div class="myAccordion-content">
+					    		<p>L'élément contenu dans un déclencheur peut contenir n'importe quelle balise HTML. Dans cet exemple, des titres de niveau 1 ont été utilisés.</p>
+							<p>myAccordion est entièrement personnalisable via sa feuille de styles CSS.</p>
+
+						</div>
+					</div>
+					<!-- ! myAccordion -->
+
+
+	  </div> <!-- #LeftPane -->
+
+	  <div id="RightPane">
+
+		<div id="TopPane">
+			<div class="container">
+				<div class="span-18 last" style="background:#edeff4">
+					<div style="height:30px;padding-top:10px;padding-left:10px;font-weight:bold;">Folder Navigation</div>
+				
+				</div>
+			</div>
+			
+			<form id='frmPager'>
+			<div style="padding-left:10px;padding-right:10px;">
+			<?php echo $this->catalogPager;?>
+			</div>
+			</form>
+		</div>
+
+
+	  </div> <!-- #RightPane -->
+
+
+	</div> <!-- #MySplitter -->
+</div>
+
+
+
+
+
+

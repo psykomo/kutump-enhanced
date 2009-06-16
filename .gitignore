@@ -1,0 +1,6 @@
+/uploads
+/lib/Zend*
+/view-resources
+/data
+/application/config/*.ini
+/application/tmp

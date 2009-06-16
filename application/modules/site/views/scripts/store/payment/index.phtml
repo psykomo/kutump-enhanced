@@ -1,0 +1,21 @@
+<?if($this->type == 'postpaid'){?>
+<fieldset><legend>Postpaid</legend>
+<div class="span-23">
+	<div class="span-4">Total Postpaid Limit</div> 
+		<div class="span-4" align="right"><?=$this->limit;?></div>
+	<div class="span-4">Outstanding Postpaid Account</div>
+		<div class="span-4 last" align="right"><?=number_format($this->outstandingAmount,2);?></div><br />
+	<div class="span-4">Today's Total Transaction</div>
+		<div class="span-4" align="right"><?=number_format($this->grandTotal,2); ?></div>	
+	<div class="span-4">Remaining Limit</div>
+		<div class="span-4" align="right"><?=$this->netLimit; ?> </div>
+	<hr class="space">
+	<div class="span-18" align="center">
+	<input type="button" value= "back" onclick="javascript:history.back();" />
+	<input type="button" value="Pay(Postpaid)" onClick="parent.location.href='../../postpaid'" />
+	</div>
+</div>
+</fieldset>
+<?}else{?>
+
+<?}?>

@@ -1,0 +1,7 @@
+<h3>RELATED<span class="alt"> TOPICS</span></h3>
+<hr>
+<?php foreach ($this->rowsetFolder as $row){?>
+	<div style="padding-top:5px"></div>
+	<a href="<?php echo KUTU_ROOT_URL;?>/dms/<?php echo $row->guid;?>"><?php echo $row->title; ?></a>
+	<div style="padding-top:5px"></div>
+<?php } ?>

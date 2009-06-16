@@ -1,0 +1,45 @@
+<script>
+	var message = "<?echo $this->message;?>";
+	if(message != "")
+		alert(message);
+</script
+<hr class="space">
+<h2 class="alt">Document Upload Management: Upload New File</h2>
+<div id="menu" >
+	  <ul>
+		<li>
+	      <span class="head_menu">
+	        <a href="<?echo $this->urlReferer;?>">Back to Origin Page</a>
+	      </span>
+	    </li>
+	  </ul>
+	</div>
+<hr class="space">
+<form method="POST" id="frmUploadFile" name="frmUploadFile" ENCTYPE="multipart/form-data">
+	<p>
+		<label for="profileGuid">Profile</label>
+		Document
+		<input type='hidden' name='profileGuid' id='profileGuid' value='kutu_doc'>
+		<input type='hidden' name='relatedGuid' id='relatedGuid' value='<?echo $this->relatedGuid;?>'>
+	</p>
+	<p>
+		<label for="uploadedFile">Browse File</label>
+		<input type='file' size='60' name='uploadedFile' id='uploadedFile'>
+	</p>
+	<p>
+		<label for="fixedTitle">Title</label>
+		<textarea name="fixedTitle" id="fixedTitle" rows="1" cols="50"></textarea>
+	</p>
+	<p>
+		<label for="fixedDescription">Description</label>
+		<textarea name="fixedDescription" id="fixedDescription" rows="1" cols="50"></textarea>
+	</p>
+	<p>
+		<label for="fixedLanguage">Language</label>
+		<select name="fixedLanguage" id="fixedLanguage">
+					<option value="in" selected>Indonesia</option>
+					<option value="en">English</option>
+			</select>
+	</p>
+	<p><label>&nbsp;</label><br><input type="submit" value="Upload Now"></p>
+</form>

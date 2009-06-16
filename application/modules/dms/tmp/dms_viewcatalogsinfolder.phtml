@@ -1,0 +1,106 @@
+<link rel="stylesheet" href="<?echo KUTU_ROOT_URL;?>/lib/jquery/pagination.css" />
+<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.pagination.js"></script>
+View Catalogs
+<br>
+<?echo $this->url();?><br>
+<?echo 'Number of record(s): '.$this->aData['totalCount'];?>
+<div id='catalogContent'>
+	<table width="100%" class="tblCatalogPager" id='tblCatalogPager-0'>
+		<?php 
+			$numData = count($this->aData['catalogs']);
+			for($i=0; $i<$numData;$i++)
+		{?>
+		<tr valign="top">
+			<td width="25"><a href="<? echo KUTU_ROOT_URL;?>/dms/catalog/<?php echo $this->aData['catalogs'][$i]['guid'];?>/node/<? echo $this->aData['folderGuid'];?>" class=""><IMG src="<?php echo KUTU_ROOT_URL.'/common/images/doc-s.png' ?>" border="0" align="absmiddle" /></a></td>
+			<td>
+				<a href="<? echo KUTU_ROOT_URL;?>/dms/catalog/<?php echo $this->aData['catalogs'][$i]['guid'];?>/node/<? echo $this->aData['folderGuid'];?>" class="folderTitleLink"><?php echo $this->aData['catalogs'][$i]['title']; ?></a>
+				<div><?php echo $this->aData['catalogs'][$i]['subTitle']; ?></div>
+				<div class="" style="padding-top:8px"></div>
+			</td>
+		</tr>
+		<?php }; ?>
+	</table>
+</div>
+<table width='100%'>
+	<tr>
+		<td width=35%>&nbsp;</td>
+		<td align=right><div id='catalogPagination' class="pagination"></div></td>
+	</tr>
+</table>
+
+
+<div id='message'>message</div>
+<style type="text/css">
+	
+</style>
+<script>
+
+
+
+$(document).ready(function(){
+	
+	// First Parameter: number of items
+	// Second Parameter: options object
+	var myPageIndex = 0;
+	
+	$("#catalogPagination").pagination(<?php echo $this->aData['totalCount'];?>, {
+	items_per_page:<?php echo $this->aData['limit'];?>, 
+	callback:handlePaginationClick
+	});
+	
+	function handlePaginationClick(new_page_index, pagination_container) 
+	{
+		myPageIndex = new_page_index;
+		myStart = (<?php echo $this->aData['limit'];?> * myPageIndex);
+		//calcLimit = myLimit*myPageIndex
+		
+		if(new_page_index!=0)
+		{
+			//$.get('<?echo KUTU_ROOT_URL;?>/api/catalog/getcatalogsinfolder/folderGuid/2/start/0/limit/20', '', showResult, "text");
+			if($('#tblCatalogPager-'+myPageIndex).length==0)
+				$.getJSON('<?echo KUTU_ROOT_URL;?>/api/catalog/getcatalogsinfolder/folderGuid/<?php echo $this->aData['folderGuid'];?>/start/'+myStart+'/limit/<?php echo $this->aData['limit'];?>', '', testJson);
+			else
+				showCatalogContent();
+		}
+		else
+		{
+			showCatalogContent();
+		}
+		return false;
+	}
+	
+	function testJson(res)
+	{
+		size = res.catalogs.length;
+		var tblRow = '<table width="100%" class="tblCatalogPager" id="tblCatalogPager-'+myPageIndex+'">';
+		for(i=0;i<size;i++)
+		{
+			tblRow += 
+				
+				"<tr valign=top>"
+				+"<td width=25><a href='<? echo KUTU_ROOT_URL;?>/dms/catalog/"+res.catalogs[i].guid+"/node/"+res.folderGuid+"'><IMG src='<?php echo KUTU_ROOT_URL.'/common/images/doc-s.png' ?>' border=0 align=absmiddle /></a></td>"
+				+"<td><a href='<? echo KUTU_ROOT_URL;?>/dms/catalog/"+res.catalogs[i].guid+"/node/"+res.folderGuid+"'>"+res.catalogs[i].title+"</a>"
+				+"<div>"+res.catalogs[i].subTitle+"</div>"
+				+"<div class='' style='padding-top:8px'></div>"
+				+"</td>"
+				+"</tr>";
+				
+		}
+		tblRow += "</table>";
+		//alert(tblRow);
+		$(tblRow).appendTo("#catalogContent");
+		showCatalogContent();
+		
+		
+	}
+	function showCatalogContent()
+	{
+		$('.tblCatalogPager').hide();
+		$('#tblCatalogPager-'+myPageIndex).show();
+		//alert($('#aku3').length);
+	}
+});
+
+
+
+</script>

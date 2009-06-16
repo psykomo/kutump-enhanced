@@ -1,0 +1,116 @@
+<div id="main">	
+<p><?echo $this->action('breadcrumbs','pages_component','site',array('node'=>$this->currentNode));?>
+</p>
+<hr>
+
+	
+<div class="span-14">
+	
+	<?
+		if($this->showHeadline)
+		{
+			
+	?>
+			<h2><?echo Kutu_Core_Util::getCatalogAttributeValue($this->catalogGuid, 'fixedTitle')?></h2>
+			<p><?echo Kutu_Core_Util::getCatalogAttributeValue($this->catalogGuid, 'fixedSubTitle')?></p>
+			<p><?echo $this->row->modifiedDate?></p>
+			<p><?echo Kutu_Core_Util::getCatalogAttributeValue($this->catalogGuid, 'fixedDescription')?></p>
+			<?echo Kutu_Core_Util::getCatalogAttributeValue($this->catalogGuid, 'fixedContent')?>
+			
+			<p><a href="<?echo KUTU_ROOT_URL;?>/pages/g/<?echo $this->currentNode;?>/heading/0">View All Articles in <?echo $this->listTitle;?></a></p>
+			<?
+				echo $this->action('document','pages_component','site',array("g"=>$this->catalogGuid));
+			?>
+	<? }?>
+	<?
+		if(!$this->showHeadline)
+		{
+	?>
+	<!--<h2 class="alt"><?echo $this->listTitle;?></h2>-->
+	<link rel="stylesheet" href="<?echo KUTU_ROOT_URL;?>/lib/jquery/pagination.css" />
+	<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.pagination.js"></script>
+	<script>
+
+	$(document).ready(function(){
+
+		var isFirstTime = 1;
+
+		// First Parameter: number of items
+		// Second Parameter: options object
+		var myPageIndex = 0;
+		var itemsPerPage = <?echo $this->itemsPerPage;?>;
+		var currentOffset = <?echo $this->offset;?>;
+		var limit = <?echo $this->limit;?>;
+		var currentNode = "<?echo $this->currentNode;?>";
+		var totalItems = <?echo $this->totalItems;?>;
+		var sort = "<?echo $this->sort;?>";
+
+
+		var tmpCurrentPageIndex = currentOffset/itemsPerPage;
+
+		$("#catalogPagination").pagination(totalItems, 
+		{items_per_page:itemsPerPage, callback:handlePaginationClick, current_page:tmpCurrentPageIndex}
+		);
+
+		function handlePaginationClick(new_page_index, pagination_container) 
+		{
+			if(!isFirstTime)
+			{
+				myPageIndex = new_page_index;
+				var nextOffset = (itemsPerPage * myPageIndex);
+
+				$("#sOffset").val(nextOffset);
+				$("#frmSearch").submit();
+
+				var url = "<?echo KUTU_ROOT_URL;?>/pages/g/"+currentNode+"/offset/"+nextOffset+"/limit/"+limit+"/sort/"+sort+"/heading/0";
+				window.location = url;
+			}
+			isFirstTime = 0;
+			return false;
+		}
+
+
+	});
+
+	</script>
+	<h3 class="alt">Number of Articles: <?php echo $this->hits->response->numFound;?> Record(s)</h3>
+	<div style="padding-top:10px"></div>
+	<!--<form id="frmCatalogs" name="frmCatalogs" style="background:;">-->
+	<?php foreach ($this->hits->response->docs as $hit) { ?>
+		<div class='span-1'><IMG src='<?php echo KUTU_ROOT_URL.'/common/images/fb/note.png' ?>' width=24 height=24 border=0 align=absmiddle /></div>
+		<div class='span-12 last'>
+			<p>
+				<?php if($hit->profile == 'kutu_doc'){?>
+					<a href="<?php echo KUTU_ROOT_URL;?>/browser/downloadfile/guid/<?php echo $hit->id;?>"><div class="searchResultTitle">File: <?php try {echo $hit->title;} catch (Exception $e) {echo '';}?></div></a>
+				<?php } else { ?>
+						<a href="<? echo KUTU_ROOT_URL;?>/pages/g/<?php echo $hit->id;?>/node/<?echo $this->currentNode;?>"><?php try {echo $hit->title;} catch (Exception $e) {echo 'No-Title';}?></a>
+				<?php }?>
+				<?php try {echo (@$hit->subTitle)?'<br>'.@$hit->subTitle:'';} catch (Exception $e) {echo '';}?>
+				<br>
+				Last modified on: <?php try {echo @$hit->modifiedDate;} catch (Exception $e) {echo '';}?>
+			</p>
+		</div>
+		<hr>
+	<?php }; ?>
+	<!--</form>-->
+	<div class="span-14 last">
+		<div id='catalogPagination' class="pagination"></div>
+	</div>
+	<br>&nbsp;
+	<?php } ?>
+</div>
+</div><!-- end MAIN DIV -->
+<div class="span-6 last"></div>
+<div id="sidebar">
+	<ul class="sidemenu">	
+
+		<li><a href="/project-s-members/" title="Go to the Project's Members page" class="link"><strong>Project's Members</strong></a>
+
+
+		<li><a href="/contact-us/" title="Go to the Contact Us page" class="link"><strong>Contact Us</strong></a>
+
+
+	</ul>
+	<?//echo $this->widget1->render();?>
+	
+</div>

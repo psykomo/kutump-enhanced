@@ -1,0 +1,130 @@
+<style type="text/css">
+#myController span{
+/*color:#FFF;
+background:#000;*/
+margin-right:5px;
+cursor:pointer;
+padding:2px;
+}
+
+#jFlowSlide{
+border:0px solid #F00;
+padding-top:20px;
+}
+
+#myController span.jFlowSelected {
+background:#e7b700;
+color:#FFF;
+}
+
+
+.jFlowPrev, .jFlowNext{
+cursor:pointer;
+}
+
+#myController2 span{
+color:#FFF;
+background:#000;
+margin-right:10px;
+cursor:pointer;
+}
+
+#jFlowSlide2{
+border:10px solid #0F0;
+}
+
+#myController2 span.jFlowSelected2 {
+background:#0F0;
+}
+
+.jFlowPrev2, .jFlowNext2{
+cursor:pointer;
+}
+
+
+#myController3 span{
+color:#FFF;
+background:#000;
+margin-right:10px;
+cursor:pointer;
+}
+
+#jFlowSlide3{
+border:10px solid #00F;
+}
+
+#myController3 span.jFlowSelected3 {
+background:#00F;
+}
+
+.jFlowPrev3, .jFlowNext3{
+cursor:pointer;
+}
+
+</style>
+<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.flow.js"></script>
+<script language="javascript">
+$(document).ready(function(){
+
+	$("#myController").jFlow({
+		slides: "#mySlides",
+		controller: ".jFlowControl", // must be class, use . sign
+		slideWrapper : "#jFlowSlide", // must be id, use # sign
+		selectedWrapper: "jFlowSelected",  // just pure text, no sign
+		width: "100%",
+		height: "500px",
+		duration: 400
+		//prev: ".jFlowPrev", // must be class, use . sign
+		//next: ".jFlowNext" // must be class, use . sign
+	});
+	
+	$("#myController2").jFlow({
+		slides: "#mySlides2",
+		controller: ".jFlowControl2", // must be class, use . sign
+		slideWrapper : "#jFlowSlide2", // must be id, use # sign
+		selectedWrapper: "jFlowSelected2",  // just pure text, no sign
+		easing: "swing",
+		duration: 400,
+		height: "200px",
+		width: "99%",
+		prev: ".jFlowPrev2", // must be class, use . sign
+		next: ".jFlowNext2" // must be class, use . sign
+	});
+	
+	$("#myController3").jFlow({
+		slides: "#mySlides3",
+		controller: ".jFlowControl3", // must be class, use . sign
+		slideWrapper : "#jFlowSlide3", // must be id, use # sign
+		selectedWrapper: "jFlowSelected3",  // just pure text, no sign
+		easing: "swing",
+		duration: 400,
+		height: "200px",
+		width: "99%",
+		prev: ".jFlowPrev3", // must be class, use . sign
+		next: ".jFlowNext3" // must be class, use . sign
+	});
+
+});
+</script>
+<div id="myController">
+<span class="jFlowControl">CATALOG</span>
+<span class="jFlowControl">FILE(S)</span>
+<span class="jFlowControl">SEJARAH</span>
+<span class="jFlowControl">DASAR HUKUM</span>
+<span class="jFlowControl">PELAKSANA</span>
+<span class="jFlowControl">RELATED ITEMS</span>
+<span class="jFlowControl">TOPIC(S)</span>
+<span class="jFlowControl">TRANSLATION</span>
+</div>
+
+<div id="mySlides">
+	<div><?echo $this->widget1->render();?></div>
+	<div><?echo $this->action('document','dms_component','site',array('g'=>$this->catalogGuid));?></div>
+	<div><?echo $this->action('sejarah','dms_component','site',array('g'=>$this->catalogGuid));?></div>
+	<div><?echo $this->action('dasarhukum','dms_component','site',array('g'=>$this->catalogGuid));?></div>
+	<div><?echo $this->action('pelaksana','dms_component','site',array('g'=>$this->catalogGuid));?></div>
+	<div><?echo $this->action('others','dms_component','site',array('g'=>$this->catalogGuid));?></div>
+	<div><?echo $this->action('folders','dms_component','site',array('g'=>$this->catalogGuid));?></div>
+	<div><?echo $this->action('translations','dms_component','site',array('g'=>$this->catalogGuid));?></div>
+</div>
+<!--<span class="jFlowPrev">Prev</span> <span class="jFlowNext">Next</span>-->

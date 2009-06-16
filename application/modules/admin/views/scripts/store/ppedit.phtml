@@ -1,0 +1,85 @@
+<link rel="stylesheet" href="<?echo KUTU_ROOT_URL;?>/lib/jquery/pagination.css" />
+<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.pagination.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		//$('#menu').flickrmenu();
+        $('ul.sf-menu').superfish();
+    
+    var isFirstTime = 1;
+	
+	// First Parameter: number of items
+	// Second Parameter: options object
+	var myPageIndex = 1;
+	var itemsPerPage = <?echo $this->itemsPerPage;?>;
+	var currentOffset = <?echo $this->offset;?>;
+	var limit = <?echo $this->limit;?>;
+	var currentNode = "<?echo $this->currentNode;?>";
+	var totalItems = <?echo $this->totalItems;?>;
+	var sort = "<?echo $this->sort;?>";
+	
+	
+	var tmpCurrentPageIndex = currentOffset/itemsPerPage;
+	
+	$("#catalogPagination").pagination(totalItems, 
+	{items_per_page:itemsPerPage, callback:handlePaginationClick, current_page:tmpCurrentPageIndex}
+	);
+	
+	function handlePaginationClick(new_page_index, pagination_container) 
+	{
+		if(!isFirstTime)
+		{
+			myPageIndex = new_page_index;
+			var nextOffset = (itemsPerPage * myPageIndex);
+		
+			$("Offset").val(nextOffset);
+			$("#frmSearch").submit();
+			
+			var url = "<?echo KUTU_ROOT_URL;?>/admin/store/postpaid/Query/"+<?=$this->Query;?>+currentNode+"/offset/"+nextOffset+"/limit/"+limit+"/sort/"+sort+"/";
+			window.location = url;
+		}
+		isFirstTime = 0;
+		return false;
+	}
+
+	});
+    
+</script>
+<?=$this->render('header.phtml');?>
+<hr class="space">
+<form method="post">
+<?foreach($this->rowset as $row) : ?>
+<b>Editing user : <?=$row->userId;?> - <?=$row->FN;?> <?=$row->LN;?></b>
+<hr class="space">
+<div class="span-5">Tax Number </div>
+<div class="span-5"><input type="text" name="taxNumber" value="<?=$row->taxNumber; ?>"></div>
+<div class="span-5">Company</div>
+<div class="span-5"><input type="text" name="taxCompany" value="<?=$row->taxCompany; ?>"></div> 
+<hr class="space" />
+<div class="span-5">Address</div>
+<div class="span-5"><input type="text" name="taxAddress" value="<?=$row->taxAddress; ?>"></div> 
+<div class="span-5">City</div>
+<div class="span-5"><input type="text" name="taxCity" value="<?=$row->taxCity; ?>"></div> 
+<hr class="space" />
+<div class="span-5">ZIP</div><div class="span-5"><input type="text" name="taxZip" value="<?=$row->taxZip; ?>"></div>
+<div class="span-5">Province</div>
+<div class="span-5"><input type="text" name="taxProvince" value="<?=$row->taxProvince; ?>"></div> 
+<hr class="space" /> 
+<div class="span-5">Country ID</div>
+<div class="span-5"><input type="text" name="taxCountryId" value="<?=$row->taxCountryId; ?>"></div>
+<div class="span-5">Limit </div>
+<div class="span-5"><input type="text" name="creditLimit" value="<?=$row->creditLimit; ?>"></div>
+<hr class="space" /> 
+<div class="span-20">
+<input type="button" value="Back" onclick="javascript:history.back();">
+<input type="reset">
+<input type="submit" name="update" value="Update">
+
+</div>
+<?endforeach; ?>
+</form>
+<table width='100%'>
+	<tr>
+		<td width=35%>&nbsp;</td>
+		<td align=right><div id='catalogPagination' class="pagination"></div></td>
+	</tr>
+</table>

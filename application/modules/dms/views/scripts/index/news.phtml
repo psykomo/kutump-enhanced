@@ -1,0 +1,340 @@
+<table width="982" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
+  	<tr>
+    	<td width="984" align="left" valign="top">
+		<table width="982" border="0" cellspacing="0" cellpadding="0">
+  		<tr>
+    		<td width="984"><table width="982" border="0" cellspacing="0" cellpadding="0">
+      	<tr>
+        	<td width="350" align="left" valign="top" class="td_news"><?php ////echo $this->action('utama','widgets_content'); ?></td>
+        	<td width="334" align="left" valign="top" class="td_news1">
+        	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+          	<tr>
+            	<td  class="td_news2"><span class="kotakjudubesar">Berita Terbaru</span></td>
+          	</tr>
+          	<tr>
+            	<td class="td_news1">
+					<p class="buttons" id="handles8">
+						<?php //echo $this->action('terbaru','widgets_content'); ?>
+						<?
+							$modDir = Zend_Controller_Front::getInstance()->getModuleDirectory();
+							require_once($modDir.'/components/Terbaru.php');
+							$w2 = new Dms_Terbaru();
+							echo $w2->render();
+						?>
+					</p>
+				</td>
+          	</tr>
+          	<tr>
+          		<td  class="td_news2"><span class="kotakjudubesar">Isu Hangat</span></td>
+          	</tr>
+          	<tr>
+          		<td><p class="buttons"  id="handles8">
+					<?php //echo $this->action('isuhangat','widgets_content'); ?>
+					<?
+						require_once($modDir.'/components/Terbaru.php');
+						$w2 = new Dms_Terbaru('kutu_putusan',10);
+						echo $w2->render();
+					?>
+				</p>
+            	</td>
+          	</tr>
+        	</table>
+        	</td>
+        	<td width="10" align="left" valign="top">&nbsp;</td>
+        	<td width="280" align="left" valign="top"  class="td_peraturan">
+        	<table width="280" border="0" cellspacing="0" cellpadding="0">
+          	<tr>
+            	<td height="20" align="left" valign="middle" class="td_peraturan2"><span class="kotakjudubesar">Fokus</span></td>
+          	</tr>
+          	<tr>
+            	<td align="left" valign="top" class="td_kosong">
+					<?php //echo $this->action('fokus','widgets_content'); ?>
+					<?
+						require_once($modDir.'/components/Terbaru.php');
+						$w2 = new Dms_Terbaru('kutu_putusan',30);
+						echo $w2->render();
+					?>
+				</td>
+          	</tr>
+          	<tr>
+           		<td height="20" align="left" valign="middle" class="td_peraturan2"><span class="kotakjudubesar">Kolom</span></td>
+          	</tr>
+          	<tr>
+            	<td align="left" valign="top" class="td_kosong">
+					<?php //echo $this->action('kolom','widgets_content'); ?>
+					<?
+						require_once($modDir.'/components/Terbaru.php');
+						$w2 = new Dms_Terbaru('kutu_peraturan',30);
+						echo $w2->render();
+					?>
+				</td>
+          	</tr>
+          	<tr>
+          		<td height="20" align="left" valign="middle" class="td_peraturan2"><span class="kotakjudubesar">Tokoh</span></td>
+          	</tr>
+          	<tr>
+            	<td align="left" valign="top" class="td_kosong">
+					<?php //echo $this->action('tokoh','widgets_content'); ?>
+					<?
+						require_once($modDir.'/components/Terbaru.php');
+						$w2 = new Dms_Terbaru('kutu_putusan',100);
+						echo $w2->render();
+					?>
+				</td>
+          	</tr>
+			</table>
+			</td>
+      	</tr>
+		</table>
+		</td>
+  	</tr>
+  	<tr>
+    	<td width="984" height="14" background="<? echo KUTU_ROOT_URL;?>/view-resources/img/line_yellow.jpg"><img src="<? echo KUTU_ROOT_URL;?>/view-resources/img/line_yellow.jpg" width="10" height="14" /></td>
+  	</tr>
+  	<tr>
+    	<td width="984">
+    	<table width="982" border="0" cellspacing="0" cellpadding="0">
+	   	<tr>
+	    	<td width="694" height="80" align="left" valign="top" bgcolor="#000000">&nbsp;</td>
+	        <td width="10" height="80" align="left" valign="top">&nbsp;</td>
+	        <td width="280" height="80" align="left" valign="top" bgcolor="#000000">&nbsp;</td>
+	   	</tr>
+	    <tr>
+	    	<td height="5" colspan="3" align="left" valign="top"><img src="<? echo KUTU_ROOT_URL;?>/view-resources/img/putih10x10.jpg" width="9" height="9" /></td>
+	   	</tr>
+    	</table>
+    	</td>
+  	</tr>
+  	<tr>
+    	<td>
+    	<table width="982" border="0" cellspacing="0" cellpadding="0">
+      	<tr>
+        	<td width="220" align="left" valign="top" class="td_peraturan1">
+        	<table width="210" border="0" cellspacing="0" cellpadding="0">
+          	<tr>
+            	<td height="30" align="left" valign="top"><div class="kotakjudubesar">Pusat Data hukumonline</div></td>
+          	</tr>
+          	<tr>
+            	<td>
+            	<div id="kotakisi"><p>Hukumonline Legal Directory (HOLD) Online memuat koleksi data hukum elektronik terlengkap di Indonesia.</p></div>
+            	</td>
+          	</tr>
+          	<tr>
+            	<td height="20" valign="bottom"><a href="#" class="peraturan">Selengkapnya »</a></td>
+          	</tr>
+          	<tr>
+            	<td height="40" align="left" valign="bottom"><img src="<? echo KUTU_ROOT_URL;?>/view-resources/img/arrow02.jpg" width="9" height="9" /><a href="<?php echo KUTU_ROOT_URL;?>/app/hold/browser" class="peraturan"> Browse</a></td>
+          	</tr>
+          	<tr>
+            	<td height="20" align="left" valign="bottom"><img src="<? echo KUTU_ROOT_URL;?>/view-resources/img/arrow02.jpg" width="9" height="9" /><a href="#" class="peraturan"> Advance Search</a></span></td>
+          	</tr>
+          	<tr>
+            	<td height="20">&nbsp;</td>
+          	</tr>
+          	<tr>
+            	<td height="90" align="center" valign="middle"><a href="<?php echo KUTU_ROOT_URL;?>/app/servers/identity/account/signup" onmouseout="MM_swapImgRestore()" onmouseover="MM_swapImage('signup','','<? echo KUTU_ROOT_URL;?>/view-resources/img/signupnow_f2.jpg',1)"><img src="<? echo KUTU_ROOT_URL;?>/view-resources/img/signupnow.jpg" alt="Sign up Now !" name="signup" width="217" height="89" border="0" id="signup" /></a></td>
+          	</tr>
+        	</table>
+        	</td>
+        	<td width="454" align="left" valign="top" class="td_peraturan2">
+        	<div id="lilmenu">
+				<div class="hidup" title="terbaru"><span>Peraturan Terbaru</span></div>
+			    <div class="mati" title="pilihan"><span>Peraturan Pilihan</span></div>
+    		</div>
+    		<?php //echo $this->action('peraturan','widgets_content'); ?>
+			<?
+				require_once($modDir.'/components/Terbaru.php');
+				$w2 = new Dms_Terbaru('kutu_peraturan',300);
+				echo $w2->render();
+			?>
+            <div id="pilihan" class="tutup">
+            	<div id="peraturan">
+            		<span class="peraturanjudul">Peraturan Apa Lagi Nomor 323242343 Tahun 2032</span><br />
+            		<a href="#" class="link">DI LINGKUNGAN MAHKAMAN BADAN PERADILAN AGUNG DI LINGKUNGAN MAHKAMAN BADAN PERADILAN AGUNG  DATUNJANGAN KHUSUS KINERJA HAKIM DAN PEGAWAI NEGERI </a><img src="<? echo KUTU_ROOT_URL;?>/view-resources/img/b_panah.gif" width="13" height="10"/><br /><br />
+          		</div>
+            	<div id="peraturan">
+            		<span class="peraturanjudul">Peraturan Apa Lagi Nomor 323242343 Tahun 2032</span><br />
+            		<a href="#" class="link">DI LINGKUNGAN MAHKAMAN BADAN PERADILAN AGUNG DI LINGKUNGAN MAHKAMAN BADAN PERADILAN AGUNG  DATUNJANGAN KHUSUS KINERJA HAKIM DAN PEGAWAI NEGERI </a><img src="<? echo KUTU_ROOT_URL;?>/view-resources/img/b_panah.gif" width="13" height="10"/><br /><br />
+          		</div>
+            	<div id="peraturan">
+            		<span class="peraturanjudul">Peraturan Apa Lagi Nomor 323242343 Tahun 2032</span><br />
+            		<a href="#" class="link">DI LINGKUNGAN MAHKAMAN BADAN PERADILAN AGUNG DI LINGKUNGAN MAHKAMAN BADAN PERADILAN AGUNG  DATUNJANGAN KHUSUS KINERJA HAKIM DAN PEGAWAI NEGERI </a><img src="<? echo KUTU_ROOT_URL;?>/view-resources/img/b_panah.gif" width="13" height="10"/><br /><br />
+          		</div>
+            	<div id="peraturan">
+            		<span class="peraturanjudul">Peraturan Apa Lagi Nomor 323242343 Tahun 2032</span><br />
+            		<a href="#" class="link">DI LINGKUNGAN MAHKAMAN BADAN PERADILAN AGUNG DI LINGKUNGAN MAHKAMAN BADAN PERADILAN AGUNG  DATUNJANGAN KHUSUS KINERJA HAKIM DAN PEGAWAI NEGERI </a><img src="<? echo KUTU_ROOT_URL;?>/view-resources/img/b_panah.gif" width="13" height="10"/><br /><br />
+          		</div>
+            	<div id="peraturan">
+            		<span class="peraturanjudul">Peraturan Apa Lagi Nomor 323242343 Tahun 2032</span><br />
+            		<a href="#" class="link">DI LINGKUNGAN MAHKAMAN BADAN PERADILAN AGUNG DI LINGKUNGAN MAHKAMAN BADAN PERADILAN AGUNG  DATUNJANGAN KHUSUS KINERJA HAKIM DAN PEGAWAI NEGERI </a><img src="<? echo KUTU_ROOT_URL;?>/view-resources/img/b_panah.gif" width="13" height="10"/><br /><br />
+          		</div>
+          	</div>
+        	</td>
+        	<td width="10" align="left" valign="top">&nbsp;</td>
+        	<td width="280" align="center" valign="top" class="td_peraturan">
+        		<div width:280px;="width:280px;" height:="height:" 320px; margin-bottom:1em="margin-bottom:1em"">
+            		<!--<div id="dog1" class="tabcontent"> <a href="#"><img src="<? echo KUTU_ROOT_URL;?>/view-resources/img/promotion/img1.jpg" /></a></div>
+          			<div id="dog2" class="tabcontent"> <a href="#"><img src="<? echo KUTU_ROOT_URL;?>/view-resources/img/promotion/img2.jpg" /></a> </div>
+          			<div id="dog3" class="tabcontent"> <a href="#"><img src="<? echo KUTU_ROOT_URL;?>/view-resources/img/promotion/img1.jpg" /></a> </div>
+          			<div id="dog4" class="tabcontent"> <a href="#"><img src="<? echo KUTU_ROOT_URL;?>/view-resources/img/promotion/img3.jpg" /></a> </div>-->
+        		</div>
+            	<div id="pettabs" class="indentmenu">
+              	<ul>
+	                <li><a href="#" rel="dog1" class="selected">1</a></li>
+	                <li><a href="#" rel="dog2">2</a></li>
+	                <li><a href="#" rel="dog3">3</a></li>
+	                <li><a href="#" rel="dog4">4</a></li>
+              	</ul>
+              	<br style="clear: left" />
+            	</div>
+          		<!--<script type="text/javascript">
+					var mypets=new ddtabcontent("pettabs")
+					mypets.setpersist(true)
+					mypets.setselectedClassTarget("link")
+					mypets.init(5000)
+      			</script>-->
+        	</td>
+      	</tr>
+    	</table>
+    	</td>
+  	</tr>
+  	<tr>
+    	<td width="984"></td>
+  	</tr>
+  	<tr>
+    	<td width="984" height="14" background="<? echo KUTU_ROOT_URL;?>/view-resources/img/line_yellow.jpg"><img src="<? echo KUTU_ROOT_URL;?>/view-resources/img/line_yellow.jpg" width="10" height="14" /></td>
+  	</tr>
+  	<tr>
+    	<td width="984">
+    	<table width="982" border="0" cellspacing="0" cellpadding="0">
+      	<tr>
+        	<td width="491" height="80" align="left" valign="top" class="td_peraturan1">
+        	<table width="465" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+            	<td width="232">
+            	<div class="judulnaik">Klinik Hukum</div><hr>
+            	<div id="kotakisi">
+            		<img src="<? echo KUTU_ROOT_URL;?>/view-resources/img/foto.jpg" vspace="0" width="70" border="0" height="70" hspace="0"  align="left" class="image"/><span class="kotakjudul">Kerja 24 jam nostop!</span>
+                	<p>Tunangan saya(wanita) bekerja di sebuah perusahaan di jakarta, dengan jam kerja 08.00 wib - 17.00wib. terkadang pulang jam 19.00wib, tapi kemarin tgl 25 agustus, setelah lewat jam kerja normal, tunangan saya di minta kerja malam, jadi langsung kerja lagi dan sekitar jam 08.00(26 agustus) saya telepon ternyata masih belum pulang...<br />(mulyanta)<a href="#" class="linkbawah"> Selengkapnya</a></p>
+              	</div>
+              	</td>
+              	<td width="3">&nbsp;</td>
+              	<td width="232" align="left" valign="top">
+              	<div id="kotakisi">
+              		<img src="<? echo KUTU_ROOT_URL;?>/view-resources/img/foto.jpg" vspace="0" width="70" border="0" height="70" hspace="0"  align="left" class="image"/><span class="kotakjudul">Anggaran Dasar Perseroan Terbuka</span>
+                  	<p>Mohon penjelasan mengenai kedudukan Peraturan Ketua Bapepam LK terhadap UU PT. Selanjutnya, dalam hal Perseroan Terbuka, jika terdapat pengaturan yang berbeda mengenai suatu hal yang sama antara UU PT dengan Peraturan Ketua Bapepam LK (misalnya penetapan kuorum RUPS ketiga vide UU PT pasal 86 ayat (5) dan Peraturan bapepam LK...<br />(ririn febry) <a href="#" class="linkbawah"> Selengkapnya</a></p>
+              	</div>
+                </td>
+          	</tr>
+          	</table>
+          	</td>
+        	<td width="2" height="80"  valign="top">&nbsp;</td>
+        	<td width="491" height="80" align="left" valign="top" class="td_peraturan1">
+        	<table width="465" border="0" cellspacing="0" cellpadding="0">
+            <tr>
+            	<td width="232" align="left" valign="top">
+            	<div class="judulnaik">Resensi Buku</div><hr>
+            	<div id="kotakisi">
+            		<img src="<? echo KUTU_ROOT_URL;?>/view-resources/img/buku/buku1.jpg" vspace="0" width="210" border="0" height="100" hspace="0"  align="left" class="image"/><br /><span class="kotakjudul">Prof. Dr. Jagoan Neon S</span><br />
+                	<span class="kotakauthor">Nama Orang,SH</span><br />
+                  	<p>Hukumonline Legal Directory (HOLD) Online memuat koleksi data hukum elektronik terlengkap di Indonesia.<br /></p>
+              		<p><img src="<? echo KUTU_ROOT_URL;?>/view-resources/img/comment.jpg" width="13" height="9" /><a href="#" class="linkbawah"> 23 komentar </a> |<a href="#" class="linkbawah"> Selengkapnya </a> |<a href="#" class="linkbawah"> Index »</a></p>
+            	</div>
+            	</td>
+              	<td width="3">&nbsp;</td>
+              	<td width="232" align="left" valign="top">
+              	<div id="kotakisi">
+              		<img src="<? echo KUTU_ROOT_URL;?>/view-resources/img/foto.jpg" vspace="0" width="70" border="0" height="70" hspace="0"  align="left" class="image"/><span class="kotakjudul">Prof. Dr. Jagoan Neon S</span><br />
+                  	<p>Hukumonline Legal Directory (HOLD) Online memuat koleksi data hukum elektronik <a href="#" class="linkbawah"> Selengkapnya</a></p>
+              	</div><hr>
+              	<div id="kotakisi">
+              		<img src="<? echo KUTU_ROOT_URL;?>/view-resources/img/foto.jpg" vspace="0" width="70" border="0" height="70" hspace="0"  align="left" class="image"/><span class="kotakjudul">Prof. Dr. Jagoan Neon S</span><br />
+                  	<p>Hukumonline Legal Directory (HOLD) Online memuat koleksi data hukum elektronik <a href="#" class="linkbawah"> Selengkapnya</a></p>
+              	</div><hr>
+              	<div id="kotakisi">
+              		<img src="<? echo KUTU_ROOT_URL;?>/view-resources/img/foto.jpg" vspace="0" width="70" border="0" height="70" hspace="0"  align="left" class="image"/><span class="kotakjudul">Prof. Dr. Jagoan Neon S</span><br />
+                  	<p>Hukumonline Legal Directory (HOLD) Online memuat koleksi data hukum elektronik <a href="#" class="linkbawah"> Selengkapnya</a></p>
+              	</div>
+              	</td>
+         	</tr>
+          	</table>
+          	</td>
+      	</tr>
+      	<tr>
+        	<td height="5" colspan="7" align="left" valign="top"><img src="<? echo KUTU_ROOT_URL;?>/view-resources/img/putih10x10.jpg" width="9" height="9" /></td>
+      	</tr>
+    	</table>
+    	</td>
+  	</tr>
+  	<tr>
+    	<td width="984">
+    	<table width="982" border="0" cellspacing="0" cellpadding="0">
+      	<tr>
+        	<td width="244" height="80" align="left" valign="top" class="td_peraturan1">
+        	<div class="judulnaik">Info</div><hr>
+        	<?php //echo $this->action('info','widgets_content'); ?>
+				<?
+					require_once($modDir.'/components/Terbaru.php');
+					$w2 = new Dms_Terbaru('kutu_putusan',800);
+					echo $w2->render();
+				?>
+          	</td>
+        	<td width="3" height="80" align="left" valign="top">&nbsp;</td>
+        	<td width="244" height="80" align="left" valign="top" class="td_peraturan1">
+        	<div class="judulnaik">Jeda</div><hr>
+        	<?php //echo $this->action('jeda','widgets_content'); ?>
+				<?
+					require_once($modDir.'/components/Terbaru.php');
+					$w2 = new Dms_Terbaru('kutu_putusan',230);
+					echo $w2->render();
+				?>
+         	</td>
+        	<td width="2" height="80"  valign="top">&nbsp;</td>
+        	<td width="244" height="80" align="left" valign="top" class="td_peraturan1">
+        	<div class="judulnaik">Tajuk</div><hr>
+        	<?php  //echo $this->action('tajuk','widgets_content'); ?>
+				<?
+					require_once($modDir.'/components/Terbaru.php');
+					$w2 = new Dms_Terbaru('kutu_putusan',1200);
+					//echo $w2->render();
+				?>
+        	</td>
+        	<td width="3" height="80"  valign="top">&nbsp;</td>
+        	<td width="244" height="80" align="left" valign="top" class="td_peraturan1">
+        	<div class="judulnaik">Polling</div><hr>
+        	<?php //echo $this->action('polling','widgets_content'); ?>
+				<?
+					require_once($modDir.'/components/Terbaru.php');
+					$w2 = new Dms_Terbaru('kutu_putusan',1500);
+					//echo $w2->render();
+				?>
+            </td>
+      	</tr>
+      	<tr>
+        	<td height="5" colspan="7" align="left" valign="top"><img src="<? echo KUTU_ROOT_URL;?>/view-resources/img/putih10x10.jpg" width="9" height="9" /></td>
+      	</tr>
+    	</table>
+    	</td>
+  	</tr>
+   	<tr>
+    	<td width="984" height="14" background="view-resources/img/line_yellow.jpg"><img src="<? echo KUTU_ROOT_URL;?>/view-resources/img/line_yellow.jpg" width="10" height="14" /></td>
+  	</tr>
+  	<tr>
+    	<td width="984">
+    	<table width="982" border="0" cellspacing="0" cellpadding="0">
+      	<tr>
+        	<td width="244" height="80" align="left" valign="top" bgcolor="#000000">&nbsp;</td>
+	        <td width="3" height="80" align="left" valign="top">&nbsp;</td>
+	        <td width="244" height="80" align="left" valign="top" bgcolor="#000000">&nbsp;</td>
+	        <td width="2" height="80"  valign="top">&nbsp;</td>
+	        <td width="244" height="80" align="left" valign="top" bgcolor="#000000">&nbsp;</td>
+	        <td width="3" height="80"  valign="top">&nbsp;</td>
+	        <td width="244" height="80" align="left" valign="top" bgcolor="#000000">&nbsp;</td>
+      	</tr>
+      	<tr>
+        	<td height="5" colspan="7" align="left" valign="top"><img src="<? echo KUTU_ROOT_URL;?>/view-resources/img/putih10x10.jpg" width="9" height="9" /></td>
+     	</tr>
+    	</table>
+    	</td>
+  	</tr> 
+</table>

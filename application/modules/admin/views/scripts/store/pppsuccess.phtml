@@ -1,0 +1,6 @@
+<?=$this->render('header.phtml');?>
+<hr class="space">
+<?foreach($this->rowset as $row):?>
+Postpaid payment with order <b><?=$row->orderId;?></b> has been successfully changed.<hr class="space" /> Click here to go back to 
+
+<?endforeach;?>

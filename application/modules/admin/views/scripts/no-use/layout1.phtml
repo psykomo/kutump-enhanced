@@ -1,0 +1,49 @@
+<html dir="ltr" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<link rel="stylesheet" href="<?echo KUTU_ROOT_URL;?>/common/modules/admin/styles/base.css" type="text/css">
+
+<!--[if IE]><script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/js/excanvas.js"></script><![endif]-->
+<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.js"></script>
+<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.roundcorners.2.js"></script>
+<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/splitter.js"></script>
+<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.cookie.js"></script>
+<title>Admin Panel</title>
+</head>
+<body height="100%" style="margin:0px;">
+	<table width='100%' cellpadding="0" cellspacing="0" height="100%" >
+		<tr>
+			<td>
+				<div id="header">
+					<div id="gbar"><nobr><b class="gb1">Dashboard</b> 
+						<a href="<?echo KUTU_ROOT_URL;?>/admin/user/browse" class="gb1">User</a> 
+						<a href="http://images.google.co.id/images?hl=id&amp;q=css&amp;um=1&amp;ie=UTF-8&amp;sa=N&amp;tab=wi" onClick="gbar.qs(this)" class="gb1">Group</a> 
+						<a href="http://groups.google.co.id/groups?hl=id&amp;q=css&amp;um=1&amp;ie=UTF-8&amp;sa=N&amp;tab=wg" onClick="gbar.qs(this)" class="gb1">Membership</a> 
+						<a href="<?echo KUTU_ROOT_URL;?>/admin/dms/browse" class="gb1">DMS</a> 
+						<a href="http://blogsearch.google.co.id/blogsearch?hl=id&amp;q=css&amp;um=1&amp;ie=UTF-8&amp;sa=N&amp;tab=wb" onClick="gbar.qs(this)" class="gb1">Commerce</a> 
+						<a href="http://mail.google.com/mail/?um=1&amp;hl=id&amp;tab=wm" class="gb1">Access Control</a> 
+						<a href="http://www.google.co.id/intl/id/options/" onClick="this.blur();gbar.tg(event);return !1" aria-haspopup="true" class="gb3"><u>More</u> <small>▼</small></a>
+					</div>
+
+					<div class="gbh" style="left: 0pt;"></div><div class="gbh" style="right: 0pt;"></div>
+						<div id="gb"><nobr><a href="https://www.google.com/accounts/Login?continue=http://www.google.co.id/search%3Fhl%3Did%26q%3Dcss%26btnG%3DTelusuri%2Bdengan%2BGoogle%26meta%3D%26aq%3Df%26oq%3D&amp;hl=id">Masuk</a>
+						<nobr><b>ninjok@gmail.com</b> | <a href="https://www.google.com/accounts/ManageAccount">My Account</a> | <a href="http://www.google.com/accounts/Logout?continue=http://www.google.com/search%3Fq%3Djavascript%2Btree%2Bgrid%26hl%3Den%26client%3Dsafari%26rls%3Den-us%26start%3D10%26sa%3DN">Sign out</a>	
+							</nobr>
+						</div>
+						<form id="tsf" name="gs" method="get" action="/search"><table id="sft" class="ts" style="clear: both;"><tbody><tr valign="top"><td style="padding-right: 8px;"><h1><a id="logo" href="http://www.google.co.id/webhp?hl=id" title="Ke Beranda Google">Google<img src="<?echo KUTU_ROOT_URL;?>/common/modules/admin/images/nav_logo4.png" alt="" height="119" width="168"></a></h1></td><td id="sff" style="padding: 1px 0pt 7px; width: 100%;"><table class="ts" style="margin-top: 25px;"><tbody><tr><td nowrap="nowrap"><input name="hl" value="id" type="hidden"><input name="q" size="41" maxlength="2048" value="css" title="Telusuri" type="text"> <input name="btnG" value="Telusuri" type="submit"></td><td style="padding: 0pt 6px;" class="nobr xsm"><a href="http://www.google.co.id/advanced_search?q=css&amp;hl=id">Penelusuran Lanjutan</a><br><a href="http://www.google.co.id/preferences?q=css&amp;hl=id">Preferensi</a></td></tr></tbody></table> </td></tr></tbody></table></form>
+				</div>
+			</td>
+		</tr>
+		<tr valign="top">
+			<td height="100%" style="padding-left:10px;padding-right:10px">
+				<?php echo $this->layout()->content; ?>
+			</td>
+		</tr>
+	</table>
+	
+	
+	
+	
+</body>
+</html>

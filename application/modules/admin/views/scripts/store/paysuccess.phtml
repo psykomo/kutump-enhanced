@@ -1,0 +1,7 @@
+<?=$this->render('header.phtml');?>
+<hr class="space">
+<?foreach($this->rowset as $row):?>
+Postpaid payment with order <b><?=$row->orderId;?></b> has been successfully changed.<hr class="space" /> 
+Click <a href="<? echo $this->url(array('controller'=>'store', 'action'=> $this->ctrl, 'id'=>$row->orderId));?>">here</a> to go back to bank payment editing, or <a href="<? echo $this->url(array('controller'=>'store', 
+            'action'=>'trdetail', 'id'=>$row['orderId']));?>">here</a> to go yo transaction detail.
+<?endforeach;?>

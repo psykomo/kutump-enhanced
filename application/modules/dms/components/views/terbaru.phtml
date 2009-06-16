@@ -1,0 +1,13 @@
+<div class="terbaru_border">
+	<div class="terbaru_box">
+		<?php 
+		for($i=0; $i<$this->numberOfRows;$i++) { 
+			$short_content = nl2br(substr($this->data[$i][0],0,40));
+			$short_content = strlen($this->data[$i][0]) > 40 ? $short_content."..." : $short_content;
+		?>
+		<div class="terbaru_time_box"><?php echo $this->data[$i][1]; ?></div>
+		<div class="terbaru_text"><a href="<?php echo KUTU_ROOT_URL; ?>/app/dms/browser/detail/guid/<?php echo $this->data[$i][2]; ?>" class="terbaru"><?php echo $short_content; ?></a></div>
+		<div class="tanda_bawah"></div>
+		<?php } ?>
+	</div>
+</div>

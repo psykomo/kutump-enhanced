@@ -1,0 +1,19 @@
+<?=$this->render('header.phtml');?>
+Editing data with id number : <?=$this->id;?>
+<p>
+<form method="post">
+<?  foreach($this->rows as $row): ?>
+	    Key :<br />
+        <input type="text" name="key" value="<?=$row->settingKey;?>" size="70" /><br />
+        Value :<br />
+        <input type="text" name="value" value="<?=$row->settingValue;?>" size="70" /><br />
+        Notes : <br />
+        <textarea name="note" rows="20"><?=$row->note;?></textarea>
+        <br />
+        <input type="hidden" name="id" value="<?=$this->id;?>" />
+<? endforeach;?>
+    <input type="button" value= "back" onclick="document.location.href='<?=KUTU_ROOT_URL?>/admin/store/paymentsetting'" />
+    <input type="reset" value="reset" />
+    <input type="submit" name="save" value="save" />
+</form>
+</p>

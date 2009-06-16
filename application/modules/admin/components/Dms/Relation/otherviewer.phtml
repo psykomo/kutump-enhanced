@@ -1,0 +1,34 @@
+<?php $guid = $this->generateGuid();?>
+<div id="legalbasis-page">
+<table width="100%" cellpadding="0" cellspacing="0">
+	<tr>
+		<td>
+			<div style="padding:5px;">
+				<div id="<?php echo $guid;?>spinner" style="color:red; display:none;"><img src="<?php echo $this->getKutuRootUrl();?>/app/resources/images/wait-trans.gif" border="0"> Sending Request</div>
+				<?php foreach ($this->aData as $data){?>
+					<div style="padding-top:5px"></div>
+					<?if($data['node']==$this->catalogGuid) {?><strong>---></strong><?php } ?>
+					<a href="<?echo KUTU_ROOT_URL;?>/admin/dms_catalog/details/guid/<?php echo $data['node'];?>"><?php echo $data['title']; ?></a>
+					<?php if($this->isAllowed($this->catalogGuid, 'update','content')){?>
+					- <a href="javascript:;" onclick="<?php echo $guid;?>remove('<?php echo $data['nodeLeft'];?>', '<?php echo $data['nodeRight'];?>', 'RELATED_ITEM');return false;">Remove</a>
+					<br><?php echo $data['subTitle']; ?>
+					<br><strong>Catatan: </strong><?php echo $data['description']; ?>
+					<?php }?>
+					<div style="padding-top:5px"></div>
+				<?php }?>
+				<div style="padding-bottom:5px"></div>
+			</div>
+		</td>
+	</tr>
+</table>
+</div>
+<script type="text/javascript">
+function <?php echo $guid;?>remove(itemGuid, relatedGuid, relateAs)
+{
+	if(confirm ('Are you sure to remove this?'))
+	{
+		window.location = "<?echo KUTU_ROOT_URL;?>/admin/dms_relation/remove/guid/"+itemGuid+"/relatedGuid/"+relatedGuid+"/relateAs/"+relateAs;
+		
+	}
+}
+</script>

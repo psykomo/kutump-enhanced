@@ -1,0 +1,13 @@
+<script type="text/javascript" language="JavaScript" src="<?php echo KUTU_ROOT_URL; ?>/lib/datepicker/datetimepicker.js"></script>
+  <script language="JavaScript">
+	<!--
+		if (document.images)
+		{
+		calimg= new Image(16,16); 
+		calimg.src="<?php echo KUTU_ROOT_URL;?>/mix_lib/extjs/resources/images/default/custom/img.gif"; 
+		}
+	//-->
+</script>
+
+<!--<input type="Text" id="<?php echo $this->name;?>" maxlength="25" size="25" name="<?php echo $this->name;?>" value="<?php echo $this->value;?>"><a href="javascript:NewCal('<?php echo $this->name;?>','yyyymmdd',true,24,'dropdown',true)"><img src="<?php echo KUTU_ROOT_URL;?>/mix_lib/extjs/resources/images/default/custom/img.gif" width="16" height="16" border="0" alt="Pick a date"></a>-->
+<input type="Text" id="<?php echo $this->name;?>" maxlength="25" size="25" name="<?php echo $this->name;?>" value="<?php echo $this->value;?>"><a href="javascript:NewCal('<?php echo $this->name;?>','yyyymmdd',true,24)"><img src="<?php echo KUTU_ROOT_URL;?>/mix_lib/extjs/resources/images/default/custom/img.gif" width="16" height="16" border="0" alt="Pick a date"></a>

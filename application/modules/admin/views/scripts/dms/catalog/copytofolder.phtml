@@ -1,0 +1,82 @@
+<!--<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.js"></script>-->
+<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.selectboxes.js"></script>
+<link rel="stylesheet" type="text/css" href="<?echo KUTU_ROOT_URL;?>/lib/jquery/jstree/tree_component.css" />
+
+<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jstree/_lib/css.js"></script>
+
+<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jstree/tree_component.js"></script>
+<style type="text/css">
+<!--
+// -->
+</style>
+<script type="text/javascript">
+$(document).ready(function() {
+	//$('ul.sf-menu').superfish();
+	$("#demo2").tree({
+	      data  : {
+	        type  : "json", // or "xml_nested" or "xml_nested"
+	        url   : "<?echo KUTU_ROOT_URL;?>/admin/dms_folder/getchildreninjson",
+	        async : true,
+	        async_data : function (NODE) { return { id : $(NODE).attr("id") || 0, my_param : "my_value" } }
+	      },
+		callback    : {
+
+					onselect    : function(NODE,TREE_OBJ) { 
+								//alert(TREE_OBJ.selected.text());
+								$("#targetNodeTitle").val(TREE_OBJ.selected.text());
+								$("#targetNode").val(TREE_OBJ.selected.attr("id"));
+						}
+
+				},
+			cookies : { prefix : "treeCategories", opts : { path : '/' }}
+	    });
+	
+	var currentNode = "<?echo $this->backToNode;?>";
+	
+	var message = "<?echo $this->message;?>";
+	if(message!="")
+	{
+		alert (message);
+	}
+
+});
+</script>
+<hr class="space">
+<h2 class="alt">Catalog Management: Copy to Folder</h2>
+<ul class="sf-menu">
+	<li class="current">
+		<a href="<?echo $this->urlReferer;?>">Back to Origin Page</a>
+	</li>	
+</ul>
+<div class="span-12 colborder">
+	<hr class="space">
+	You will COPY the following CATALOG:
+	<br>
+	<strong><?echo $this->catalogTitle;?></strong>
+	<br>&nbsp;<br>To:
+	<br>
+	<form class="" id="frmCopyToFolder" method="post" action="">
+		<fieldset>
+			<legend>Selected Target Folder</legend>
+			<p>
+				<label for="targetNode">Target Folder</label>
+				<input type="text" id="targetNodeTitle" name="targetNodeTitle" value="">
+				<input type="hidden" id="targetNode" name="targetNode" value="">
+				<input type="hidden" id="guid" name="guid" value="<?echo $this->guid;?>">
+			</p>
+			<p>
+				<label for="Save">&nbsp;</label>
+				<input class="submit" type="submit" value="Save"/>
+			</p>
+		</fieldset>
+	</form>
+</div>
+<div class="span-11 last">
+	<h3>Choose Folders</h3>
+	<div id="demo2" class="demo"></div>
+</div>
+<div class="span-24">
+	
+	
+	
+</div>

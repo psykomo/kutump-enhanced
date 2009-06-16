@@ -1,0 +1,33 @@
+1. add and update deposit/fund
+2. create profile lgs_memoranda DONE
+3. create profile lgs_boilerplate
+4. create profile book
+
+5. implement DELETE USER
+6. implement dedicated interface for BULK UPDATE PRICE
+7. implement subscribe newsletter (must add new field in KutuUser: isNewsletter. Indicating that user subscribe or not subscribe to a newsletter)
+8. implement subscribe to BB Web Signals (must add new field in KutuUser).
+9. implement error page for any error. For example: if a controller generate uncaught exception. Page not found, catalog not found, etc.
+
+10. Do research on using proper character set (UTF-8 versus latin 1).
+11. implement interface for edit uploaded document.
+
+12a. add in SOLR config support for profile legal_memoranda -- ternyata ndak perlu -- DONE
+12.b. Add new profile legal_memoranda in database DONE
+
+13. Must check before someone does click add to cart. Because, ternyata, ada Catalog sudah ada harganya, tapi FILE yang didonlotnya tidak available atau belum diupload. Jika ditemukan masalah ini, maka aplikasi will cetak notifikasi "File not ready to be purchased."
+
+14. Extract 1-3 pages from PDF file for sample that can be viewed and downloaded by users. DONE ONLY EXTRACT 1 PAGE.
+
+
+
+INSTALLATION NOTES:
+
+1. Make sure you have installed PDFTOTEXT and ANTIWORD
+2. Set Upload Max Size as big at it can
+3. set max execution time to at least 5 hours (for indexing purpose)
+4. set PHP SCRIPT Allocated Memory to 256MB or more
+5. set PREFIX in app/config/config.ini
+6. mod_rewrite must be installed and activated
+7. check for mod_deflate for GZIP-ing content
+8. enable APC

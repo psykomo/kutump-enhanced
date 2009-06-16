@@ -1,0 +1,10 @@
+<?if(count($this->rowsetMenu)>0) {?>
+<ul class="sf-menu">
+	<?foreach($this->rowsetMenu as $row) {?>
+		<li>
+			<a href="<?echo KUTU_ROOT_URL;?>/pages/g/<?echo $row->guid;?>"><?echo $row->title;?></a>
+			<?echo $this->action('getmenuchildren','component','site',array('node'=>$row->guid))?>
+		</li>
+	<?}?>
+</ul>
+<?}?>

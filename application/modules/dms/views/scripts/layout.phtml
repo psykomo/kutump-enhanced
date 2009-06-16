@@ -1,0 +1,56 @@
+<?php
+/**
+ * @package kutump
+ * @copyright 2008-2009 hukumonline.com
+ * @author Nihki Prihadi <nihki@hukumonline.com>
+ *
+ * $Id: layout.phtml 2009-02-04 14:58: $
+ */
+?>
+
+<html>
+<head>
+	<title>Hukumonline.com</title>
+	<link rel="shortcut icon" href="<?php echo KUTU_ROOT_URL; ?>/view-resources/ico/hole_small.ico">
+	<link rel="stylesheet" href="<?echo KUTU_ROOT_URL;?>/view-resources/css/styles.css" />
+	<link href="<?php echo KUTU_ROOT_URL; ?>/mix_lib/min/g=front-css" type="text/css" rel="stylesheet" />
+	<!--<script src="<?php //echo $this->getKutuRootUrl(); ?>/mix_lib/min/g=front" type="text/javascript"></script>-->
+	<!--<?php //echo $this->render('_script.phtml'); ?>-->
+	
+	<!--[if IE]><script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/js/excanvas.js"></script><![endif]-->
+	<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.js"></script>
+	<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.roundcorners.js"></script>
+	<link rel="stylesheet" href="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.jgrowl.css" />
+	<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.jgrowl.js"></script>
+</head>
+<body>
+<div id="growl" class="top-right"></div>
+<table width="982" border="0" align="center" cellpadding="0" cellspacing="0" bgcolor="#FFFFFF">
+<tr>
+   	<td><!-- header -->
+		<?php
+			$modDir = Zend_Controller_Front::getInstance()->getModuleDirectory();
+			require_once($modDir.'/components/Header.php');
+			$w = new Dms_Header();
+			echo $w->render();
+		
+		?>
+	</td>
+</tr>
+<tr>
+	<td><!-- content --><?php echo $this->layout()->content; ?></td>
+</tr>
+<tr>
+	<td><!-- nav -->
+		<?php
+			$modDir = Zend_Controller_Front::getInstance()->getModuleDirectory();
+			require_once($modDir.'/components/Footer.php');
+			$w = new Dms_Footer();
+			echo $w->render();
+		
+		?>
+	</td>
+</tr>
+</table>
+</body>
+</html>

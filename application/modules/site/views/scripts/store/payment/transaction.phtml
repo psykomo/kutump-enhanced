@@ -1,0 +1,95 @@
+<h2 class="alt">Transaction History</h2>
+<hr>
+<div class="span-10">
+	<a href="<? echo KUTU_ROOT_URL;?>/site/myaccount">My Account</a> || 
+	<!-- <input type="button" value= "My Account" onclick="javascript:history.back();" /> -->
+	<a href="<? echo KUTU_ROOT_URL;?>/site/store_payment/list">Order History</a> || 
+	<a href="<? echo KUTU_ROOT_URL;?>/site/store_payment/billing">Edit Billing Info</a> || 
+	<a href="<? echo KUTU_ROOT_URL;?>/site/store_payment/document">Documents</a>
+</div>
+<div class="span-14 last" align="right">
+<form id="frmSearch" name="frmSearch" method="GET" action="<?=KUTU_ROOT_URL;?>/site/store_payment/search">
+	<input id="sQuery" name="sQuery" size=30 value='<?echo $this->sQuery;?>'> 
+	<input type="hidden" id="sLimit" name="sLimit" value="10">
+	<input type="hidden" id="sOffset" name="sOffset" value="<?echo $this->sOffset;?>">
+	<input type="submit" id="btnGoSearch" value="Search">
+</form>
+</div>
+<link rel="stylesheet" href="<?echo KUTU_ROOT_URL;?>/lib/jquery/pagination.css" />
+<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.pagination.js"></script>
+<script>
+$(document).ready(function(){
+	
+	var isFirstTime = 1;
+	
+	// First Parameter: number of items
+	// Second Parameter: options object
+	var myPageIndex = 0;
+	var itemsPerPage = <?echo $this->itemsPerPage;?>;
+	var currentOffset = <?echo $this->offset;?>;
+	var limit = <?echo $this->limit;?>;
+	var currentNode = "<?echo $this->currentNode;?>";
+	var totalItems = <?echo $this->numCount;?>;
+	var sort = "<?echo $this->sort;?>";
+	
+	
+	var tmpCurrentPageIndex = currentOffset/itemsPerPage;
+	
+	$("#catalogPagination").pagination(totalItems, 
+	{items_per_page:itemsPerPage, callback:handlePaginationClick, current_page:tmpCurrentPageIndex}
+	);
+	
+	function handlePaginationClick(new_page_index, pagination_container) 
+	{
+		if(!isFirstTime)
+		{
+			myPageIndex = new_page_index;
+			var nextOffset = (itemsPerPage * myPageIndex);
+		
+			$("#sOffset").val(nextOffset);
+			//$("#frmSearch").submit();
+			
+			var url = "<?echo KUTU_ROOT_URL;?>/site/store_payment/transaction"+currentNode+"/offset/"+nextOffset+"/limit/"+limit+"/sort/"+sort+"/";
+			window.location = url;
+		}
+		isFirstTime = 0;
+		return false;
+	}
+	
+	
+});
+</script>
+<b>Data number <?=($this->offset+1>$this->numCount)?$this->numCount:$this->offset+1; ?> to <?=($this->offset+$this->limit>$this->numCount)?$this->numCount:$this->offset+$this->limit>$this->numCount; ?> from <?=$this->numCount;?> data(s)</b>
+<hr>
+    <div class="span-1">No&nbsp;</div>
+    <div class="span-3">Invoice&nbsp;</div>
+    <div class="span-4">date&nbsp;</div>
+    <div class="span-4">Payment Date&nbsp;</div>
+    <div class="span-3">Total Document&nbsp;</div>
+    <div class="span-3">Total Amount&nbsp;</div>
+    <div class="span-3">Method&nbsp;</div>
+    <div class="span-3 last">Status&nbsp;</div>
+<hr />
+<? $i = $this->offset + 1; ?>
+<? if(!empty($_POST['searchid'])):?>
+    <?=header('Location: '.$this->url(array('controller'=>'store_payment', 
+            'action'=>'detail', 'id'=>$_POST['searchid'])));?>
+<? endif; ?>
+<? foreach($this->listOrder as $value): ?>
+    <div class="span-1"><a href="<? echo $this->url(array('controller'=>'store_payment', 
+        'action'=>'trdetail', 'id'=>$value['orderId']));?>"><?=$i;?></a>&nbsp;</div>
+    <div class="span-3"><?=$value['invoiceNumber']; ?>&nbsp;</div>
+    <div class="span-4"><?=$value['datePurchased']; ?>&nbsp;</div>
+    <div class="span-4"><?=$value['dateOrderFinished']; ?>&nbsp;</div>
+    <div class="span-3"><?=$value['orderTotal']; ?>&nbsp;</div>
+    <div class="span-3"><?=$value['countTotal']; ?>&nbsp;</div>
+    <div class="span-3"><?=$value['paymentMethod']; ?>&nbsp;</div>
+    <div class="span-3 last"><?=$value['orderStatus']; ?>&nbsp;</div>
+    <hr />
+<? $i++; endforeach;  ?>
+<table width='100%'>
+	<tr>
+		<td width=35%>&nbsp;</td>
+		<td align=right><div id='catalogPagination' class="pagination">&nbsp;</div></td>
+	</tr>
+</table>

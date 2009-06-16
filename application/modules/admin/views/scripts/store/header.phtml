@@ -1,0 +1,84 @@
+<link rel="stylesheet" href="<?echo KUTU_ROOT_URL;?>/lib/jquery/pagination.css" />
+<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.pagination.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		//$('#menu').flickrmenu();
+        $('ul.sf-menu').superfish();
+
+    
+</script>
+<hr class="space">
+<h2 class="alt">Store Management</h2>
+<ul class="sf-menu">
+	<li class="current">
+		<a href="<?echo KUTU_ROOT_URL;?>/admin/store">Dasboard</a>
+	</li>
+	<li>
+		<a href="#">Search</a>
+	</li>
+	<li>
+		<a href="#">Orders</a>
+		<ul>
+			<li>
+				<a href="#">Show All</a>
+				<ul>
+					<li><a href="<? echo $this->url(array('action'=>'paymentsetting'));?>">Payment Setting</a></li>
+					<li><a href="<? echo $this->url(array('action'=>'order'));?>">Orders</a></li>
+					<li><a href="#">short</a></li>
+					<li><a href="#">short</a></li>
+					<li><a href="#">short</a></li>
+				</ul>
+			</li>
+			<li>
+				<a href="#">menu item</a>
+				<ul>
+					<li><a href="#">menu item</a></li>
+					<li><a href="#">menu item</a></li>
+					<li><a href="#">menu item</a></li>
+					<li><a href="#">menu item</a></li>
+					<li><a href="#">menu item</a></li>
+				</ul>
+			</li>
+			<li>
+				<a href="#">menu item</a>
+				<ul>
+					<li><a href="#">menu item</a></li>
+					<li><a href="#">menu item</a></li>
+					<li><a href="#">menu item</a></li>
+					<li><a href="#">menu item</a></li>
+					<li><a href="#">menu item</a></li>
+				</ul>
+			</li>
+			<li>
+				<a href="#">menu item</a>
+				<ul>
+					<li><a href="#">menu item</a></li>
+					<li><a href="#">menu item</a></li>
+					<li><a href="#">menu item</a></li>
+					<li><a href="#">menu item</a></li>
+					<li><a href="#">menu item</a></li>
+				</ul>
+			</li>
+			<li>
+				<a href="#">menu item</a>
+				<ul>
+					<li><a href="#">menu item</a></li>
+					<li><a href="#">menu item</a></li>
+					<li><a href="#">menu item</a></li>
+					<li><a href="#">menu item</a></li>
+					<li><a href="#">menu item</a></li>
+				</ul>
+			</li>
+		</ul>
+	</li>
+	<li>
+		<a href="#">More</a>
+		<ul>
+			<li><a href="#">Couspon</a></li>
+			<li><a href="#">menu item</a></li>
+			<li><a href="#">menu item</a></li>
+			<li><a href="#">menu item</a></li>
+			<li><a href="#">menu item</a></li>
+		</ul>
+	</li>	
+</ul>

@@ -1,0 +1,14 @@
+<div id="mainHome">	
+	<p><?echo $this->action('breadcrumbs','pages_component','site',array('node'=>$this->folderGuid));?></p>
+	<!--<h2 class="alt"><?echo $this->folderTitle;?></h2>-->
+	<hr>
+	<h2><?echo Kutu_Core_Util::getCatalogAttributeValue($this->catalogGuid, 'fixedTitle')?></h2>
+	<p><?echo Kutu_Core_Util::getCatalogAttributeValue($this->catalogGuid, 'fixedSubTitle')?></p>
+	<p><?echo $this->row->modifiedDate?></p>
+	<p><?echo Kutu_Core_Util::getCatalogAttributeValue($this->catalogGuid, 'fixedDescription')?></p>
+	<?echo Kutu_Core_Util::getCatalogAttributeValue($this->catalogGuid, 'fixedContent')?>
+
+	<?
+		echo $this->action('document','pages_component','site',array("g"=>$this->catalogGuid));
+	?>
+</div>

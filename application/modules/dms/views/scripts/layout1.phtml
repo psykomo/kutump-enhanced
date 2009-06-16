@@ -1,0 +1,186 @@
+<html dir="ltr" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<style type="text/css">
+<!--
+body,td,div,p,a,font,span {font-family: arial,sans-serif}
+body {margin-top:2}
+
+.c {width: 4; height: 4}
+
+.bubble {background-color:#C3D9FF}
+
+.tl {padding: 0; width: 4; text-align: left; vertical-align: top}
+.tr {padding: 0; width: 4; text-align: right; vertical-align: top}
+.bl {padding: 0; width: 4; text-align: left; vertical-align: bottom}
+.br {padding: 0; width: 4; text-align: right; vertical-align: bottom}
+
+.caption {color:#000000; white-space:nowrap; background:#E8EEFA; text-align:center}
+
+.form-noindent {background-color: #ffffff; border: #C3D9FF 1px solid}
+
+.feature-image {padding: 15 0 0 0; vertical-align: top; text-align: right; }
+.feature-description {padding: 15 0 0 10; vertical-align: top; text-align: left; }
+
+.demo{
+	border: 1px solid #444;
+	padding: 8px;
+	background: #C3D9FF;
+	text-align: center;
+	font-weight: 600;
+}
+
+
+// -->
+</style>
+<!-- Framework CSS -->
+	<link rel="stylesheet" href="<?echo KUTU_ROOT_URL;?>/common/modules/dms/styles/screen.css" type="text/css" media="screen, projection">
+	<link rel="stylesheet" href="<?echo KUTU_ROOT_URL;?>/common/modules/dms/styles/print.css" type="text/css" media="print">
+  <!--[if IE]><link rel="stylesheet" href="<?echo KUTU_ROOT_URL;?>/common/modules/dms/styles/ie.css" type="text/css" media="screen, projection"><![endif]-->
+
+<!--[if IE]><script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/js/excanvas.js"></script><![endif]-->
+<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.js"></script>
+<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.roundcorners.js"></script>
+<link rel="stylesheet" href="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.jgrowl.css" />
+<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.jgrowl.js"></script>
+
+<style>
+div.fs-logo {
+	/* Site logo */
+	height: 90px;
+	width: 400px;
+	background: #999;
+	margin-bottom: 10px;
+}
+div.fs-horiznav {
+	/* Horizontal menu */
+	height: 25px;
+	width: 710px;
+	background: #999;
+	margin-bottom: 10px;
+}
+
+div.fs-featured {
+	/* Featured sections */
+	width: 710px;
+	height: 580px;
+	background: #ccc;
+	margin-top: 10px;
+	margin-bottom: 10px;
+}
+div.fs-txt-featured {
+	/* Featured */
+	height: 30px;
+	width: 110px;
+	background: #999;
+}
+div.fs-features {
+	/* Features */
+	height: 570px;
+	width: 590px;
+	background: #999;
+}
+div.fs-bigfeature {
+	/* Big feature */
+	height: 260px;
+	width: 590px;
+	background: #666;
+	margin-bottom: 20px;
+}
+div.fs-smfeatures div{
+	/* Small  feature */
+	height: 280px;
+	background: #666;
+	margin-bottom: 10px;
+}
+
+div.fs-recentpost {
+	/* Individual recent post. Height is actually variable, but is a minimum of 49 px */
+	height: 50px; // Roughly
+	width: 190px;
+	background: #999;
+	margin-bottom: 10px;
+}
+
+
+
+</style>
+
+<title>
+  langIT
+</title>
+</head>
+<body bgcolor="#ffffff" link="#0000ff" vlink="#0000ff">
+	<div class="container"> <!--  showgrid -->
+		<div class="fs-content">
+			<div class="fs-mainblock span-18 colborder"><!-- s: fs-mainblock -->
+				<div class="fs-header"><!-- s: fs-header -->
+					<div class="fs-logo">Logo</div>
+					<div class="fs-horiznav">Menu</div>
+				</div><!-- e: fs-header -->
+
+				<div class="fs-featured"><!-- s: fs-featured -->
+					<div class="fs-txt-featured span-3">Featured</div>
+					<div class="fs-features span-15 last">
+						<div class="fs-bigfeature">big feature</div>
+						<div class="fs-smfeatures"><!-- s: fs-smfeatures -->
+							<div class="span-5">sm feature</div>
+							<div class="span-5">sm feature</div>
+							<div class="span-5 last">sm feature</div>
+						</div><!-- e: fs-smfeatures -->
+					</div>
+				</div><!-- e: fs-featured -->
+				<div class="clear"></div>
+			</div><!-- e: fs-mainblock -->
+
+			<div class="fs-sidebar span-5 last"><!-- s: fs-sidebar -->
+				<div class="fs-recentposts">
+					Recent posts
+					<div class="fs-recentpost">recent post</div>
+					<div class="fs-recentpost">recent post</div>
+					<div class="fs-recentpost">recent post</div>
+					<div class="fs-recentpost">recent post</div>
+					<div class="fs-recentpost">recent post</div>
+				</div>
+				<br/>
+
+				<div class="fs-newsbox"><!-- s: fs-newsbox -->
+					News
+				</div><!-- e: fs-newsbox -->
+			</div><!-- e: fs-sidebar -->
+
+		</div><!-- end: fs-content -->
+		<div class="clear"></div>
+
+		<div class="fs-footer">
+			<p>(c) Copyright 2008-present, This blog</p>
+		</div>
+		<br/>
+
+	</div>
+	
+	
+	<div class="container" style='background-color:blue;'>
+		<div class="span-5 border">
+			The first column
+		</div>
+		<div class="span-5 append-4">
+			The second column
+		</div>
+		<div class="span-5 border">
+			The third column
+		</div>
+		<div class="span-5 last">
+			The fourth (last) column
+		</div>
+	</div>
+	<div class="container" style='background-color:;'>
+		<div class="span-24 last">
+			<div style="border: .5px .5px .5px .5px;">
+			<?php echo $this->layout()->content; ?>
+			</div>
+		</div>
+	</div>
+<div id="growl" class="top-right"></div>
+</body>
+</html>

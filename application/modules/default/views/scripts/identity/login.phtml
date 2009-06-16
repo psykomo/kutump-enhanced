@@ -1,0 +1,49 @@
+<br>
+<form id="kutu_loginform" action="<?php echo KUTU_ROOT_URL;?>/identity/login" method="post">
+	<table width='100%' cellpadding="0" cellspacing="0">
+		<tr valign="top">
+			<td>
+				<table width='100%' cellpadding="2" cellspacing="4">
+					<tr>
+						<td width="10">Nama</td>
+						<td><input name="username" id="username" size="18" value="" class="gaia le val" type="text"></td>
+					<tr>
+					<tr>
+						<td>Password</td>
+						<td><input name="password" id="password" size="18" class="gaia le val" type="password"></td>
+					<tr>
+					<tr>
+						<td colspan="2">
+							<input name="PersistentCookie" id="PersistentCookie" value="yes" type="checkbox">
+							  <input name="rmShown" value="1" type="hidden">
+							  <label for="PersistentCookie" class="gaia le rem">
+							  Ingat saya di komputer ini
+							  </label>	
+						</td>
+					</tr>
+					<tr>
+						<td colspan="2">
+							<input class="gaia le button" name="signIn" value="Masuk" type="submit">
+							<div style="padding-top:5px;"></div>
+							<a href="http://mail.google.com/support/bin/answer.py?answer=46346&amp;fpUrl=https%3A%2F%2Fwww.google.com%2Faccounts%2FForgotPasswd%3FfpOnly%3D1%26continue%3Dhttp%253A%252F%252Fmail.google.com%252Fmail%252F%253Fui%253Dhtml%2526zy%253Dl%26service%3Dmail%26ltmpl%3Ddefault&amp;fuUrl=https%3A%2F%2Fwww.google.com%2Faccounts%2FForgotPasswd%3FfuOnly%3D1%26continue%3Dhttp%253A%252F%252Fmail.google.com%252Fmail%252F%253Fui%253Dhtml%2526zy%253Dl%26service%3Dmail%26ltmpl%3Ddefault&amp;hl=in" target="_top">
+							  Akun saya tak dapat diakses
+							  </a>
+							<input name="asts" id="asts" value="" type="hidden">
+							<input name="returnTo" id="returnTo" value="<? echo $this->returnTo;?>" type="hidden">
+						</td>
+					</tr>
+				</table>
+			</td>
+			<td>
+				<a href="<?php echo KUTU_ROOT_URL;?>/identity/index/signup"><span style="font-size:22px">SIGN UP</span></a>
+				<table width='100%' cellpadding="0" cellspacing="0">
+					<tr>
+						<td></td>
+					<tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	
+  
+</form>

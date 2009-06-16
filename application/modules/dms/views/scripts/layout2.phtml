@@ -1,0 +1,307 @@
+<html dir="ltr" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!-- Framework CSS -->
+	<link rel="stylesheet" href="<?echo KUTU_ROOT_URL;?>/common/modules/dms/styles/screen.css" type="text/css" media="screen, projection">
+	<link rel="stylesheet" href="<?echo KUTU_ROOT_URL;?>/common/modules/dms/styles/print.css" type="text/css" media="print">
+  <!--[if IE]><link rel="stylesheet" href="<?echo KUTU_ROOT_URL;?>/common/modules/dms/styles/ie.css" type="text/css" media="screen, projection"><![endif]-->
+
+<!--[if IE]><script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/js/excanvas.js"></script><![endif]-->
+<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.js"></script>
+<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.roundcorners.js"></script>
+<link rel="stylesheet" href="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.jgrowl.css" />
+<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.jgrowl.js"></script>
+
+<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.idtabs.js"></script>
+<style type="text/css">
+
+/*Credits: Dynamic Drive CSS Library */
+/*URL: http://www.dynamicdrive.com/style/ */
+
+.invertedshiftdown3{
+padding: 0;
+width: 100%;
+border-bottom: 1px solid #bcbcbb; /*Highlight red color theme*/
+background: transparent;
+voice-family: "\"}\"";
+voice-family: inherit;
+}
+
+.invertedshiftdown2{
+padding: 0;
+width: 100%;
+border-top: 2px solid black; /*Highlight red color theme*/
+background: transparent;
+voice-family: "\"}\"";
+voice-family: inherit;
+}
+
+.invertedshiftdown2 ul{
+margin:0;
+margin-left: 270px; /*margin between first menu item and left browser edge*/
+padding: 0;
+list-style: none;
+}
+
+.invertedshiftdown2 li{
+display: inline;
+margin: 0 2px 0 0;
+padding: 0;
+text-transform:uppercase;
+}
+
+.invertedshiftdown2 a{
+float: left;
+display: block;
+font: 11px Arial;
+color: black;
+text-decoration: none;
+margin: 0 1px 0 0; /*Margin between each menu item*/
+padding: 5px 10px 5px 10px; /*Padding within each menu item*/
+background-color: white; /*Default menu color*/
+border-bottom: 1px solid white;
+border-right: 1px solid #bcbcbb;
+}
+
+.invertedshiftdown2 a:hover{
+/*background-color: #D10000; /*Highlight red color theme*/
+padding-top: 10px; /*Set padding-top value to default's padding-top + padding-bottom */
+padding-bottom: 0; /*Set padding-bottom value to 0 */
+border-bottom-color: #D10000; /*Highlight red color theme*/
+color: white;*/
+text-decoration: none;
+margin: 0 1px 0 0; /*Margin between each menu item*/
+padding: 5px 10px 5px 10px; /*Padding within each menu item*/
+background-color: lightblue; /*Default menu color*/
+border-bottom: 1px solid white;
+}
+
+.invertedshiftdown2 .current a{ /** currently selected menu item **/
+/*background-color: #D10000; /*Highlight red color theme*/
+padding-top: 10px; /*Set padding-top value to default's padding-top + padding-bottom */
+padding-bottom: 0; /*Set padding-bottom value to 0 */
+border-bottom-color: #bcbcbb; /*Highlight red color theme*/
+color: black;*/
+text-decoration: none;
+margin: 0 1px 0 0; /*Margin between each menu item*/
+padding: 5px 10px 5px 10px; /*Padding within each menu item*/
+background-color: #f4f4f4; /*Default menu color*/
+border-bottom: 1px solid #f4f4f4;
+}
+
+#myform{ /*CSS for sample search box. Remove if desired */
+float: right;
+margin: 0;
+margin-top: 2px;
+padding: 0;
+}
+
+#myform .textinput{
+width: 190px;
+border: 1px solid gray;
+}
+
+#myform .submit{
+font: normal 12px Verdana;
+height: 22px;
+border: 1px solid #D10000;
+background-color: black;
+color: white;
+}
+
+</style>
+
+<title>
+  langIT
+</title>
+</head>
+<body>
+	<div class="container"><div class="span-24 last">&nbsp;</div></div>
+	<!--<div class="container" style='border-width: 0px 1px 0px 1px; border-style:solid;border-left-color:grey;border-right-color:white;'>
+		<div class="span-5 last" style="background-color:grey;">test</div>
+	</div>-->
+	<div class="container" style=' border-width: 1px 1px 1px 1px; border-style:solid;border-color:#bcbcbb;'>
+		<div class="span-24 last" style='background-color:; border-width: 0px 0px 0px 0px;border-style: solid;'> 
+		</div>
+		<div class="span-7">
+			&nbsp;
+		</div>
+		<div class="span-9">
+			<div align='center' style='margin-top:0;font-size:20px;'><img src="<?echo KUTU_ROOT_URL;?>/view-resources/img/logo_hukumonline.jpg"></div>
+		</div>
+		<div class="span-5 last">
+			
+		</div>
+		<div class="span-24 last">
+				<div class="invertedshiftdown2">
+				<ul>
+				<li><a href="http://www.dynamicdrive.com" title="Home">Home</a></li>
+				<li><a href="http://www.dynamicdrive.com/new.htm" title="New">New</a></li>
+				<li class="current"><a href="http://www.dynamicdrive.com/revised.htm" title="Revised">Revised</a></li>
+				<li><a href="http://tools.dynamicdrive.com" title="Tools">Tools</a></li>	
+				<li><a href="http://www.dynamicdrive.com/style/" title="CSS">CSS</a></li>
+				<li><a href="http://www.dynamicdrive.com/forums/" title="DHTML Forums">Forums</a></li>
+				</ul>
+				</div>
+				<br style="clear: both;" />
+				<div class="invertedshiftdown3"></div>
+				
+		</div>
+		<div class="span-24 last" style='background-color:#f4f4f4; height:25;vertical-align:center;padding-top:5px;'>
+			test
+		</div>
+		<div class="span-24 last" style='background-color:white; height:120;border-width: 1px 0px 4px 0px; border-style:solid;border-color:#bcbcbb;border-bottom-color:#f1c701;'>
+			<div style='margin-top:15px;margin-left:100px;'>
+				<img src="<?echo KUTU_ROOT_URL;?>/common/images/banner.jpg" align='bottom'>
+			</div>
+		</div>
+		<div class="span-24 last">&nbsp;</div>
+		<div class="span-10 border">
+			<div style='margin-left:10px;margin-right:10px;margin-bottom:10px;font-size:16px;font-weight:bold;'>Berita Terbaru</div>
+			<div style='margin-left:10px;font-size:9px;'>20 Januari 2009, 00:00</div>
+			<div style='margin-left:10px;margin-bottom:5px;font-size:14px;font-weight:bold;color:#004276;'>
+				Albany, Don’t Bank on the Feds
+			</div>
+			<div style='margin-left:10px;margin-right:10px;'>
+
+			Without reforms, cuts in services and new fees in New York State, the big federal stimulus package will only offer momentary relief from deficits.
+
+			    * Times Topics: Economic Stimulus
+
+			Crime Scene Imperfections
+
+			The judicial system should take notice of a study that finds most forensic methods inaccurate and unreliable.
+			Changing Climate Numbers
+
+			Research shows that there is unequivocal evidence that the earth is warming and without a global prescription it is likely to get worse.
+			</div>
+			<br>
+			<div style='margin-left:10px;font-size:9px;'>20 Januari 2009, 00:00</div>
+			<div style='margin-left:10px;margin-bottom:5px;font-size:14px;font-weight:bold;color:#004276;'>
+				Albany, Don’t Bank on the Feds
+			</div>
+			<div style='margin-left:10px;margin-right:10px;'>
+
+			Without reforms, cuts in services and new fees in New York State, the big federal stimulus package will only offer momentary relief from deficits.
+
+			    * Times Topics: Economic Stimulus
+
+			Crime Scene Imperfections
+
+			The judicial system should take notice of a study that finds most forensic methods inaccurate and unreliable.
+			Changing Climate Numbers
+
+			Research shows that there is unequivocal evidence that the earth is warming and without a global prescription it is likely to get worse.
+			</div>
+			<br>
+			<div style='margin-left:10px;font-size:9px;'>20 Januari 2009, 00:00</div>
+			<div style='margin-left:10px;margin-bottom:5px;font-size:14px;font-weight:bold;color:#004276;'>
+				Albany, Don’t Bank on the Feds
+			</div>
+			<div style='margin-left:10px;margin-right:10px;'>
+
+			Without reforms, cuts in services and new fees in New York State, the big federal stimulus package will only offer momentary relief from deficits.
+
+			    * Times Topics: Economic Stimulus
+
+			Crime Scene Imperfections
+
+			The judicial system should take notice of a study that finds most forensic methods inaccurate and unreliable.
+			Changing Climate Numbers
+
+			Research shows that there is unequivocal evidence that the earth is warming and without a global prescription it is likely to get worse.
+			</div>
+			<br>
+			<div class="span-5 border">
+				<div style='margin-left:10px;font-size:9px;'>20 Januari 2009, 00:00</div>
+				<div style='margin-left:10px;margin-bottom:5px;font-size:14px;font-weight:bold;color:#004276;'>
+					Albany, Don’t Bank on the Feds
+				</div>
+				<div style='margin-left:10px;margin-right:10px;'>
+
+				Without reforms, cuts in services and new fees in New York State, the big federal stimulus package will only offer momentary relief from deficits.
+				</div>
+			</div>
+			<div class="span-5 last">
+				<div style='margin-left:10px;font-size:9px;'>20 Januari 2009, 00:00</div>
+				<div style='margin-left:10px;margin-bottom:5px;font-size:14px;font-weight:bold;color:#004276;'>
+					Albany, Don’t Bank on the Feds
+				</div>
+				<div style='margin-left:10px;margin-right:10px;'>
+
+				Without reforms, cuts in services and new fees in New York State, the big federal stimulus package will only offer momentary relief from deficits.
+				</div>
+			</div>
+			<br>&nbsp;
+		</div>
+		<div class="span-5 border">
+			<div style='margin-left:10px;margin-right:10px;margin-bottom:10px;font-size:16px;font-weight:bold;'>Fokus</div>
+			<div style='margin-left:10px;font-size:9px;'>20 Januari 2009, 00:00</div>
+			<div style='margin-left:10px;margin-bottom:5px;font-size:14px;font-weight:bold;color:#004276;'>
+				Albany, Don’t Bank on the Feds
+			</div>
+			<div style='margin-left:10px;margin-right:10px;'>
+
+			Without reforms, cuts in services and new fees in New York State, the big federal stimulus package will only offer momentary relief from deficits.
+
+			Research shows that there is unequivocal evidence that the earth is warming and without a global prescription it is likely to get worse.
+			</div>
+			<br>
+			<div style='margin-left:10px;font-size:9px;'>20 Januari 2009, 00:00</div>
+			<div style='margin-left:10px;margin-bottom:5px;font-size:14px;font-weight:bold;color:#004276;'>
+				Albany, Don’t Bank on the Feds
+			</div>
+			<div style='margin-left:10px;margin-right:10px;'>
+
+			Without reforms, cuts in services and new fees in New York State, the big federal stimulus package will only offer momentary relief from deficits.
+
+			    * Times Topics: Economic Stimulus
+
+			Crime Scene Imperfections
+
+			The judicial system should take notice of a study that finds most forensic methods inaccurate and unreliable.
+			Changing Climate Numbers
+
+			Research shows that there is unequivocal evidence that the earth is warming and without a global prescription it is likely to get worse.
+			</div>
+			<br>
+		</div>
+		<div class="span-9 last">
+			<div style='margin-left:10px;margin-right:10px;'>
+				<img src="<?echo KUTU_ROOT_URL;?>/common/images/Travian_Game_300x250.gif" align='bottom'>
+				<br>&nbsp;
+				<hr>
+				<div style='margin-left:10px;margin-right:10px;margin-bottom:10px;font-size:16px;font-weight:bold;'>Klinik</div>
+				<div style='margin-left:10px;margin-bottom:5px;font-size:14px;font-weight:bold;color:#004276;'>
+					Albany, Don’t Bank on the Feds
+				</div>
+				<div style='margin-left:10px;margin-right:10px;'>
+
+				Without reforms, cuts in services and new fees in New York State, the big federal stimulus package will only offer momentary relief from deficits.
+
+				</div>
+				<br>
+				<div style='margin-left:10px;margin-bottom:5px;font-size:14px;font-weight:bold;color:#004276;'>
+					Albany, Don’t Bank on the Feds
+				</div>
+				<div style='margin-left:10px;margin-right:10px;'>
+
+				Without reforms, cuts in services and new fees in New York State, the big federal stimulus package will only offer momentary relief from deficits.
+
+				</div>
+				<br>
+		</div>
+	</div>
+	<div class="span-24 last" style='background-color:#f4f4f4; height:200;vertical-align:center;padding-top:5px;border-width: 1px 0px 1px 0px; border-style:solid;border-color:#bcbcbb;'>
+		test
+	</div>
+	<div class="container" style='background-color:;'>
+		<div class="span-24 last">
+			<div style="border: .5px .5px .5px .5px;">
+			<?php echo $this->layout()->content; ?>
+			</div>
+		</div>
+	</div>
+<div id="growl" class="top-right"></div>
+</body>
+</html>

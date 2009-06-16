@@ -1,0 +1,89 @@
+[general]
+db.adapter = PDO_MYSQL
+db.config.host = localhost
+db.config.username = root
+db.config.password = root
+db.config.dbname = kutump-lgs
+
+helper.login.page = /helper/sso/login
+
+guid.prefix = lgs
+
+# --- ACL ---
+
+acl.adapter = phpgacl
+acl.config.db.adapter = mysql
+acl.config.db.param.host = localhost
+acl.config.db.param.username = root
+acl.config.db.param.password = root
+acl.config.db.param.dbname = kutump-lgs
+# acl.config.db.param.port =
+
+# --- END ACL ---
+
+
+# auth.adapter = remote
+auth.config.remote.url = http://localhost/kutump/app/servers/auth/manager/authenticate
+
+auth.adapter = direct
+auth.config.db.adapter = PDO_MYSQL
+auth.config.db.param.host = localhost
+auth.config.db.param.username = root
+auth.config.db.param.password = root
+auth.config.db.param.dbname = kutump-lgs
+
+# session.savehandler = remote
+session.config.remote.savehandler.url = https://127.0.0.1/kutump/app/servers/session/savehandler
+
+# -- sessionidgenerator url MUST BE the same server/ip as the identity server
+session.config.sessionidgenerator.url = http://localhost/kutump-enhanced/session/server/start
+
+session.savehandler = directdb
+session.config.db.adapter = PDO_MYSQL
+#session.config.db.param.dbname = newhol
+session.config.db.param.host = localhost
+session.config.db.param.username = root
+session.config.db.param.password = root
+session.config.db.param.dbname = kutump-lgs
+
+# --- IDENTITY --- 
+
+identity.adapter = remote
+identity.login.url = http://localhost/kutump-enhanced/identity/login
+identity.logout.url = http://localhost/kutump-enhanced/identity/logout
+identity.rememberme.duration = 86000
+
+# --- END ---
+
+# --- INDEXING ---
+
+indexing.engine = solr
+
+#indexing param for SOLR MASTER index
+indexing.adapter.param.dir = /solr/core0
+indexing.adapter.param.host = localhost
+indexing.adapter.param.port = 8983
+
+#indexing param for SOLR READ index
+indexing.adapter.read.param.dir = /solr/core1
+indexing.adapter.read.param.host = localhost
+indexing.adapter.read.param.port = 8983
+
+#indexing.engine = zendlucene
+
+#indexing param for Zend Lucene
+#indexing.adapter.param.dir = /data/lucene_indexes
+#indexing.adapter.param.host = localhost
+#indexing.adapter.param.port = 80
+
+
+
+#complete path including the executable filename to pdf extractor tool
+indexing.pdfextractor.executable = /opt/local/bin/pdftotext
+indexing.wordextractor.executable = /opt/local/bin/antiword
+
+# --- END ---
+
+route.pages.action = index
+route.pages.controller = pages
+route.pages.module = site

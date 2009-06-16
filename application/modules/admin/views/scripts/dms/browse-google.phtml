@@ -1,0 +1,200 @@
+<style type="text/css">
+<!--
+.demo{
+	
+	background: #C3D9FF;
+	background: #67a7e3;
+	}
+	#MySplitter {
+		border: 1px 0px 0px 0px solid #669;
+		border-style: solid;
+		border-color: #C3D9FF;
+		border-left-width: 2px;
+		border-right-width: 2px;
+		border-top-width: 0px;
+		border-bottom-width: 2px;
+		min-width: 500px;	/* Splitter can't be too thin ... */
+		min-height: 300px;	/* ... or too flat */
+		height: 100%;
+	}
+	#LeftPane {
+		/*background: #ddf;*/
+		width: 150px;
+		min-width: 100px;
+		max-width: 500px;
+		overflow: auto;		/* Scroll bars appear as needed */
+	}
+	#TopPane {				/* Top nested in right pane */
+		/*background: #ccf;*/
+		height: 100%;		 /*Initial height */
+	/*	min-height: 75px;	/* Minimum height */
+		overflow: auto;	
+	}
+	#BottomPane {			/* Bottom nested in right pane */
+		background: #eef;
+		min-height: 100px;
+		overflow: auto;
+	}
+
+	/* Splitbar styles; these are the default class names */
+
+	.vsplitbar {
+		width: 5px;
+		background: #67a7e3 url(img/vgrabber.gif) no-repeat center;
+	}
+	.vsplitbar:hover, .vsplitbar.active {
+		background: #c66 url(img/vgrabber.gif) no-repeat center;
+		opacity: 0.7;
+		filter: alpha(opacity=70); /* IE */
+		background: #c99;
+	}
+	.hsplitbar {
+		height: 6px;
+		background: #669 url(img/hgrabber.gif) no-repeat center;
+	}
+	.hsplitbar.active, .hsplitbar:hover {
+		background: #c66 url(img/hgrabber.gif) no-repeat center;
+	}
+	
+
+// -->
+</style>
+<link rel="stylesheet" href="<?echo KUTU_ROOT_URL;?>/lib/jquery/myAccordion.css" type="text/css">
+<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/myAccordion.js"></script>
+<script type="text/javascript">
+$(document).ready(function() {
+	// Vertical splitter. Set min/max/starting sizes for the left pane.
+	$("#MySplitter").splitter({
+		splitVertical: true,
+		outline: true,
+		sizeLeft: true,
+		anchorToWindow: true,
+		resizeToWidth: true,
+		accessKey: "I",
+		cookie:"splitbar1"
+	});
+	
+	/*$().ready(function() {
+		$("#MySplitter").splitter({
+			type: "v",
+			outline: true,
+			resizeToWidth: true,
+			cookie: "vsplitter",
+			accessKey: 'I'
+		});
+	});*/
+	
+	
+	// Horizontal splitter, nested in the right pane of the vertical splitter.
+	/*$("#RightPane1").splitter({
+		splitHorizontal: true,
+		sizeTop: true,
+		accessKey: "H"
+	});*/
+});
+</script>
+<table width='100%' cellpadding="0" cellspacing="0" height='40px'>
+	<tr>
+  		<td id="td-round-1" class="demo">
+			<table>
+				<tr><td>
+				<div id="gbar">
+				<a href="http://images.google.co.id/images?hl=id&amp;q=css&amp;um=1&amp;ie=UTF-8&amp;sa=N&amp;tab=wi" onClick="gbar.qs(this)" class="gb1">New</a> 
+				<a href="http://groups.google.co.id/groups?hl=id&amp;q=css&amp;um=1&amp;ie=UTF-8&amp;sa=N&amp;tab=wg" onClick="gbar.qs(this)" class="gb1">Edit</a> 
+				<a href="http://books.google.co.id/books?hl=id&amp;q=css&amp;um=1&amp;ie=UTF-8&amp;sa=N&amp;tab=wp" onClick="gbar.qs(this)" class="gb1">Move to</a> 
+				<a href="http://blogsearch.google.co.id/blogsearch?hl=id&amp;q=css&amp;um=1&amp;ie=UTF-8&amp;sa=N&amp;tab=wb" onClick="gbar.qs(this)" class="gb1">Copy</a> 
+				<a href="http://mail.google.com/mail/?um=1&amp;hl=id&amp;tab=wm" class="gb1">More actions</a>
+				</div>
+				</td></tr>
+			</table>
+		</td>
+  	</tr>
+</table>
+
+<div id="MySplitter">
+
+  <div id="LeftPane">
+				<!-- myAccordion -->
+				<div id="myAccordion">
+					<!-- Element -->
+					<div class="myAccordion-declencheur"><h1>Categories</h1></div>
+
+					<div class="myAccordion-content">
+				    		<p>myAccordion est un plugin jQuery permettant de créer facilement une navigation en accordéon. Cette technique permet par exemple de structurer un menu ou une page présentant un contenu trop important.</p>
+							<p>myAccordion est un plugin jQuery permettant de créer facilement une navigation en accordéon. Cette technique permet par exemple de structurer un menu ou une page présentant un contenu trop important.</p>
+							<p>myAccordion est un plugin jQuery permettant de créer facilement une navigation en accordéon. Cette technique permet par exemple de structurer un menu ou une page présentant un contenu trop important.</p>
+							<p>myAccordion est un plugin jQuery permettant de créer facilement une navigation en accordéon. Cette technique permet par exemple de structurer un menu ou une page présentant un contenu trop important.</p>
+							<p>myAccordion est un plugin jQuery permettant de créer facilement une navigation en accordéon. Cette technique permet par exemple de structurer un menu ou une page présentant un contenu trop important.</p>
+							</div>
+					<!-- Element -->
+					<div class="myAccordion-declencheur"><h1>Favourites</h1></div>
+					<div class="myAccordion-content">
+				    		<p>L'ajout d'éléments à myAccordion se résume à un simple « copier-coller » de quelques lignes de HTML. myAccordion s'occupe de tout le reste !</p>
+
+						<p>La seule chose à respecter concerne le nom des classes CSS qui doit rester tel quel, ainsi que l'ordre des div ( Les déclencheurs précèdent leur contenu propre. Le tout, englobé dans un div portant un identifiant unique ).</p>
+					</div>
+					<!-- Element -->
+					<div class="myAccordion-declencheur"><h1>Liberté</h1></div>
+					<div class="myAccordion-content">
+				    		<p>L'élément contenu dans un déclencheur peut contenir n'importe quelle balise HTML. Dans cet exemple, des titres de niveau 1 ont été utilisés.</p>
+						<p>myAccordion est entièrement personnalisable via sa feuille de styles CSS.</p>
+
+					</div>
+				</div>
+				<!-- ! myAccordion -->
+							
+		
+  </div> <!-- #LeftPane -->
+
+  <div id="RightPane">
+
+	<div id="TopPane">
+		<table width="100%" bgcolor="#d6e9f8">
+			<tr><td>test</td></tr>
+		</table>
+		<p>This is the top-right part of the 3-pane splitter. It starts at 150 pixels because the height of #TopPane was set in the stylesheet. The stylesheet has also set <code>min-height: 75px</code> so it can't get any smaller than that.</p>
+		<p>The splitbars are keyboard-accessible. Use <kbd>Alt-Shift-I</kbd> to select the vertical splitbar, or <kbd>Alt-Shift-H</kbd>  for the horizontal one. Then use the arrow keys to move the bar. The plugin lets you specify any key for the access key, but be sure to test on all browsers in case they reserve those keystrokes.</p>
+		<p>This is the top-right part of the 3-pane splitter. It starts at 150 pixels because the height of #TopPane was set in the stylesheet. The stylesheet has also set <code>min-height: 75px</code> so it can't get any smaller than that.</p>
+		<p>The splitbars are keyboard-accessible. Use <kbd>Alt-Shift-I</kbd> to select the vertical splitbar, or <kbd>Alt-Shift-H</kbd>  for the horizontal one. Then use the arrow keys to move the bar. The plugin lets you specify any key for the access key, but be sure to test on all browsers in case they reserve those keystrokes.</p>
+		<p>This is the top-right part of the 3-pane splitter. It starts at 150 pixels because the height of #TopPane was set in the stylesheet. The stylesheet has also set <code>min-height: 75px</code> so it can't get any smaller than that.</p>
+		<p>The splitbars are keyboard-accessible. Use <kbd>Alt-Shift-I</kbd> to select the vertical splitbar, or <kbd>Alt-Shift-H</kbd>  for the horizontal one. Then use the arrow keys to move the bar. The plugin lets you specify any key for the access key, but be sure to test on all browsers in case they reserve those keystrokes.</p>
+		<p>This is the top-right part of the 3-pane splitter. It starts at 150 pixels because the height of #TopPane was set in the stylesheet. The stylesheet has also set <code>min-height: 75px</code> so it can't get any smaller than that.</p>
+		<p>The splitbars are keyboard-accessible. Use <kbd>Alt-Shift-I</kbd> to select the vertical splitbar, or <kbd>Alt-Shift-H</kbd>  for the horizontal one. Then use the arrow keys to move the bar. The plugin lets you specify any key for the access key, but be sure to test on all browsers in case they reserve those keystrokes.</p>
+		<p>This is the top-right part of the 3-pane splitter. It starts at 150 pixels because the height of #TopPane was set in the stylesheet. The stylesheet has also set <code>min-height: 75px</code> so it can't get any smaller than that.</p>
+		<p>The splitbars are keyboard-accessible. Use <kbd>Alt-Shift-I</kbd> to select the vertical splitbar, or <kbd>Alt-Shift-H</kbd>  for the horizontal one. Then use the arrow keys to move the bar. The plugin lets you specify any key for the access key, but be sure to test on all browsers in case they reserve those keystrokes.</p>
+		<p>This is the top-right part of the 3-pane splitter. It starts at 150 pixels because the height of #TopPane was set in the stylesheet. The stylesheet has also set <code>min-height: 75px</code> so it can't get any smaller than that.</p>
+		<p>The splitbars are keyboard-accessible. Use <kbd>Alt-Shift-I</kbd> to select the vertical splitbar, or <kbd>Alt-Shift-H</kbd>  for the horizontal one. Then use the arrow keys to move the bar. The plugin lets you specify any key for the access key, but be sure to test on all browsers in case they reserve those keystrokes.</p>
+		<p>This is the top-right part of the 3-pane splitter. It starts at 150 pixels because the height of #TopPane was set in the stylesheet. The stylesheet has also set <code>min-height: 75px</code> so it can't get any smaller than that.</p>
+		<p>The splitbars are keyboard-accessible. Use <kbd>Alt-Shift-I</kbd> to select the vertical splitbar, or <kbd>Alt-Shift-H</kbd>  for the horizontal one. Then use the arrow keys to move the bar. The plugin lets you specify any key for the access key, but be sure to test on all browsers in case they reserve those keystrokes.</p>
+		<p>This is the top-right part of the 3-pane splitter. It starts at 150 pixels because the height of #TopPane was set in the stylesheet. The stylesheet has also set <code>min-height: 75px</code> so it can't get any smaller than that.</p>
+		<p>The splitbars are keyboard-accessible. Use <kbd>Alt-Shift-I</kbd> to select the vertical splitbar, or <kbd>Alt-Shift-H</kbd>  for the horizontal one. Then use the arrow keys to move the bar. The plugin lets you specify any key for the access key, but be sure to test on all browsers in case they reserve those keystrokes.</p>
+		<p>This is the top-right part of the 3-pane splitter. It starts at 150 pixels because the height of #TopPane was set in the stylesheet. The stylesheet has also set <code>min-height: 75px</code> so it can't get any smaller than that.</p>
+		<p>The splitbars are keyboard-accessible. Use <kbd>Alt-Shift-I</kbd> to select the vertical splitbar, or <kbd>Alt-Shift-H</kbd>  for the horizontal one. Then use the arrow keys to move the bar. The plugin lets you specify any key for the access key, but be sure to test on all browsers in case they reserve those keystrokes.</p>
+		<p>This is the top-right part of the 3-pane splitter. It starts at 150 pixels because the height of #TopPane was set in the stylesheet. The stylesheet has also set <code>min-height: 75px</code> so it can't get any smaller than that.</p>
+		<p>The splitbars are keyboard-accessible. Use <kbd>Alt-Shift-I</kbd> to select the vertical splitbar, or <kbd>Alt-Shift-H</kbd>  for the horizontal one. Then use the arrow keys to move the bar. The plugin lets you specify any key for the access key, but be sure to test on all browsers in case they reserve those keystrokes.</p>
+	</div>
+
+
+	<!-- <div id="BottomPane">
+		<p>This is the bottom-right part of the 3-pane splitter. It can't get any smaller than 100 pixels tall--because the stylesheet says so, that's why.</p>
+
+		<p>Notice that the #MySplitter element is set to <code>min-width: 400px</code>, so some of the splitter will be out of sight if you try to resize the browser window too narrowly. Similarly, it has <code>min-height: 300px</code> so the splitter won't perform an impossible act--like setting itself to a negative height if window is resized above the top of the splitter!</p>
+	</div> #BottomPane -->
+
+  </div> <!-- #RightPane -->
+
+
+</div> <!-- #MySplitter -->
+
+<script>
+$('#td-round-1').bg(['7px', '7px', '0', '0']);
+$('#tb-round-1').bg(['0','0','7px', '7px']);
+</script>
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#myAccordion").myAccordion({
+		speed: "fast", // @param : low, medium, fast
+		defautContent: 0 // @param : number
+	});
+});
+</script>

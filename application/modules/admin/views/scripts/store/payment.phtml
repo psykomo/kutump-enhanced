@@ -1,0 +1,64 @@
+<link rel="stylesheet" href="<?echo KUTU_ROOT_URL;?>/lib/jquery/pagination.css" />
+<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.pagination.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		//$('#menu').flickrmenu();
+        $('ul.sf-menu').superfish();
+    
+    var isFirstTime = 1;
+	
+	// First Parameter: number of items
+	// Second Parameter: options object
+	var myPageIndex = 1;
+	var itemsPerPage = <?echo $this->itemsPerPage;?>;
+	var currentOffset = <?echo $this->offset;?>;
+	var limit = <?echo $this->limit;?>;
+	var currentNode = "<?echo $this->currentNode;?>";
+	var totalItems = <?echo $this->totalItems;?>;
+	var sort = "<?echo $this->sort;?>";
+	
+	
+	var tmpCurrentPageIndex = currentOffset/itemsPerPage;
+	
+	$("#catalogPagination").pagination(totalItems, 
+	{items_per_page:itemsPerPage, callback:handlePaginationClick, current_page:tmpCurrentPageIndex}
+	);
+	
+	function handlePaginationClick(new_page_index, pagination_container) 
+	{
+		if(!isFirstTime)
+		{
+			myPageIndex = new_page_index;
+			var nextOffset = (itemsPerPage * myPageIndex);
+		
+			$("Offset").val(nextOffset);
+			$("#frmSearch").submit();
+			
+			var url = "<?echo KUTU_ROOT_URL;?>/admin/store/postpaid/Query/"+<?=$this->Query;?>+currentNode+"/offset/"+nextOffset+"/limit/"+limit+"/sort/"+sort+"/";
+			window.location = url;
+		}
+		isFirstTime = 0;
+		return false;
+	}
+
+	});
+    
+</script>
+<?=$this->render('header.phtml');?>
+<div class="span-10 last">
+<form id="frmSearch" name="frmSearch" method="GET">
+	<input id="Query" name="Query" size=30 value='<?echo $this->Query;?>'>
+	<input type="hidden" id="limit" name="limit" value="10">
+	<input type="hidden" id="offset" name="offset" value="<?echo $this->offset;?>">
+	<input type="hidden" id="relatedGuid" name="relatedGuid" value="<?echo $this->relatedGuid;?>">
+	<input type="submit" id="btnGoSearch" name="search" value="Search">
+</form>
+</div>
+<hr class="space">
+
+<table width='100%'>
+	<tr>
+		<td width=35%>&nbsp;</td>
+		<td align=right><div id='catalogPagination' class="pagination"></div></td>
+	</tr>
+</table>

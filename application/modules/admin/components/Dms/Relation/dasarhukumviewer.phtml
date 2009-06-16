@@ -1,0 +1,31 @@
+<?php $guid = $this->generateGuid();?>
+<table width="100%" cellpadding="0" cellspacing="0">
+	<tr>
+		<td>
+			<div style="padding:5px;">
+				<?php foreach ($this->rowsetDasarHukum as $data){?>
+					<div style="padding-top:5px"></div>
+					
+					<a href="<?echo KUTU_ROOT_URL;?>/admin/dms_catalog/details/guid/<?php echo $data->itemGuid;?>"><?php echo Kutu_Core_Util::getCatalogAttributeValue($data->itemGuid,'fixedTitle') ?></a>
+					
+					<?php if($this->isAllowed($this->catalogGuid, 'update','content')){?>
+					- <a href="javascript:;" onclick="<?php echo $guid;?>remove('<?php echo $data->itemGuid;?>', '<?php echo $data->relatedGuid;?>', 'RELATED_BASE');return false;">Remove</a>
+					<br><?php echo Kutu_Core_Util::getCatalogAttributeValue($data->itemGuid,'fixedSubTitle') ?>
+					<?php }?>
+					<div style="padding-top:5px"></div>
+				<?php }?>
+				<div style="padding-bottom:5px"></div>
+			</div>
+		</td>
+	</tr>
+</table>
+<script type="text/javascript">
+function <?php echo $guid;?>remove(itemGuid, relatedGuid, relateAs)
+{
+	if(confirm ('Are you sure to remove this?'))
+	{
+		window.location = "<?echo KUTU_ROOT_URL;?>/admin/dms_relation/remove/guid/"+itemGuid+"/relatedGuid/"+relatedGuid+"/relateAs/"+relateAs;
+		
+	}
+}
+</script>

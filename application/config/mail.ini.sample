@@ -1,0 +1,10 @@
+[general]
+mail.host=mail.langit.biz
+mail.sender.support.email=support@lgsonline.com
+mail.sender.billing.email=billing@lgsonline.com
+mail.sender.support.name=LGS Online
+mail.sender.billing.name=LGS Online
+mail.method=SMTP
+mail.auth=login
+mail.username=putra@langit.biz	
+mail.password=putra

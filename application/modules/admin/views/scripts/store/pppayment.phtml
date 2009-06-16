@@ -1,0 +1,99 @@
+<script src="<?echo KUTU_ROOT_URL;?>/lib/calendar.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" media="all" href="<?echo KUTU_ROOT_URL;?>/lib/calendar/calendar-mos.css" title="green">
+<script src="<?echo KUTU_ROOT_URL;?>/lib/calendar/calendar_mini.js" type="text/javascript"></script>
+<script src="<?echo KUTU_ROOT_URL;?>/lib/calendar/lang/calendar-en.js" type="text/javascript"></script>
+<?=$this->render('header.phtml');?>
+<div class="span-10 last">
+<form id="frmSearch" name="frmSearch" method="GET">
+	<input id="Query" name="Query" size=30 value='<?echo $this->Query;?>'>
+	<input type="hidden" id="limit" name="limit" value="10">
+	<input type="hidden" id="offset" name="offset" value="<?echo $this->offset;?>">
+	<input type="hidden" id="relatedGuid" name="relatedGuid" value="<?echo $this->relatedGuid;?>">
+	<input type="submit" id="btnGoSearch" name="search" value="Search">
+</form>
+</div>
+<hr class="space">
+Editing data with id number <b><?=$this->id;?></b>
+<hr class="space">
+
+<form method="post">
+<?  foreach($this->rows as $row): ?>
+<div class="span-5">Invoice</div> 
+<div class="span-5"><input type="text" name="invoiceNumber" readonly ="readonly" value="<?=$row->invoiceNumber; ?>" /></div>
+<div class="span-5">USer ID</div> 
+<div class="span-5"><input type="text" name="userId" readonly ="readonly" value="<?=$row->userId; ?>"  /></div>
+
+<div class="span-5">Tax Number</div> 
+<div class="span-5"> <input type="text" name="taxNumber" readonly ="readonly" value="<?=$row->taxNumber; ?>"  /></div>
+<div class="span-5">Tax Company</div> 
+<div class="span-5"> <input type="text" name="taxCompany" readonly ="readonly" value="<?=$row->taxCompany; ?>"  /></div>
+
+<div class="span-5">Tax Address</div> 
+<div class="span-5"> <input type="text" name="taxAddress" readonly ="readonly" value="<?=$row->taxAddress; ?>"  /></div>
+<div class="span-5">tax City</div> 
+<div class="span-5"> <input type="text" name="taxCity" readonly ="readonly" value="<?=$row->taxCity; ?>" /></div>
+
+<div class="span-5">Tax ZIP</div> 
+<div class="span-5"><input type="text" name="taxZip" readonly ="readonly" value="<?=$row->taxZip; ?>"  /></div>
+<div class="span-5">Tax Province</div> 
+<div class="span-5"> <input type="text" name="taxProvince" readonly ="readonly" value="<?=$row->taxProvince; ?>"  /></div>
+
+<div class="span-5">Tax Country</div> 
+<div class="span-5"> <input type="text" name="taxCountryId" readonly ="readonly" value="<?=$row->taxCountryId; ?>"  /></div>
+<div class="span-5">Telephone</div> 
+<div class="span-5"> <input type="text" name="telephone" readonly ="readonly" value="<?=$row->telephone; ?>"  /></div>
+
+<div class="span-5">Payment Method</div> 
+<div class="span-5"> <input type="text" name="paymentMethod" readonly ="readonly" value="<?=$row->paymentMethod; ?>"  /></div>
+<div class="span-5">Payment Method Note</div>
+<div class="span-5"> <input type="text" name="paymentMethodNote" readonly ="readonly" value="<?=$row->paymentMethodNote; ?>"  /></div>
+
+<div class="span-5">Last Modified</div> 
+<div class="span-5"> <input type="text" id="lastModified" name="lastModified" value="<?=date("Y-m-d");//=$row->lastModified; ?>"  /><input class="button" type="reset" value="..." onclick="return showCalendar('lastModified');" name="cmddprebiddate"/></div>
+<div class="span-5">Date Purchased</div> 
+<div class="span-5"> <input type="text" name="datePurchased" readonly ="readonly" value="<?=$row->datePurchased; ?>"  /></div>
+
+<div class="span-5">Order Status</div> 
+<div class="span-5"> 
+<input type="hidden" name="orderaStatus" value="<?=$row->orderStatus; ?>"  />
+<select name="orderStatus">
+	<? foreach($this->rowsStatus as $status):?>
+	<option value="<?=$status['orderStatusId']?>" <? echo ($status['orderStatusId']==$row->orderStatus?'selected=selected':'') ; ?>><?=$status['ordersStatus']?>
+	<? endforeach;?>
+</select>
+</div>
+
+<div class="span-5">Date Order Finished</div> 
+<div class="span-5"> <input type="text" id="datepicker" readonly ="readonly" name="dateOrderFinished" value="<?=$row->dateOrderFinished; ?>"  /></div>
+<div class="span-5">Currency</div> <div class="span-5"> <input type="text" readonly ="readonly" name="currency" value="<?=$row->currency; ?>"  /></div>
+
+<div class="span-5">Currency Value</div> 
+<div class="span-5"> <input type="text" name="currencyValue" readonly ="readonly" value="<?=$row->currencyValue; ?>"  /></div>
+<div class="span-5">Order Total</div> 
+<div class="span-5"> <input type="text" name="orderTotal" readonly ="readonly" value="<?=$row->orderTotal; ?>"  /></div>
+
+<div class="span-5">Order Tax</div> <div class="span-5"> 
+<input type="text" name="orderTax" readonly ="readonly" value="<?=$row->orderTax ; ?>"  /></div>
+<!--
+<div class="span-5">Paypal IPN ID</div> 
+<div class="span-5"> <input type="text" name="paypalIpnId" readonly ="readonly" value="<?=$row->paypalIpnId; ?>"  /></div>
+-->
+<div class="span-5">IP Address</div> 
+<div class="span-5"> <input type="text" name="ipAddress" readonly ="readonly" value="<?=$row->ipAddress; ?>" /></div>
+<div class="span-5">Payment Date</div> 
+<div class="span-5"> <input type="text" id="paidDate" name="paidDate" readonly ="readonly" value="<?=date('Y-m-d') ?>" /><input class="button" type="reset" value="..." onclick="return showCalendar('paidDate');" name="cmddprebiddate"/></div>
+<div class="span-5">
+Note:
+</div>
+<div class="span-5">
+<textarea name="note"></textarea>
+<input type="hidden" name="id" value="<?=$this->id;?>" />
+<input type="hidden" name="offset" value="<?=$this->offset;?>" />
+</div>
+<div class="span-19">
+<input type="button" value= "back" onclick="javascript:history.back();" />
+<input type="reset" value="reset" />
+<input type="submit" name="save" value="save" />
+</div>
+</form>
+<? endforeach;?>

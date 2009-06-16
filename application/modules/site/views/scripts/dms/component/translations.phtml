@@ -1,0 +1,14 @@
+<h3>Available<span class="alt"> Translation(s)</span></h3>
+<hr>
+<div style="padding:0px;">
+	<?php foreach ($this->aData as $data){?>
+		
+		<?if($data['node']==$this->catalogGuid) {?>
+		<?php } else {?>
+			<a href="<?echo KUTU_ROOT_URL;?>/pages/g/<?php echo $data['node'];?>"><?php echo $data['title']; ?></a>
+			<br><?php echo $data['subTitle']; ?>
+			<div style="padding-top:5px"></div>
+		<?}?>
+		
+	<?php }?>
+</div>

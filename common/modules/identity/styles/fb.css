@@ -1,0 +1,55 @@
+html{height:100%;}
+html.auto_resize_iframe{height:auto;}
+body{height:100%;}
+body.auto_resize_iframe{height:auto;}
+.use_scroll_wrapper #scroll_wrapper{width:100%;height:100%;overflow:auto;position:relative;}
+#nonfooter{padding:0px;margin:0px;min-height:100%;}
+#page_height{padding:0px 0px 100px 0px;margin:0px;}
+body{background:#fff;font-family:"lucida grande",tahoma,verdana,arial,sans-serif;font-size:11px;margin:0px;padding:0px;text-align:left;direction:ltr;unicode-bidi:embed;}
+h1, h2, h3, h4, h5{font-size:13px;color:#333;margin:0px;padding:0px;}
+h1{font-size:14px;}
+h4, h5{font-size:11px;}
+p{font-family:"lucida grande", tahoma, verdana, arial, sans-serif;font-size:11px;text-align:left;}
+a{cursor:pointer;color:#3b5998;-moz-outline-style:none;text-decoration:none;}
+a:hover{text-decoration:underline;}
+img{border:0px;}
+select{border:1px solid #BDC7D8;font-family:"lucida grande",tahoma,verdana,arial,sans-serif;font-size:11px;padding:2px;}
+td,
+td.label{font-size:11px;text-align:left;}
+
+#fb_menubar .fb_menu .fb_menu_title a{color:white;display:block;font-weight:bold;padding:7px 7px 7px 8px;}
+
+.lt_menu_title{
+	font-family:"lucida grande",tahoma,verdana,arial,sans-serif;
+	font-size:11px;
+	color:white;font-weight:bold;padding:7px 7px 7px 8px;
+	float: left;
+}
+.lt_menu_title_right{
+	font-family:"lucida grande",tahoma,verdana,arial,sans-serif;
+	font-size:11px;
+	color:white;font-weight:normal;padding:7px 7px 7px 8px;
+	float: right;
+}
+.lt_menu_main_title{
+	font-family:"lucida grande",tahoma,verdana,arial,sans-serif;
+	font-size:14px;
+	color:white;font-weight:bold;padding:7px 7px 7px 8px;
+	float:left;
+}
+
+/* Floating Box always on TOP
+http://roshanbh.com.np/examples/floating-message-jquery/ */
+#message_box { 
+       position: absolute; 
+       top: 0; left: 0; 
+       z-index: 10; 
+	   background:#ffc;
+	   padding:5px;
+       border:1px solid #CCCCCC;
+       text-align:center; 
+       font-weight:bold; 
+       width:50px;
+		height:20px;
+      }
+

@@ -1,0 +1,87 @@
+<?php
+/**
+ * @package kutump
+ * @copyright 2008-2009 hukumonline.com
+ * @author Nihki Prihadi <nihki@hukumonline.com>
+ *
+ * $Id: header.phtml 2009-02-04 18:01: $
+ */
+?>
+
+<table width="982" border="0" cellspacing="0" cellpadding="0">
+<!-- BANNER
+<tr>
+	<td width="984" height="70" align="left" valign="top" bgcolor="#000000">&nbsp;</td>
+</tr>
+-->
+<tr>
+	<td width="984" height="65" align="left" valign="top">
+	<table width="982"  height="62" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+    	<td width="200" rowspan="2" align="center" valign="top"><img src="<?php echo KUTU_ROOT_URL; ?>/view-resources/img/logo_hukumonline.jpg" width="151" height="65" /></td>
+        <td width="784" height="30" align="right" valign="top">
+		<?php if (Zend_Auth::getInstance()->hasIdentity()) { ?>        
+	    	    <span class="atas"><b>Selamat datang,</b> <?php echo Zend_Auth::getInstance()->getIdentity()->username ?></span>&nbsp; <a href="<?php echo KUTU_ROOT_URL;?>/app/servers/identity/account/personal-setting" class="atas">My Account</a> <a class="atas" href="<?php echo $this->logoutUrl; ?>">Logout</a>&nbsp;</td>
+		<?php } else { ?>
+		        <a class="atas" href="<?php echo $this->loginUrl; ?>">Login</a>  <a class="atas" href="<?php echo KUTU_ROOT_URL;?>/app/servers/identity/account/signup">Register</a>		
+		<?php } ?>
+        </td>
+   	</tr>
+    <tr>
+    	<td height="35" align="right" valign="bottom" class="atas"><a class="atas" href="#">Tentang Kita</a>|   <a class="atas" href="#">Produk</a>   |   <a class="atas" href="#">Agenda</a>   |   <a class="atas" href="#">Forum</a>   |   <a class="atas" href="#">Karir</a></td>
+    </tr>
+  	</table>
+  	</td>
+</tr>
+<tr>
+	<td width="984" height="32" align="left" valign="top" background="<?php echo KUTU_ROOT_URL; ?>/view-resources/img/nav_tile.jpg">
+	<table width="982" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+    	<td width="200" height="32" align="left" valign="top"><img src="<?php echo KUTU_ROOT_URL; ?>/view-resources/img/nav_img.jpg" width="197" height="32" /></td>
+        <td width="787" height="32" align="right" valign="top">
+        <table width="0%" border="0" cellspacing="0" cellpadding="0">
+  		<tr>
+    		<td><img src="<?php echo KUTU_ROOT_URL; ?>/view-resources/img/nav_line.jpg" width="15" height="32" class="nol" /></td>
+    		<td class="atasnav"><a href="<?php echo KUTU_ROOT_URL; ?>">Awal</a> </td>
+    		<td><img src="<?php echo KUTU_ROOT_URL; ?>/view-resources/img/nav_line.jpg" width="15" height="32" class="nol" /></td>
+    		<td class="atasnav"><a href="#">Berita</a> </td>
+    		<td><img src="<?php echo KUTU_ROOT_URL; ?>/view-resources/img/nav_line.jpg" width="15" height="32" class="nol" /></td>
+    		<td class="atasnav"><a href="#">Peraturan</a> </td>
+    		<td><img src="<?php echo KUTU_ROOT_URL; ?>/view-resources/img/nav_line.jpg" width="15" height="32" class="nol" /></td>
+    		<td class="atasnav"><a href="#">Praktisi</a> </td>
+    		<td><img src="<?php echo KUTU_ROOT_URL; ?>/view-resources/img/nav_line.jpg" width="15" height="32" class="nol" /></td>
+    		<td class="atasnav"><a href="#">Klinik</a> </td>
+    		<td><img src="<?php echo KUTU_ROOT_URL; ?>/view-resources/img/nav_line.jpg" width="15" height="32" class="nol" /></td>
+    		<td class="atasnav"><a href="#">Kumunitas</a> </td>
+    		<td><img src="<?php echo KUTU_ROOT_URL; ?>/view-resources/img/nav_line.jpg" width="15" height="32" class="nol" /></td>
+    		<td class="atasnav"><a href="#">hukumpedia</a> </td>
+    		<td><img src="<?php echo KUTU_ROOT_URL; ?>/view-resources/img/nav_line.jpg" width="15" height="32" class="nol" /></td>
+    		<td class="atasnav"><a href="#">English Version !</a> </td>
+  		</tr>
+		</table>
+		</td>
+   	</tr>
+    </table>
+    </td>
+</tr>
+<tr>
+	<td width="984" height="45" align="left" valign="top">
+	<table width="982" border="0" cellspacing="0" cellpadding="0">
+    <tr>
+    	<td width="594" height="45" align="left" valign="middle" background="<?php echo KUTU_ROOT_URL; ?>/view-resources/img/up_tile1.jpg">
+        <?php //echo $this->action('ticker','index'); ?>
+        </td>
+        <td width="390" height="45" align="center" valign="middle" background="<?php echo KUTU_ROOT_URL; ?>/view-resources/img/up_tile2.jpg">
+     	<input name="textfield1" type="text" class="loginform" value="Search" size="20"/>
+		<select name="a" class="loginform" id="a">
+			<option>Category</option>
+            <option>Category 1</option>
+            <option>Category 2</option>
+       	</select>
+        <input name="sa" value="Cari" type="submit" />
+       	</td>
+  	</tr>
+    </table>
+    </td>
+</tr>
+</table>

@@ -1,0 +1,30 @@
+<?php $guid = $this->generateGuid();?>
+<table width="100%" cellpadding="0" cellspacing="0">
+	<tr>
+		<td align="left">
+			<div class="widgetContent">
+				<table>
+					<?php foreach ($this->aAttribute as $row) { ?>
+						<tr valign="top">
+							<td width="200"><strong><div style="color:#2F2F2F;display:inline"><?php echo $row['name'];?></div></strong><div style="padding-top:5px"></div></td>
+							<td width="10">&nbsp;</td>
+							<td><?php echo $row['value'];?></td>
+						</tr>
+					<?php }?>
+				</table>
+			</div>
+		</td>
+	</tr>
+</table>
+<script type="text/javascript">
+$("#toggle<?php echo $guid;?>menu").click(function() {
+    $('#<?php echo $guid;?>menu').toggle();
+    return false;
+
+}); 
+<?php if ($this->isAllowed($this->itemGuid, 'create','content')) {?>
+	$('#<?php echo $guid;?>menu').show();
+<?php } else { ?>
+	$('#<?php echo $guid;?>menu').hide();
+<?php }?>
+</script>

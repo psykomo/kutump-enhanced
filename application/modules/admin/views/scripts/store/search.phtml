@@ -1,0 +1,113 @@
+<link rel="stylesheet" href="<?echo KUTU_ROOT_URL;?>/lib/jquery/pagination.css" />
+<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.pagination.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		//$('#menu').flickrmenu();
+        $('ul.sf-menu').superfish();
+    
+    var isFirstTime = 1;
+	
+	// First Parameter: number of items
+	// Second Parameter: options object
+	var myPageIndex = 1;
+	var itemsPerPage = <?echo $this->itemsPerPage;?>;
+	var currentOffset = <?echo $this->offset;?>;
+	var limit = <?echo $this->limit;?>;
+	var currentNode = "<?echo $this->currentNode;?>";
+	var totalItems = <?echo $this->totalItems;?>;
+	var sort = "<?echo $this->sort;?>";
+	
+	
+	var tmpCurrentPageIndex = currentOffset/itemsPerPage;
+	
+	$("#catalogPagination").pagination(totalItems, 
+	{items_per_page:itemsPerPage, callback:handlePaginationClick, current_page:tmpCurrentPageIndex}
+	);
+	
+	function handlePaginationClick(new_page_index, pagination_container) 
+	{
+		if(!isFirstTime)
+		{
+			myPageIndex = new_page_index;
+			var nextOffset = (itemsPerPage * myPageIndex);
+		
+			$("Offset").val(nextOffset);
+			$("#frmSearch").submit();
+			
+			var url = "<?echo KUTU_ROOT_URL;?>/admin/store/search?Query="+<?=$this->Query;?>+currentNode+"&offset="+nextOffset+"&limit="+limit+"&sort="+sort+"/";
+			window.location = url;
+		}
+		isFirstTime = 0;
+		return false;
+	}
+
+	});
+    
+</script>
+<?=$this->render('header.phtml');?>
+<div class="span-10 last">
+<form id="frmSearch" name="frmSearch" method="GET" action="<?=KUTU_ROOT_URL;?>/admin/store/search">
+	<input id="Query" name="Query" size=30 value="<?echo $this->Query;?>">
+	<input type="hidden" id="limit" name="limit" value="10">
+	<input type="hidden" id="offset" name="offset" value="<?echo $this->offset;?>">
+	<input type="hidden" id="relatedGuid" name="relatedGuid" value="<?echo $this->relatedGuid;?>">
+	<input type="submit" id="btnGoSearch" value="Search">
+</form>
+</div>
+<br />
+<br />
+<br />
+<div class="span-10">
+	<b>Data number <?=($this->offset+1>$this->totalItems)?$this->totalItems:$this->offset+1; ?> to <?=($this->offset+$this->limit>$this->totalItems)?$this->totalItems:$this->offset+$this->limit; ?> from <?=$this->totalItems;?> data(s), with search term <?=$this->Query;?> </b>
+</div>
+<div class="span-13 last" align="right"> 
+		<?for($i=0;$i<count($this->orderStatus);$i++){?>
+        [<a href="<? echo $this->url(array('controller'=>'store', 
+            'action'=>'Order', 'status'=>$this->statusId[$i]));?>">
+            <?=$this->orderStatus[$i];?></a>]
+        <?}?>
+        [<a href="<? echo $this->url(array('controller'=>'store', 
+            'action'=>'Order', 'status'=>0));?>">All</a>]
+</div>
+<hr />
+		<div class="span-1">No</div>
+        <div class="span-5">Description</div>
+        <div class="span-3">Payment Method</div>
+        <div class="span-3">Purchasing Date</div>
+        <div class="span-3">Modifies Date</div>
+		<div class="span-2">Order Status</div>
+        <div class="span-2">Order Total</div>
+        <div class="span-2">Total Count</div>
+        <div class="span-2 last">Action</div>
+<hr />
+
+<? $i=$this->offset+1; foreach($this->rows as $row): ?>
+      <div class="span-1"><?=$i?></div>
+       <div class="span-5">
+        User ID : <?=$row['userId'];?><br />
+        Invoice : <?=$row['invoiceNumber'];?><br />
+        First Name :<?=$row['firstname'];?><br />
+        Last Name : <?=$row['lastname'];?><br />
+        Company : <?=$row['company'];?><br />&nbsp;
+        </div>
+       <div class="span-3"><?=$row['paymentMethod'];?>&nbsp;</div>
+       <div class="span-3"><?=$row['datePurchased'];?>&nbsp;</div>
+       <div class="span-3"><?=$row['lastModified'];?>&nbsp;</div>
+       <div class="span-2"><?=$row['ordersStatus'];?>&nbsp;</div>
+       <div class="span-2"><?=$row['orderTotal'];?>&nbsp;</div>
+       <div class="span-2"><?=$row['countTotal'];?>&nbsp;</div>
+       <div class="span-2 last">
+       <a href="<? echo $this->url(array('controller'=>'store', 
+            'action'=>'editOrder', 'id'=>$row['orderId']));?>">edit</a>
+       <a href="<? echo $this->url(array('controller'=>'store', 
+            'action'=>'detailOrder', 'id'=>$row['orderId']));?>">detail</a>
+            <? // =$row['orderId']?>&nbsp;
+        </div>
+<hr />
+<? $i++; endforeach;?>
+<table width='100%'>
+	<tr>
+		<td width=35%>&nbsp;</td>
+		<td align=right><div id='catalogPagination' class="pagination"></div></td>
+	</tr>
+</table>

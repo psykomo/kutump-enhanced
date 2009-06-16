@@ -1,0 +1,18 @@
+<?php $guid = $this->generateGuid();?>
+<table width="100%" cellpadding="0" cellspacing="0">
+	<tr>
+		<td>
+			<div style="padding:5px;">
+				<?php foreach ($this->rowsetDasarHukum as $data){?>
+					<div style="padding-top:5px"></div>
+					
+					<a href="<?echo KUTU_ROOT_URL;?>/admin/dms_catalog/details/guid/<?php echo $data->relatedGuid;?>"><?php echo Kutu_Core_Util::getCatalogAttributeValue($data->relatedGuid,'fixedTitle') ?></a>
+					<br><?php echo Kutu_Core_Util::getCatalogAttributeValue($data->relatedGuid,'fixedSubTitle') ?>
+					
+					<div style="padding-top:5px"></div>
+				<?php }?>
+				<div style="padding-bottom:5px"></div>
+			</div>
+		</td>
+	</tr>
+</table>

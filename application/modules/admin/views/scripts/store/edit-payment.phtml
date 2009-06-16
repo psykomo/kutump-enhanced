@@ -1,0 +1,99 @@
+<link rel="stylesheet" href="<?echo KUTU_ROOT_URL;?>/lib/jquery/pagination.css" />
+<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.pagination.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		//$('#menu').flickrmenu();
+        $('ul.sf-menu').superfish();
+
+    
+</script>
+<hr class="space">
+<h2 class="alt">Store Management</h2>
+<ul class="sf-menu">
+	<li class="current">
+		<a href="<?echo KUTU_ROOT_URL;?>/admin/store">Dasboard</a>
+	</li>
+	<li>
+		<a href="#">Search</a>
+	</li>
+	<li>
+		<a href="#">Orders</a>
+		<ul>
+			<li>
+				<a href="#">Show All</a>
+				<ul>
+					<li><a href="<? echo $this->url(array('controller'=>'store', 
+            'action'=>'paymentsetting'));?>">Payment Setting</a></li>
+					<li><a href="#">Orders</a></li>
+					<li><a href="#">short</a></li>
+					<li><a href="#">short</a></li>
+					<li><a href="#">short</a></li>
+				</ul>
+			</li>
+			<li>
+				<a href="#">menu item</a>
+				<ul>
+					<li><a href="#">menu item</a></li>
+					<li><a href="#">menu item</a></li>
+					<li><a href="#">menu item</a></li>
+					<li><a href="#">menu item</a></li>
+					<li><a href="#">menu item</a></li>
+				</ul>
+			</li>
+			<li>
+				<a href="#">menu item</a>
+				<ul>
+					<li><a href="#">menu item</a></li>
+					<li><a href="#">menu item</a></li>
+					<li><a href="#">menu item</a></li>
+					<li><a href="#">menu item</a></li>
+					<li><a href="#">menu item</a></li>
+				</ul>
+			</li>
+			<li>
+				<a href="#">menu item</a>
+				<ul>
+					<li><a href="#">menu item</a></li>
+					<li><a href="#">menu item</a></li>
+					<li><a href="#">menu item</a></li>
+					<li><a href="#">menu item</a></li>
+					<li><a href="#">menu item</a></li>
+				</ul>
+			</li>
+			<li>
+				<a href="#">menu item</a>
+				<ul>
+					<li><a href="#">menu item</a></li>
+					<li><a href="#">menu item</a></li>
+					<li><a href="#">menu item</a></li>
+					<li><a href="#">menu item</a></li>
+					<li><a href="#">menu item</a></li>
+				</ul>
+			</li>
+		</ul>
+	</li>
+	<li>
+		<a href="#">More</a>
+		<ul>
+			<li><a href="#">Coupon</a></li>
+			<li><a href="#">menu item</a></li>
+			<li><a href="#">menu item</a></li>
+			<li><a href="#">menu item</a></li>
+			<li><a href="#">menu item</a></li>
+		</ul>
+	</li>	
+</ul>
+Editing data with id number : <?=$this->id;?>
+<p>
+<form method="post">
+<?  foreach($this->rows as $row): ?>
+	    Key : <input type="text" name="key" value="<?=$row->settingKey;?>" size="50" /><br />
+        Value : <input type="text" name="value" value="<?=$row->settingValue;?>" size="70" /><br />
+        Notes : <input type="text" name="note" value="<?=$row->note;?>" size="50" /><br />
+        <input type="hidden" name="id" value="<?=$this->id;?>" />
+<? endforeach;?>
+    <input type="button" value= "back" onclick="document.location.href='<?=KUTU_ROOT_URL?>/admin/store/paymentsetting'" />
+    <input type="reset" value="reset" />
+    <input type="submit" name="save" value="save" />
+</form>
+</p>

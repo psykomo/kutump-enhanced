@@ -1,0 +1,159 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<title>Sample Page</title>
+
+  <!-- Framework CSS -->
+	<link rel="stylesheet" href="<?echo KUTU_ROOT_URL;?>/common/styles/blueprint/screen.css" type="text/css" media="screen, projection">
+	<link rel="stylesheet" href="<?echo KUTU_ROOT_URL;?>/common/styles/blueprint/print.css" type="text/css" media="print">
+  <!--[if IE]><link rel="stylesheet" href="<?echo KUTU_ROOT_URL;?>/common/styles/blueprint/ie.css" type="text/css" media="screen, projection"><![endif]-->
+
+	
+	<!-- Import fancy-type plugin for the sample page. -->
+	<link rel="stylesheet" href="<?echo KUTU_ROOT_URL;?>/common/styles/blueprint/plugins/fancy-type/screen.css" type="text/css" media="screen, projection">
+	<link rel="stylesheet" href="<?echo KUTU_ROOT_URL;?>/common/modules/site/styles/site.css" type="text/css" media="screen, projection">
+	<link rel="stylesheet" href="<?echo KUTU_ROOT_URL;?>/common/modules/site/styles/superfish.css" type="text/css" media="screen, projection">
+
+	<!--[if IE]><script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/js/excanvas.js"></script><![endif]-->
+	<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.js"></script>
+	<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.roundcorners.2.js"></script>
+	<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/splitter.js"></script>
+	<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.cookie.js"></script>
+	<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.flickrmenu.js"></script>
+	<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.validate.js"></script>
+	<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/superfish.js"></script>
+	
+	<script type="text/javascript">
+		$(document).ready(function(){
+			
+		});
+	</script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			 $('ul.sf-menu').superfish();
+
+
+		});
+	</script>
+
+</head>
+
+<body style="background:#E8E8E8;">
+	<div class="container">
+		<div class="span-24">
+			<div class="span-2">&nbsp;</div>
+			<!--<div class="span-20" style="background:#0a67a0">-->
+			<div class="span-10 prepend-10" style="background:">
+				<div style="padding-top:5px"></div>
+				<?if(empty($this->username)){?>
+						<a href="<?echo KUTU_ROOT_URL;?>/identity/login" style="font-color:" >Login/Sign up</a> |
+					<?}
+					else { echo "Hello, ". $this->username;?>
+						 <a href="<?echo KUTU_ROOT_URL;?>/identity/logout" style="color:">Logout</a> |
+						<a href="<?echo KUTU_ROOT_URL;?>/site/myaccount" style="color:">My Account</a> |
+						<a href="<?echo KUTU_ROOT_URL;?>/site/store/checkout" style="color:">View Cart</a> |
+					<?}?>
+					<a href="#" style="color:">Help</a> | <a href="#" style="color:">Contact Us</a>
+					<div style="padding-top:5px"></div>
+					<form id="frmSearch" name="frmSearch" action="<?echo KUTU_ROOT_URL;?>/site/dms/search" method="GET">
+						<input id="sQuery" name="sQuery" size=30 value='<?echo $this->sQuery;?>'>
+						<input type="hidden" id="sLimit" name="sLimit" value="10">
+						<input type="hidden" id="sOffset" name="sOffset" value="<?echo $this->sOffset;?>">
+						<input type="submit" id="btnGoSearch" value="Search">
+					</form>
+					<div style="padding-top:10px"></div>
+			</div>
+			<div class="span-2 last">&nbsp;</div>
+		</div>
+		<!--<div class="span-24 last">
+			<div class="span-2">&nbsp;</div>
+			<div class="span-20" style="background:#e8b702">
+				<div style="padding-top:10px"></div>
+				<div class="span-9 prepend-1"><h2 style="color:#fff;">LGS Online</h2></div>
+				<div class="span-10 last">
+					<form id="frmSearch" name="frmSearch" action="<?echo KUTU_ROOT_URL;?>/site/dms/search" method="GET">
+						<input id="sQuery" name="sQuery" size=30 value='<?echo $this->sQuery;?>'>
+						<input type="hidden" id="sLimit" name="sLimit" value="10">
+						<input type="hidden" id="sOffset" name="sOffset" value="<?echo $this->sOffset;?>">
+						<input type="submit" id="btnGoSearch" value="Search">
+					</form>
+				</div>
+				
+			</div>
+			<div class="span-2 last">&nbsp;</div>
+		</div>-->
+		
+		 
+		
+		<!--<div class="darker"></div>-->
+		<div class="span-24">
+			<div class="span-2">&nbsp;</div>
+			<div class="span-20 menuBg">
+				
+				<div class="span-5"><h2>&nbsp;&nbsp;&nbsp;&nbsp;LGS ONLINE</h2></div>
+				<div class="span-15 last">
+					<!--<IMG src="<?echo KUTU_ROOT_URL;?>/common/modules/site/images/menu1.jpg" />-->
+					<!--<a href="<?echo KUTU_ROOT_URL;?>/site">Home</a> |
+						<?if(empty($this->username)){?> 
+							<a href="<?echo KUTU_ROOT_URL;?>/site/index/about">Lgs Legal Database</a> 
+						<?}
+						else { //echo "Hello, ". $this->username;?>
+							 <a href="<?echo KUTU_ROOT_URL;?>/dms">Lgs Legal Database</a>
+						<?}?>
+						| <a href="#">News & Opportunities</a> | <a href="#">LGS Profile</a>
+						| <a href="#">Lgs Awards</a> | <a href="#">LGS Profile</a>
+						| <a href="#">Testimonies</a> | <a href="#">LGS Clients</a> -->
+						<ul class="sf-menu">
+							<li class="current">
+								<a href="<?echo KUTU_ROOT_URL;?>/pages">Home</a>
+							</li>
+							<li>
+								<?if(empty($this->username)){?> 
+									<a href="<?echo KUTU_ROOT_URL;?>/pages/g/lgs4a1d7b209f3df">LGS Legal Database</a> 
+								<?}
+								else { //echo "Hello, ". $this->username;?>
+									 <a href="<?echo KUTU_ROOT_URL;?>/dms">LGS Legal Database</a>
+								<?}?>
+							</li>
+							<li>
+								<a href="<?echo KUTU_ROOT_URL;?>/pages/g/lgs4a1d77eb99e7a">News & Opportunities</a>
+							</li>
+							<li>
+								<a href="<?echo KUTU_ROOT_URL;?>/pages/g/lgs4a1d79ad94802">LGS Profile</a>
+								<?echo $this->sMenuLgsProfile;?>
+							</li>	
+							<li>
+								<a href="#">LGS News</a>
+
+							</li>
+							<li>
+								<a href="#">More  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</a>
+								<ul>
+									<li><a href="#">Message from the Board</a></li>
+									<li><a href="#">Indonesia Under Review</a></li>
+									<li><a href="#">Who's Who in Indonesia</a></li>
+									<li><a href="#">Important Addresses</a></li>
+									<li><a href="#">Important Public Documents And Articles</a></li>
+									<li><a href="#">Q & A With LGS Partners</a></li>
+									<li><a href="#">Important Addresses</a></li>
+								</ul>
+							</li>
+						</ul>
+						<div class="lighter"></div>
+				</div>
+				
+			
+			</div>
+			<div class="span-2 last">&nbsp;</div>
+			
+		</div>
+		
+		<?php echo $this->layout()->content; ?>
+		
+		<div class="span-3 prepend-19 append-2 last"><IMG src="<?echo KUTU_ROOT_URL;?>/common/images/logo-iso2.jpg" /></div>	
+	</div>
+</body>
+</html>
