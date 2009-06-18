@@ -4,3 +4,5 @@
 /data
 /application/config/*.ini
 /application/tmp
+/solr-kutump
+baseinit.php
