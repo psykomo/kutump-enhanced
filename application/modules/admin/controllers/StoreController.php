@@ -539,5 +539,44 @@ class Admin_StoreController extends Kutu_Controller_Action
 		$this->view->rows = $rowset;
         //print_r($r->getParams());
     }
+<<<<<<< HEAD:application/modules/admin/controllers/StoreController.php
+=======
+	public function paypalpaymentAction(){
+		$tblOrder= new Kutu_Core_Orm_Table_Order();
+		//View catalogs
+		
+		$r = $this->getRequest();
+		$limit = ($r->getParam('limit'))?$r->getParam('limit'):10;
+		$this->view->limit =$limit;
+		$itemsPerPage = $limit;
+		$this->view->itemsPerPage = $itemsPerPage;
+		$offset = ($r->getParam('offset'))?$r->getParam('offset'):0;
+		$this->view->offset = $offset;
+		$Query = ($r->getParam('Query'))?$r->getParam('Query'):'';
+		
+		//print_r($Query);
+		$db = Zend_Db_Table::getDefaultAdapter();
+		
+		$tblStatus = new Kutu_Core_Orm_Table_OrderStatus();
+        $where = "KO.orderStatus = 3 AND KO.paymentMethod ='paypal'";
+        
+        $valStatus = ' ';
+		
+        $status = $tblStatus->getStatus();
+        for($i =0 ;$i<count($status);$i++){
+            $statusId[$i] = $status[$i]->orderStatusId;
+            $orderStatus[$i] = $status[$i]->ordersStatus;
+        }
+        
+        $rowset = $tblOrder->getOrderSummaryAdmin($where,$limit, $offset);
+		$numi = $tblOrder->countOrdersAdmin('('.$where.')');
+        
+        $this->view->statusId = $statusId;
+        $this->view->orderStatus = $orderStatus;
+        $this->view->valStatus = $valStatus;
+        $this->view->totalItems = $numi;
+		$this->view->rows = $rowset;
+	}
+>>>>>>> update views, store payment controller, table model modification:application/modules/admin/controllers/StoreController.php
 }
 ?>

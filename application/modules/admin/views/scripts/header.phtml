@@ -6,7 +6,10 @@
 	$(document).ready(function(){
 		//$('#menu').flickrmenu();
         $('ul.sf-menu').superfish();
+<<<<<<< HEAD:application/modules/admin/views/scripts/header.phtml
 	});
+=======
+>>>>>>> update views, store payment controller, table model modification:application/modules/admin/views/scripts/header.phtml
 </script>
 <hr class="space">
 <h2 class="alt">Store Management</h2>
@@ -24,6 +27,13 @@
 	</li>
 	<li>
 		<a href="<? echo $this->url(array('module' => 'admin','controller'=>'store', 
+<<<<<<< HEAD:application/modules/admin/views/scripts/header.phtml
+=======
+						'action'=>'paypalPayment', 'offset'=>0,'limit'=>10));?>">Paypal Transaction</a>
+	</li>
+	<li>
+		<a href="<? echo $this->url(array('module' => 'admin','controller'=>'store', 
+>>>>>>> update views, store payment controller, table model modification:application/modules/admin/views/scripts/header.phtml
 						'action'=>'postpaid'));?>">Postpaid Users</a>
 	</li>
 		<!--
