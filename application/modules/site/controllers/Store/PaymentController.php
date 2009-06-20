@@ -16,8 +16,8 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
         - Load Configuration dari tabel kutupaymentSetting
         - set TestMode = True or False 
         */
-        $this->testMode=true;
-	$this->_defaultCurrency='USD';
+        $this->_testMode=true;
+		$this->_defaultCurrency='USD';
         $this->_helper->layout()->setLayout('layout-iht');
         
         $saveHandlerManager = new Kutu_Session_SaveHandler_Manager();
@@ -115,11 +115,7 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
                  - Logic for test mode 
                 */
                 require_once('PaymentGateway/Paypal.php');  // include the class file
-<<<<<<< HEAD:application/modules/site/controllers/Store/PaymentController.php
-                $paymentObject = new Paypal();             // initiate an instance of the class
-=======
                 $paymentObject = new Paypal;             // initiate an instance of the class
->>>>>>> update views, store payment controller, table model modification:application/modules/site/controllers/Store/PaymentController.php
                 
                 if($this->testMode){                    
                     $paymentObject->addField('business', $this->_paymentVars['paypalTestBusiness']);
@@ -145,13 +141,6 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
                 $paymentObject->addField('tax_cart',$cart['taxAmount']);
                 $paymentObject->addField('currency_code',$this->_defaultCurrency);
 
-<<<<<<< HEAD:application/modules/site/controllers/Store/PaymentController.php
-                $paymentObject->dumpFields();
-                //$paymentObject->submitPayment();
-                
-                $this->saveOrder($cart);
-				$this->updateInvoiceMethod('pending', 1, 0, 'paid with paypal method');
-=======
 				$paymentObject->dumpFields();
                 $paymentObject->submitPayment();
                 echo "<pre>";
@@ -160,7 +149,6 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
 				print_r($this->completeItem());
                 //$this->saveOrder($cart);
 				//$this->updateInvoiceMethod('pending', 1, 0, 'paid with paypal method');
->>>>>>> update views, store payment controller, table model modification:application/modules/site/controllers/Store/PaymentController.php
 				//setting payment and status as pending (1), notify = 0, notes = 'paid with...'
                 break;
             case '2co':
@@ -285,17 +273,9 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
             // variables.  However, you don't want to "process" the order until you
             // get validation from the IPN.  That's where you would have the code to
             // email an admin, update the database with payment status, activate a
-<<<<<<< HEAD:application/modules/site/controllers/Store/PaymentController.php
-        // membership, etc.  
- 
- 
-            
-            foreach ($_POST as $key => $value) { echo "$key: $value<br>"; }
-=======
 			// membership, etc.  
 				
             //foreach ($_POST as $key => $value) { echo "$key: $value<br>"; }
->>>>>>> update views, store payment controller, table model modification:application/modules/site/controllers/Store/PaymentController.php
             
             
             // You could also simply re-direct them to another page, or your own 
@@ -305,20 +285,7 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
             
     }
     
-    public function cancelAction(){
-            // The order was canceled before being completed.
-        foreach ($_POST as $key => $value) { echo "$key: $value<br>"; }
-<<<<<<< HEAD:application/modules/site/controllers/Store/PaymentController.php
-            
-=======
-		/*echo '<pre>';
-		print_r($this->_request->getParams());
-		echo '</pre>';*/
->>>>>>> update views, store payment controller, table model modification:application/modules/site/controllers/Store/PaymentController.php
-    }
-    
-    
-    public function verificationAction(){
+	public function verificationAction(){
         /*
          - check payment type use switch if necessary (paypal, twoco, manual )
          - use verification function from existing library of paypal/twoco
@@ -335,36 +302,26 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
         // class logs all IPN data to a text file.
         
         // Create an instance of the paypal library
-<<<<<<< HEAD:application/modules/site/controllers/Store/PaymentController.php
-=======
 		require_once('PaymentGateway/Paypal.php');
->>>>>>> update views, store payment controller, table model modification:application/modules/site/controllers/Store/PaymentController.php
         $myPaypal = new Paypal();
         
         // Log the IPN results
         $myPaypal->ipnLog = TRUE;
         
         // Enable test mode if needed
+		if($this->_testMode){
         $myPaypal->enableTestMode();
-        
+        }
         // Check validity, status, amount and tax amount and write down it
         if ($myPaypal->validateIpn())
         {
             if ($myPaypal->ipnData['payment_status'] == 'Completed' && $myPaypal['']=='')
             {
-                 file_put_contents('paypal.txt', 'SUCCESS');
-<<<<<<< HEAD:application/modules/site/controllers/Store/PaymentController.php
-=======
 				 $this->paypalsave('SUCCESS');
->>>>>>> update views, store payment controller, table model modification:application/modules/site/controllers/Store/PaymentController.php
             }
             else
             {
-                 file_put_contents('paypal.txt', "FAILURE\n\n" . $myPaypal->ipnData);
-<<<<<<< HEAD:application/modules/site/controllers/Store/PaymentController.php
-=======
 				 $this->paypalsave('FAILED');
->>>>>>> update views, store payment controller, table model modification:application/modules/site/controllers/Store/PaymentController.php
             }
         }
         
@@ -387,16 +344,12 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
            $body .= "from ".$this->paypal->ipn_data['payer_email']." on ".date('m/d/Y');
            $body .= " at ".date('g:i A')."\n\nDetails:\n";
            
-<<<<<<< HEAD:application/modules/site/controllers/Store/PaymentController.php
-           foreach ($this->paypal->ipn_data as $key => $value) { $body .= "\n$key: $value"; }
-=======
            foreach ($this->paypal->ipn_data as $key => $value) { 
 			$body .= "\n$key: $value"; 
 		}
->>>>>>> update views, store payment controller, table model modification:application/modules/site/controllers/Store/PaymentController.php
            mail($to, $subject, $body);
         }
-            
+        $_SESSION['jCart'] = '';      
     }
     
     public function instructionAction(){
@@ -404,20 +357,8 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
 		
 		$tblOrder = new Kutu_Core_Orm_Table_Order();
 		$rowset = $tblOrder->getLastOrder($userId);
-		
 		$this->view->rowset = $rowset;
-    }
-    
-    public function paymentConfirm(){        
-        
-    }
-    
-    public function paymentCancel(){
-        
-    }
-    
-    public function paymentRefund(){
-        
+		$_SESSION['jCart'] = '';        
     }
     
     private function getInvoiceNumber(){
@@ -486,27 +427,23 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
 	
 	public function postpaidAction(){
 		$cart = $this->completeItem();
-<<<<<<< HEAD:application/modules/site/controllers/Store/PaymentController.php
-=======
 		/*echo '<pre>';
 		print_r($cart);
 		print_r($this->_request->getParams());
 		echo '</pre>';*/
->>>>>>> update views, store payment controller, table model modification:application/modules/site/controllers/Store/PaymentController.php
 		$this->saveOrder($cart);
 		$this->updateInvoiceMethod('postpaid', 5, 0, 'paid with postpaid method');
 		//setting payment and status as postpaid (5), notify = 0, notes = 'paid with...'
 		$this->_helper->redirector('postpaidSuccess');
 	}
-	public function postpaidlimitAction(){
-    }
+
 	public function postpaidsuccessAction(){
 		$userId = $this->_userInfo->userId;
 		
 		$tblOrder = new Kutu_Core_Orm_Table_Order();
 		$rowset = $tblOrder->getLastOrder($userId);
-		
 		$this->view->rowset = $rowset;
+		$_SESSION['jCart'] = '';
 	}
 	public function notpostpaidAction(){
 	}
@@ -655,11 +592,7 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
 			$userFinance->update($data,$where);
 			$this->_helper->redirector('bilupdsuc');
 		}else{
-<<<<<<< HEAD:application/modules/site/controllers/Store/PaymentController.php
-			echo 'falset';
-=======
 			//echo 'falset';
->>>>>>> update views, store payment controller, table model modification:application/modules/site/controllers/Store/PaymentController.php
 		}
 	}
 	public function bilupdsucAction(){
@@ -710,17 +643,9 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
 		$this->view->rowsetHistory = $rowsetHistory;		
 		
 	}
-<<<<<<< HEAD:application/modules/site/controllers/Store/PaymentController.php
-=======
 	public function paypalsave($status){
 	
-		/*$row->taxNumber=$value['taxNumber'];
-		$row->taxCompany=$value['taxCompany'];
-		$row->taxAddress=$value['taxAddress'];
-		$row->taxCity=$value['taxCity'];
-		$row->taxZip=$value['taxZip'];
-		$row->taxProvince=$value['taxProvince'];
-		$row->taxCountryId*/
+
 		$cart = $this->completeItem();
 		//save order
 		@$this->saveOrder($cart);		
@@ -735,7 +660,7 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
 		$data->payerId  = $this->_request->getParam('payer_id');  
 		$data->addressStreet  = $this->_request->getParam('address_street');  
 		$data->paymentDate  = $this->_request->getParam('payment_date');
-		$data->paymentStatus  = $status; //$this->_request->getParam('payment_status');  
+		$data->paymentStatus  = $status; 						
 		$data->addressZip  = $this->_request->getParam('address_zip'); 
 		$data->firstName  = $this->_request->getParam('first_name');  
 		$data->mcFee  = $this->_request->getParam('mc_fee');
@@ -761,19 +686,7 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
 		$data->parentTxnId  = $this->_request->getParam('txn_id');
 		$data->lastModified = date('Y-m-d');
 		$data->dateAdded = date('Y-m-d');
-		/*
-		no return
-		$this->_request->getParam('paypalIpnId');
-		$this->_request->getParam('reasonCode'); 
-		$this->_request->getParam('pendingReason'); 
-		$this->_request->getParam('orderId'); 
-		$this->_request->getParam('payerBusinessName'); 
-		$this->_request->getParam('settleAmount'); 
-		$this->_request->getParam('settleCurrency'); 
-		$this->_request->getParam('exchangeRate'); 
-		$this->_request->getParam('lastModified'); 
-		$this->_request->getParam('dateAdded'); 
-		*/
+		
 		$data->save();
 		//echo($tblPaypal->getLastInsertId());
 		$paypalHistory = new Kutu_Core_Orm_Table_PaypalPaymentHistory();
@@ -782,14 +695,56 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
 		$row['txnId'] = $this->_request->getParam('txn_id');
 		$row['parentTxnId'] = $this->_request->getParam('txn_id');
 		$row['paymentStatus'] = $this->_request->getParam('payment_status');
-		//$row['pendingReason'] =     
 		$row['dateAdded'] = date('Y-m-d');
 		
 		$row->save();
-		echo '<pre>';
-		//print_r(($this->_request->getParams()));
-		echo '</pre>';
-		//print_r($this->completeItem());
 	}
->>>>>>> update views, store payment controller, table model modification:application/modules/site/controllers/Store/PaymentController.php
+    public function confirmAction(){
+        $userId = $this->_userInfo->userId;
+        $tblOrder = new Kutu_Core_Orm_table_Order();
+        $tblSetting = new Kutu_Core_Orm_Table_PaymentSetting();
+        
+        $rowset = $tblOrder->getTransactionToConfirm($userId);//,$limit,$offset);
+        $numCount = $tblOrder->getTransactionToConfirmCount($userId);
+        $bankAccount = $tblSetting->fetchAll($tblSetting->select()->where("settingKey = 'bankAccount'"));
+        
+        $this->view->numCount = $numCount;
+        $this->view->rowset = $rowset;
+        $this->view->bankAccount = $bankAccount;
+        
+    }
+    public function payconfirmAction(){
+		$r = $this->getRequest();
+		foreach($r->getParam('orderId')as $key=>$row){
+			$tblConfirm = new Kutu_Core_Orm_Table_PaymentConfirmation();
+			$data = $tblConfirm->fetchNew();
+			
+			$data['paymentMethod'] = $r->getParam('paymentMethod');
+			$data['destinationAccount'] = $r->getParam('destinationAccount');
+			$data['paymentDate'] = $r->getParam('paymentDate');
+			$data['amount'] = $r->getParam('amount');
+			$data['senderAccount'] = $r->getParam('senderAccount');
+			$data['senderAccountName'] = $r->getParam('senderAccountName');
+			$data['bankName'] = $r->getParam('bankName');
+			$data['note'] = $r->getParam('note');
+			$data['orderId'] = $row;
+			$data->save();
+			
+			$tblOrder = new Kutu_Core_Orm_Table_Order();
+			$statdata['orderStatus'] = 4;
+			$tblOrder->update($statdata, 'orderId = '.$data['orderId']);
+		}
+		$this->_helper->redirector('confirm');
+	}
+    public function cobaAction(){
+        $mail = new PaymentGateway_HtmlMail();
+        $sMailSource="My Name is {NAME}. Thank's for using {USING}.";
+        $sMailEmailTo='destination@email.com';
+        $sMailSubject="Using Send File Mail";
+        $sMailEmailFrom='from@email.com';
+        $sMailHeader='';
+        $aMailDataSet=array('NAME' 	=> 'Firman',
+                            'USING'	=> 'HTML Mail Templates' );
+        $mail->SendFileMail($sMailSource, $sMailEmailTo, $sMailSubject, $sMailEmailFrom, $sMailHeader, $aMailDataSet);
+    }
 }

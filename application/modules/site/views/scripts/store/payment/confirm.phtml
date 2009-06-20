@@ -1,0 +1,151 @@
+<h2 class="alt">Order History</h2>
+<hr>
+<div class="span-10">
+	<a href="<? echo KUTU_ROOT_URL;?>/site/myaccount">My Account</a> || 
+	<!-- <input type="button" value= "My Account" onclick="javascript:history.back();" /> -->
+	<a href="<? echo KUTU_ROOT_URL;?>/site/store_payment/transaction">Transaction History</a> || 
+	<a href="<? echo KUTU_ROOT_URL;?>/site/store_payment/billing">Edit Billing Info</a> || 
+	<a href="<? echo KUTU_ROOT_URL;?>/site/store_payment/document">Documents</a>
+</div>
+<div class="span-14 last" align="right">
+<form id="frmSearch" name="frmSearch" method="GET" action="<?=KUTU_ROOT_URL;?>/site/store_payment/search">
+	<input id="sQuery" name="sQuery" size=30 value='<?echo $this->sQuery;?>'> 
+	<input type="hidden" id="sLimit" name="sLimit" value="10">
+	<input type="hidden" id="sOffset" name="sOffset" value="<?echo $this->sOffset;?>">
+	<input type="submit" id="btnGoSearch" value="Search">
+</form>
+</div>
+<script src="<?echo KUTU_ROOT_URL;?>/lib/calendar.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" media="all" href="<?echo KUTU_ROOT_URL;?>/lib/calendar/calendar-mos.css" title="green">
+<script src="<?echo KUTU_ROOT_URL;?>/lib/calendar/calendar_mini.js" type="text/javascript"></script>
+
+<script src="<?echo KUTU_ROOT_URL;?>/lib/calendar/lang/calendar-en.js" type="text/javascript"></script
+<link rel="stylesheet" href="<?echo KUTU_ROOT_URL;?>/lib/jquery/pagination.css" />
+<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.pagination.js"></script>
+<script>
+	function showResults() {
+		 var resultMsg=0
+		 <?
+		 foreach($this->rowset as $value){
+			$arr[]= $value['orderTotal'];
+		 }
+		 ?>
+		<? foreach($arr as $key=>$val){?>
+		 
+		 if(document.payconfirm.orderId[<? echo $key?>].checked){ 
+		 resultMsg+=parseFloat(<? echo ($val)?>)
+		 }
+		<?}?>
+		 document.getElementById('amount').value=resultMsg
+	}
+	</script>
+
+<b><?=$this->numCount;?> data(s) of unconfirmed payment.</b>
+<hr>
+<form name="payconfirm" id="payconfirm" method="post" action="payconfirm">
+    <div class="span-1">No&nbsp;</div>
+    <div class="span-3">Invoice&nbsp;</div>
+    <div class="span-4">date Purchased&nbsp;</div>
+    <!-- <div class="span-4">Payment Date&nbsp;</div> -->
+    <div class="span-3">Total Price&nbsp;</div>
+    <div class="span-3">Total Amount&nbsp;</div>
+    <div class="span-3">Method&nbsp;</div>
+    <div class="span-3">Status&nbsp;</div>
+    <div class="span-3 last">Pay&nbsp;</div>
+<hr />
+<? $i = $this->offset + 1; ?>
+<? if(!empty($_POST['searchid'])):?>
+    <?=header('Location: '.$this->url(array('controller'=>'store_payment', 
+            'action'=>'detail', 'id'=>$_POST['searchid'])));?>
+<? endif; ?>
+<? foreach($this->rowset as $value): ?>
+<? if($value['orderStatus'] == 3 or $value['orderStatus'] == 5){
+	$anchor = 'trdetail';
+	}else{
+	$anchor = 'detail';
+	}
+	if($value['orderStatus']==4){
+		$color = "green";
+	}elseif($value['orderStatus']==6){
+		$color = "orange";
+	}else{
+		$color = "black";
+	}
+?>	
+	<font color="<?=$color?>">
+    <div class="span-1"><a href="<?=$this->url(array('controller'=>'store_payment', 
+        'action'=>$anchor, 'id'=>$value['orderId'])); ?>"><?=$i;?></a>&nbsp;</div>
+    <div class="span-3"><?=$value['invoiceNumber']; ?>&nbsp;</div>
+    <div class="span-4"><?=$value['datePurchased']; ?>&nbsp;</div>
+    <!-- <div class="span-4"><?=$value['dateOrderFinished']; ?>&nbsp;</div> -->
+    <div class="span-3" id="orderTotale"><?=$value['orderTotal']; ?>&nbsp;</div>
+    <div class="span-3"><?=$value['countTotal']; ?>&nbsp;</div>
+    <div class="span-3"><?=$value['paymentMethod']; ?>&nbsp;</div>
+    <div class="span-3"><?=$value['ordersStatus']; ?>&nbsp;</div>
+    <div class="span-3 last">
+	<?if(($value['orderStatus']==4) ){?>
+	<input type="checkbox" id="orderId" name="orderId[<?=$i?>]" disabled="disabled">
+	<?}else{?>
+	<input type="checkbox" id="orderId" name="orderId[<?=$i?>]" value="<?=$value['orderId']?>" onClick="showResults();">
+	<?}?>
+	&nbsp;</div>
+    <hr />
+	</font>
+<? $i++; endforeach;  ?>
+<hr/>
+<fieldset class="span-14">
+    <div class="span-14">
+    <div class="span-5">Payment Method</div>
+    <div class="span-5 last">
+        <select name="paymentMethod">
+            <option value="atm transfer">ATM Transfer
+            <option value="cash bank">Cash Bank
+            <option value="transfer">Transfer
+            <option value="internet banking">Internet Banking
+        </select>
+    </div>
+<hr>
+    <div class="span-5">Bank Account Destination</div>
+    <div class="span-5 last">
+    <select name="destinationAccount">
+        <? foreach($this->bankAccount as $destAccount){
+            $acc = explode("|", $destAccount->settingValue);
+        }
+        foreach($acc as $accN ){
+        ?>
+        <option value="<?=$accN?>"><?=$accN?>
+        <?}?>
+    </select>
+    </div>
+<hr>
+    <div class="span-5">Date</div>
+    <div class="span-5 last">
+    <input type="text" name="paymentDate" id="paymentDate" value="<?=date('Y-m-d')?>"><input class="button" type="reset" value="..." onclick="return showCalendar('paymentDate');" name="cmddprebiddate"/></div>
+<hr>
+    <div class="span-5">Amount</div>
+    <div class="span-5 last"><input type="text" name="amount" id="amount" value="0"readonly="readonly"></div>
+<hr>
+    <div class="span-5">Sender Account</div>
+    <div class="span-5 last"><input type="text" name="senderAccount"></div>
+<hr>
+    <div class="span-5">Sender Account Name</div>
+    <div class="span-5 last"><input type="text" name="senderAccountName"></div>
+<hr>
+    <div class="span-5">Bank Name</div>
+    <div class="span-5 last"><input type="text" name="bankName"></div>
+<hr>
+    <div class="span-5">Notes</div>
+    <div class="span-5 last"><textarea name="note"></textarea></div>
+<hr>
+    <div class="span-8"><input type="submit"/></div>
+<hr class="space">
+</div>
+</fieldset>
+</form>
+
+<table width='100%'>
+	<tr>
+		<td width=35%>&nbsp;</td>
+		<td align=right><div id='catalogPagination' class="pagination">&nbsp;</div></td>
+	</tr>
+</table>
