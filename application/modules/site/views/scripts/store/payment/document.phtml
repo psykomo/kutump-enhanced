@@ -3,9 +3,11 @@
 <div class="span-10">
 	<a href="<? echo KUTU_ROOT_URL;?>/site/myaccount">My Account</a> || 
 	<!-- <input type="button" value= "My Account" onclick="javascript:history.back();" /> -->
-	<a href="<? echo KUTU_ROOT_URL;?>/site/store_payment/list">Oder History</a> || 
-	<a href="<? echo KUTU_ROOT_URL;?>/site/store_payment/transaction">Transaction History</a> || 
-	<a href="<? echo KUTU_ROOT_URL;?>/site/store_payment/billing">Edit Billing Info</a>
+	<a href="<? echo KUTU_ROOT_URL;?>/site/store_payment/list">Order </a> || 
+	<a href="<? echo KUTU_ROOT_URL;?>/site/store_payment/transaction">Transaction </a> || 
+	<a href="<? echo KUTU_ROOT_URL;?>/site/store_payment/confirm">Confirmation</a> || 
+	<a href="<? echo KUTU_ROOT_URL;?>/site/store_payment/billing">Billing Info</a> || 
+	<a href="<? echo KUTU_ROOT_URL;?>/site/store_payment/document">Documents</a>
 </div>
 <div class="span-14 last" align="right">
 <form id="frmSearch" name="frmSearch" method="GET">
@@ -61,26 +63,28 @@ $(document).ready(function(){
 </script>
 <b>Data number <?=($this->offset+1>$this->numCount)?$this->numCount:$this->offset+1; ?> to <?=($this->offset+$this->limit>$this->numCount)?$this->numCount:$this->offset+$this->limit>$this->numCount; ?> from <?=$this->numCount;?> data(s)</b>
 <hr>
-<div class="span-2">No.</div>
+<strong>
+<div class="span-1" align="center">No.</div>
 <!--
 <div class="span-3">Product ID</div>
 <div class="span-4">Order ID</div>
 <div class="span-4">Item ID</div>
 -->
-<div class="span-4">Purchasing Date</div>
-<div class="span-8">Item Name</div>
-<div class="span-3 last">Download</div>
+<div class="span-4" align="center">Purchasing Date</div>
+<div class="span-8" align="center">Item Name</div>
+<div class="span-2 last" align="center">Download</div>
+</strong>
 <hr />
 <? $i=$this->offset + 1; foreach($this->rowset as $valueDetail): ?>
-<div class="span-2 prepend"><?=$i?></div>
+<div class="span-1 prepend" align="right"><?=$i?></div>
 <!--
 <div class="span-3"><?=$valueDetail['orderProductId']; ?> </div>
 <div class="span-4"><?=$valueDetail['orderId']; ?> </div>
 <div class="span-4"><?=$valueDetail['itemId']; ?> </div>
 -->
-<div class="span-4"><?=$valueDetail['purchasingDate']; ?>&nbsp </div>
+<div class="span-4" align="center"><?=strftime("%Y-%m-%d", strtotime($valueDetail['purchasingDate'])); ?>&nbsp </div>
 <div class="span-8"><?=$valueDetail['documentName']; ?>&nbsp </div>
-<div class="span-3 last"><a href="#" title="click here to download this document">download</a> </div>
+<div class="span-2 last"><a href="#" title="click here to download this document">download</a> </div>
 <hr />
 <?  $i++; endforeach;  ?>
 <table width='100%'>

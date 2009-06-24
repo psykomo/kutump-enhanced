@@ -9,9 +9,8 @@
 	
 	// First Parameter: number of items
 	// Second Parameter: options object
-	/*
 	var myPageIndex = 0;
-	var itemsPerPage = <?if(empty($this->itemsPerPage)) echo 10; else echo $this->itemsPerPage;?>;
+	var itemsPerPage = <?echo $this->itemsPerPage;?>;
 	var currentOffset = <?echo $this->offset;?>;
 	var limit = <?echo $this->limit;?>;
 	var currentNode = "<?echo $this->currentNode;?>";
@@ -23,7 +22,7 @@
 	
 	$("#catalogPagination").pagination(totalItems, 
 	{items_per_page:itemsPerPage, callback:handlePaginationClick, current_page:tmpCurrentPageIndex}
-	);*/
+	);
 	
 	function handlePaginationClick(new_page_index, pagination_container) 
 	{

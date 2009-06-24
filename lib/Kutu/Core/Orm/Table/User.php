@@ -26,6 +26,20 @@ class Kutu_Core_Orm_Table_User extends Zend_Db_Table_Abstract
 			'refColumns'	=> 'accountStatusId'
 		)
 	);*/
-	
-    
+	public function userInfoOrder($orderId){
+		$db = $this->_db->query("Select KU.* FROM KutuUser AS KU, KutuOrder as KO 
+								WHERE KO.userId = KU.guid AND KO.orderId = $orderId");
+    	$dataFetch = $db->fetchAll(Zend_Db::FETCH_ASSOC);
+    	
+		
+		$data  = array(
+            'table'    => $this,
+            'data'     => $dataFetch,
+            'rowClass' => $this->_rowClass,
+            'stored'   => true
+        );
+
+        Zend_Loader::loadClass($this->_rowsetClass);
+        return new $this->_rowsetClass($data);
+	}
 }

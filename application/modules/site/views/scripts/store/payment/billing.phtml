@@ -3,8 +3,10 @@
 <div class="span-10">
 	<a href="<? echo KUTU_ROOT_URL;?>/site/myaccount">My Account</a> || 
 	<!-- <input type="button" value= "My Account" onclick="javascript:history.back();" /> -->
-	<a href="<? echo KUTU_ROOT_URL;?>/site/store_payment/list">Oder History</a> || 
-	<a href="<? echo KUTU_ROOT_URL;?>/site/store_payment/transaction">Transaction History</a> || 
+	<a href="<? echo KUTU_ROOT_URL;?>/site/store_payment/list">Order </a> || 
+	<a href="<? echo KUTU_ROOT_URL;?>/site/store_payment/transaction">Transaction </a> || 
+	<a href="<? echo KUTU_ROOT_URL;?>/site/store_payment/confirm">Confirmation</a> || 
+	<a href="<? echo KUTU_ROOT_URL;?>/site/store_payment/billing">Billing Info</a> || 
 	<a href="<? echo KUTU_ROOT_URL;?>/site/store_payment/document">Documents</a>
 </div>
 <div class="span-14 last" align="right">
@@ -20,28 +22,42 @@
 <input type="hidden" name="modifiedDate" value="<?=$row->modifiedDate; ?>" >
 <input type="hidden" name="modifiedBy" value="<?=$row->modifiedBy; ?>" >
 
-<div class="span-5">Tax Number</div>
-<div class="span-5"><input type="text" name="taxNumber" value="<?=$row->taxNumber; ?>" ></div> 
+<div class="span-5"><strong>Tax Number</strong></div>
+<div class="span-10"><input type="text" name="taxNumber" value="<?=$row->taxNumber; ?>" ></div>
+<hr class="space"> 
 
-<div class="span-5">Tax Company</div>
-<div class="span-5"><input type="text" name="taxCompany" value="<?=$row->taxCompany; ?>" ></div> 
-<div class="span-5">Tax Address</div>
-<div class="span-5"><input type="text" name="taxAddress" value="<?=$row->taxAddress; ?>" ></div> 
+<div class="span-5"><strong>Tax Company</strong></div>
+<div class="span-10"><input type="text" name="taxCompany" value="<?=$row->taxCompany; ?>" ></div> 
+<hr class="space">
 
-<div class="span-5">Tax City</div>
-<div class="span-5"><input type="text" name="taxCity" value="<?=$row->taxCity; ?>" ></div> 
-<div class="span-5">Tax Province</div>
-<div class="span-5"><input type="text" name="taxProvince" value="<?=$row->taxProvince; ?>" ></div> 
-<div class="span-5">Tax ZIP</div><div class="span-5"><input type="text" name="taxZip" value="<?=$row->taxZip; ?>" ></div> 
+<div class="span-5"><strong>Tax Address</strong></div>
+<div class="span-10"><textarea name="taxAddress"><?=$row->taxAddress; ?></textarea></div> 
+<hr class="space">
 
-<div class="span-5">Tax Country ID</div>
+<div class="span-5"><strong>Tax City</strong></div>
+<div class="span-10"><input type="text" name="taxCity" value="<?=$row->taxCity; ?>" ></div> 
+<hr class="space">
+
+<div class="span-5"><strong>Tax Province</strong></div>
+<div class="span-10"><input type="text" name="taxProvince" value="<?=$row->taxProvince; ?>" ></div> 
+<hr class="space">
+
+<div class="span-5"><strong>Tax ZIP</strong></div>
+<div class="span-10"><input type="text" name="taxZip" value="<?=$row->taxZip; ?>" ></div> 
+<hr class="space">
+
+<div class="span-5"><strong>Tax Country ID</strong></div>
 <div class="span-5"><input type="text" name="taxCountryId" value="<?=$row->taxCountryId; ?>" ></div>
+<hr class="space">
 <hr />
 <?
 $remain =  ($row->creditLimit) - ($this->outstandingAmount);
-$limit = '<div class="span-5">Limit</div><div class="span-5">'.$row->creditLimit.'</div>
-		<div class="span-5">Otstanding Amount</div><div class="span-5">'.$this->outstandingAmount.'</div>
-		<div class="span-5">Limit Remain</div><div class="span-5">'.$remain.'</div><hr />';
+$limit = '<div class="span-5"><strong>Limit</strong></div><div class="span-10">'
+		.$row->creditLimit.'</div><hr class="space"><div class="span-5">
+		<strong>Otstanding Amount</strong></div><div class="span-5">'
+		.$this->outstandingAmount.'</div><hr class="space">
+		<div class="span-5"><strong>Limit Remain</strong></div>
+		<div class="span-5">'.$remain.'</div><hr />';
 ($row->isPostPaid == 1)?$value=$limit:$value='';
 ?>
 <?=$value?>

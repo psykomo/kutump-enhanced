@@ -1,4 +1,5 @@
 <?=$this->render('header.phtml');?>
+<hr class="space">
 Editing data with id number : <?=$this->id;?>
 <p>
 <form method="post">
@@ -8,7 +9,7 @@ Editing data with id number : <?=$this->id;?>
         Value :<br />
         <input type="text" name="value" value="<?=$row->settingValue;?>" size="70" /><br />
         Notes : <br />
-        <textarea name="note" rows="20"><?=$row->note;?></textarea>
+        <textarea cols="90" name="note"><?=$row->note;?></textarea>
         <br />
         <input type="hidden" name="id" value="<?=$this->id;?>" />
 <? endforeach;?>

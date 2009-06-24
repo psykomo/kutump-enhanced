@@ -97,8 +97,11 @@ class Admin_StoreController extends Kutu_Controller_Action
 		$ldate = ($r->getParam('ldate'))?$r->getParam('ldate'):date('Y-m-d');
 		$this->view->ldate = $ldate;
 		
-		//print_r($Query);
-		$db = Zend_Db_Table::getDefaultAdapter();
+		
+		/*$tblConfirm = new Kutu_Core_Orm_Table_PaymentConfirmation();
+		$rowsConfirm = $tblConfirm->fetchAll($tblConfirm->select()->where('confirmed = 0'));
+		
+		$this->view->rowsConfirm = $rowsConfirm;*/
 		$where ='';
 		$tblStatus = new Kutu_Core_Orm_Table_OrderStatus();
 		if($this->_request->get('status')){
@@ -197,7 +200,7 @@ class Admin_StoreController extends Kutu_Controller_Action
         $tblOrder = new Kutu_Core_Orm_Table_Order;
         $tblOrderDetail = new Kutu_Core_Orm_Table_OrderDetail;
         
-        $rowset = $tblOrder->fetchAll($tblOrder->select()->where("orderId = ". $idOrder));
+        $rowset = $tblOrder->getOrderAndStatus($idOrder);
         $rowsetDetail = $tblOrderDetail->fetchAll($tblOrderDetail->select()->where("orderId = ". $idOrder));
         
         $tblOrderHistory = new Kutu_Core_Orm_Table_OrderHistory();
@@ -293,7 +296,7 @@ class Admin_StoreController extends Kutu_Controller_Action
 		$db = Zend_Db_Table::getDefaultAdapter();
 		
 		$tblStatus = new Kutu_Core_Orm_Table_OrderStatus();
-        $where = 'KO.orderStatus = 3 OR KO.orderStatus = 5';
+        $where = 'KO.orderStatus = 3 OR KO.orderStatus = 5 OR KO.orderStatus = 2 ';
         
         $valStatus = ' ';
 		
@@ -344,9 +347,23 @@ class Admin_StoreController extends Kutu_Controller_Action
         $rowset = $tblOrder->getPostpaidSummary($limit, $offset);
         $rowset2 = $tblOrder->getPostpaidSummaryCount($limit, $offset);
         $total = $tblOrder->getPostpaidCount();
+		
+		for($i=0;$i<count($rowset);$i++){
+			$last[] =$rowset[$i]->guid;
+		}
+		for($i=0;$i<count($last);$i++){
+			echo '<pre>';
+			$coba = ($tblOrder->getLastTransactionDate($last[$i]));
+			($coba[0]->datePurchased!='')?($dateP= $coba[0]->datePurchased) : ($dateP =  '123');
+			$lastTransaction[$coba[0]->userId] = $coba[0]->datePurchased;//$dateP);
+			//$dina[] = array($coba[0]->userId => $coba[0]->datePurchased);//$dateP);
+			echo '</pre>';
+		}
         echo '<pre>';
-		//print_r($rowset);
+		print_r($lastTransaction);
+		//print_r($coba[1][0]);
 		echo '</pre>';
+        $this->view->lastTransaction = $lastTransaction;
         $this->view->totalItems = $total;
         $this->view->rowset = $rowset;
         $this->view->rowset2 = $rowset2;
@@ -539,8 +556,6 @@ class Admin_StoreController extends Kutu_Controller_Action
 		$this->view->rows = $rowset;
         //print_r($r->getParams());
     }
-<<<<<<< HEAD:application/modules/admin/controllers/StoreController.php
-=======
 	public function paypalpaymentAction(){
 		$tblOrder= new Kutu_Core_Orm_Table_Order();
 		//View catalogs
@@ -577,6 +592,205 @@ class Admin_StoreController extends Kutu_Controller_Action
         $this->view->totalItems = $numi;
 		$this->view->rows = $rowset;
 	}
->>>>>>> update views, store payment controller, table model modification:application/modules/admin/controllers/StoreController.php
+    public function refundAction(){
+        $orderId = $this->_request->getParam('id');
+        
+        $tblOrder = new Kutu_Core_Orm_Table_Order();
+        $tblOrderHistory = new Kutu_Core_Orm_Table_OrderHistory();
+        
+        $data['orderStatus'] = 2;
+        $rowOrder = $tblOrder->update($data, 'orderId = '.$orderId);
+        
+        //$data2 = $tblOrderHistory->fetchNew();
+        $data2['orderId'] = $orderId;
+        $data2['orderStatusId'] = 2;
+        $data2['dateCreated'] = date('Y-m-d H:i:s');
+        $data2['userNotified'] = '1';
+        $data2['note'] = 'Refund Payment on process';
+        $updateHistory = $tblOrderHistory->insert($data2);
+        $this->_helper->redirector('transaction');
+        echo $orderId;
+    }
+	public function confirmAction(){
+		$tblConfirm = new Kutu_Core_Orm_Table_PaymentConfirmation();
+		
+		$r = $this->getRequest();
+		$limit = ($r->getParam('limit'))?$r->getParam('limit'):10;
+		$this->view->limit =$limit;
+		$itemsPerPage = $limit;
+		$this->view->itemsPerPage = $itemsPerPage;
+		$offset = ($r->getParam('offset'))?$r->getParam('offset'):0;
+		$this->view->offset = $offset;
+		
+		
+		$rowset = $tblConfirm->unconfirmList($limit, $offset);
+		$count = $tblConfirm->unconfirmListCount();
+		echo '<pre>';
+		//print_r(($rowset));
+		echo '</pre>';
+		$this->view->rowset = $rowset;
+		$this->view->totalItems = $count;
+	}
+	public function payconfirmAction(){
+		$idOrder = $this->_request->getParam('id');
+		$tblOrder = new Kutu_Core_Orm_Table_Order;
+        $tblOrderDetail = new Kutu_Core_Orm_Table_OrderDetail;
+        $tblConfirm = new Kutu_Core_Orm_Table_PaymentConfirmation;
+		
+        $rowset = $tblOrder->getOrderAndStatus($idOrder);
+        $rowsetDetail = $tblOrderDetail->fetchAll($tblOrderDetail->select()->where("orderId = ". $idOrder));
+		$rowsetConfirm = $tblConfirm->fetchAll($tblConfirm->select()->where("orderId = ". $idOrder));
+		
+		$this->view->idOrder = $idOrder;
+		$this->view->rowset = $rowset;
+		$this->view->rowsetDetail = $rowsetDetail;
+		$this->view->rowsetConfirm = $rowsetConfirm;
+		echo '<pre>';
+		//print_r($rowset);
+		//print_r($rowsetDetail);
+		//print_r($rowsetConfirm);
+		echo '</pre>';
+	}
+	public function payconfirmyesAction(){
+		print_r($this->_request->getParams());
+		$id = $this->_request->getParam('id');
+		$tblOrder = new Kutu_Core_Orm_Table_Order;
+		$tblHistory = new Kutu_Core_Orm_Table_OrderHistory;
+        $tblConfirm = new Kutu_Core_Orm_Table_PaymentConfirmation;
+		
+		//select payment date from paymentconfirmation
+		$date = $tblConfirm->fetchAll($tblConfirm->select()->where("orderId = ". $id." AND confirmed = 0"));
+		$data['paidDate'] = @$date[0]->paymentDate;
+		//update order
+		$data['orderStatus'] = 3;
+		$tblOrder->update($data,"orderId = ". $id);
+		
+		//mailer 
+		$this->Mailer($id, 'user-confirm', 'user');
+		
+		//update paymentconfirmation
+		$dataConfirm['confirmed'] =1;
+		$tblConfirm->update($dataConfirm, "orderId = ". $id);
+		
+		//add history
+		$dataHistory = $tblHistory->fetchNew();
+		//history data
+		$dataHistory['orderId'] = $id; 
+		$dataHistory['orderStatusId'] = 3; 
+		$dataHistory['dateCreated'] = date('Y-m-d'); 
+		$dataHistory['userNotified']   = 1; 
+		$dataHistory['note'] = 'confirmed'; 
+		$dataHistory->save();
+		//redirect to confirmation page
+		$this->_helper->redirector('confirm');
+	}
+	public function payconfirmnoAction(){
+		//print_r($this->_request->getParams());
+		$id = $this->_request->getParam('id');
+		//$method = $this->_request->getParam('method');
+		/*if($this->_request->getParam('method') == 'bank'){
+			$method = 1;
+		}else{
+			$method = 5;
+		}*/
+		$method = 6;
+		$tblOrder = new Kutu_Core_Orm_Table_Order;
+		$tblHistory = new Kutu_Core_Orm_Table_OrderHistory;
+        $tblConfirm = new Kutu_Core_Orm_Table_PaymentConfirmation;
+		//echo $method;
+				//select payment date from paymentconfirmation
+		$date = $tblConfirm->fetchAll($tblConfirm->select()->where("orderId = ". $id." AND confirmed = 0"));
+		//$data['paidDate'] = @$date[0]->paymentDate;
+		//update order
+		$data['orderStatus'] = $method;
+		$tblOrder->update($data,"orderId = ". $id);
+		
+		//mailer 
+		$this->Mailer($id, 'user-confirm', 'user');
+		//update paymentconfirmation
+		$dataConfirm['confirmed'] =1;
+		//$tblConfirm->update($dataConfirm, "orderId = ". $id);
+		
+		//add history
+		$dataHistory = $tblHistory->fetchNew();
+		//history data
+		$dataHistory['orderId'] = $id; 
+		
+		$dataHistory['orderStatusId'] = $method; 
+		$dataHistory['dateCreated'] = date('Y-m-d'); 
+		$dataHistory['userNotified']   = 1; 
+		$dataHistory['note'] = 'rejected'; 
+		$dataHistory->save();
+		//redirect to confirmation page
+		$this->_helper->redirector('confirm');
+	}
+	public function Mailer($idOrder, $key, $userTo){
+        $mail = new PaymentGateway_HtmlMail();
+		
+		$tblSetting = new Kutu_Core_Orm_Table_PaymentSetting();
+		$template = $tblSetting->fetchAll($tblSetting->select()->where("settingKey = '$key'"));
+		
+		$tblOrder = new Kutu_Core_Orm_Table_Order;
+		$tbluser = new Kutu_Core_Orm_Table_User;
+        $tblOrderDetail = new Kutu_Core_Orm_Table_OrderDetail;
+        $tblSetting = new Kutu_Core_Orm_Table_PaymentSetting();
+        $lgsMail = $tblSetting->fetchAll($tblSetting->select()->where("settingKey = 'paypalBusiness'"));
+		
+		$userDetailInfo = $tbluser->userInfoOrder($idOrder);
+		
+		
+        $rowset = $tblOrder->getOrderAndStatus($idOrder);
+        $rowsetDetail = $tblOrderDetail->fetchAll($tblOrderDetail->select()->where("orderId = ". $idOrder));
+		$tblConfirm = new Kutu_Core_Orm_Table_PaymentConfirmation;
+		
+		if($rowset[0]->orderStatus == 6){
+			$status = 'rejected';
+		}else{
+			$status = 'confirmed';
+		}
+		
+		
+		$unConfirmed = $tblConfirm->fetchAll($tblConfirm->select()->where("confirmed =0 AND orderId = ". $idOrder));
+		echo '<pre>';
+		//print_r($userDetailInfo);
+		echo '</pre>';
+		$detail = "ORDER ID : ".$idOrder.'<br/>'
+					.'Detail : <br/><blockquote><ol>';
+		foreach($rowsetDetail as $row){
+				$detail .= '<li><ul>
+							<li>Document Name: '.$row->documentName.'</li>
+							<li>Quantity : '.$row->qty.'</li>
+							<li>Price : USD '.number_format($row->price,2).' </li>
+							<li>Tax : '.number_format($row->tax,2).' %</li>
+							<li>Final Price : '.number_format($row->finalPrice,2).'</li>
+							</ul></li>';
+		}
+		$detail .= '</ol><blockquote><br />';
+		
+		//print_r($detail); 
+		$sMailSource=$template[0]->note;
+		if( $userTo == 'admin'){
+			$sMailEmailTo= $lgsMail[0]->settingValue;
+			$sMailEmailFrom= $userDetailInfo[0]->email;
+			$link = '<a href="'.KUTU_ROOT_URL.'/admin/store/detailOrder/id/'.$idOrder.'">here</a>';
+		}else{
+			$sMailEmailTo= $userDetailInfo[0]->email;
+			$sMailEmailFrom= $lgsMail[0]->settingValue;
+			$link = '<a href="'.KUTU_ROOT_URL.'/site/store_payment/detail/id/'.$idOrder.'">here</a>';
+		}
+        $sMailSubject="Confirmation for user payment";
+        $sMailHeader='';
+        $aMailDataSet=array('PAYMENTDATE' 	=> $unConfirmed[0]->paymentDate,
+							'PAIDTIME' => $unConfirmed[0]->paymentDate,
+                            'PAYMENT'	=> $rowset[0]->paymentMethod,
+							'DESCRIPTION'	=> $detail,
+							'TOTALORDER'	=> $rowset[0]->orderTotal,
+							'ORDERTIME'	=> $rowset[0]->datePurchased,
+							'INVOICE'	=>	$rowset[0]->invoiceNumber,
+							'METHOD' =>$rowset[0]->paymentMethod,
+							'LINK' => $link,
+							'STATUS' => $status);
+        $mail->SendFileMail($sMailSource, $sMailEmailTo, $sMailSubject, $sMailEmailFrom, $sMailHeader, $aMailDataSet);
+    }
 }
 ?>

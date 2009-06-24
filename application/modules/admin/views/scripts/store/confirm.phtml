@@ -1,0 +1,96 @@
+<link rel="stylesheet" href="<?echo KUTU_ROOT_URL;?>/lib/jquery/pagination.css" />
+<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.pagination.js"></script>
+<script type="text/javascript">
+	$(document).ready(function(){
+		//$('#menu').flickrmenu();
+        $('ul.sf-menu').superfish();
+    
+    var isFirstTime = 1;
+	
+	// First Parameter: number of items
+	// Second Parameter: options object
+	var myPageIndex = 1;
+	var itemsPerPage = <?echo $this->itemsPerPage;?>;
+	var currentOffset = <?echo $this->offset;?>;
+	var limit = <?echo $this->limit;?>;
+	var currentNode = "<?echo $this->currentNode;?>";
+	var totalItems = <?echo $this->totalItems;?>;
+	var sort = "<?echo $this->sort;?>";
+	
+	
+	var tmpCurrentPageIndex = currentOffset/itemsPerPage;
+	
+	$("#catalogPagination").pagination(totalItems, 
+	{items_per_page:itemsPerPage, callback:handlePaginationClick, current_page:tmpCurrentPageIndex}
+	);
+	
+	function handlePaginationClick(new_page_index, pagination_container) 
+	{
+		if(!isFirstTime)
+		{
+			myPageIndex = new_page_index;
+			var nextOffset = (itemsPerPage * myPageIndex);
+		
+			$("Offset").val(nextOffset);
+			$("#frmSearch").submit();
+			
+			var url = "<?echo KUTU_ROOT_URL;?>/admin/store/confirm/"+currentNode+"/offset/"+nextOffset+"/limit/"+limit+"/sort/"+sort+"/";
+			window.location = url;
+		}
+		isFirstTime = 0;
+		return false;
+	}
+
+	});
+    
+</script>
+<?=$this->render('header.phtml');?>
+<div class="span-14">
+	<b>Data number <?=($this->offset+1>$this->totalItems)?$this->totalItems:$this->offset+1; ?> to <?=($this->offset+$this->limit>$this->totalItems)?$this->totalItems:$this->offset+$this->limit; ?> from <?=$this->totalItems;?> data(s)</b>
+</div>
+<div class="span-10 last">
+
+</div>
+<hr class="space">
+<div class="span-1">No</div>
+<div class="span-4">User</div>
+<div class="span-4">Order</div>
+<div class="span-4">Sender Detail</div>
+<div class="span-4">Destination</div>
+<div class="span-4">Action</div>
+<hr class="span-20" />
+
+<? $i = $this->offset + 1;
+foreach ($this->rowset as $row):?>
+	<div class="span-1"><?=$i;?></div>
+	<div class="span-4">
+	<?=$row->username;?><br/>
+	<?=$row->firstname?> <?=$row->lastname;?>&nbsp;<br/>
+	</div>
+	<div class="span-4">
+	Invoice : <?=$row->invoiceNumber;?><br/>
+	Total Order : <?=$row->orderTotal;?> USD<br/>
+	method : <?=$row->paymentMethod?><br/>
+	&nbsp;</div>
+	<div class="span-4">
+	Acc. : <?=$row->senderAccount;?><br/>
+	Name : <?=$row->senderAccountName;?><br/>
+	Bank : <?=$row->bankName;?><br/>
+	Note : <?=$row->note;?><br/>
+	&nbsp;
+	</div>
+	<div class="span-4">
+	Acc. : <?=$row->destinationAccount;?><br/>
+	Transfer Amount : <?=$row->amount;?><br/>
+	Payment Date : <?=$row->paymentDate;?><br/>
+	&nbsp;</div>
+	<div class="span-4"><a href="<? echo $this->url(array('controller'=>'store', 
+				'action'=>'payconfirm','id'=>$row->orderId));?>">Action</a></div>
+	<hr class="space">
+<? $i++; endforeach; ?>
+<table width='100%'>
+	<tr>
+		<td width=35%>&nbsp;</td>
+		<td align=right><div id='catalogPagination' class="pagination"></div></td>
+	</tr>
+</table>
