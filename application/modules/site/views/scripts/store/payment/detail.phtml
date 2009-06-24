@@ -3,74 +3,77 @@
 <div class="span-17">
 	<a href="<? echo KUTU_ROOT_URL;?>/site/myaccount">My Account</a> || 
 	<!-- <input type="button" value= "My Account" onclick="javascript:history.back();" /> -->
-	<a href="<? echo KUTU_ROOT_URL;?>/site/store_payment/order">Order History</a> || 
-	<a href="<? echo KUTU_ROOT_URL;?>/site/store_payment/transaction">Transaction History</a> || 
-	<a href="<? echo KUTU_ROOT_URL;?>/site/store_payment/billing">Edit Billing Info</a> || 
+	<a href="<? echo KUTU_ROOT_URL;?>/site/store_payment/list">Order </a> || 
+	<a href="<? echo KUTU_ROOT_URL;?>/site/store_payment/transaction">Transaction </a> || 
+	<a href="<? echo KUTU_ROOT_URL;?>/site/store_payment/confirm">Confirmation</a> || 
+	<a href="<? echo KUTU_ROOT_URL;?>/site/store_payment/billing">Billing Info</a> || 
 	<a href="<? echo KUTU_ROOT_URL;?>/site/store_payment/document">Documents</a>
 </div>
 <hr />
-ORDER : 
+<h3>ORDER </h3>
+<hr />
 <? foreach($this->listOrder as $value): ?>
-    <div class="span-11">Order ID : <?=$value['orderId'];  ?> </div>
-    <div class="span-11 last">Invoice : <?=$value['invoiceNumber'];  ?> </div>
+ <div class="span-5"><strong>OrderID </strong> </div><div class="span-6"> <?=$value['orderId'];  ?> &nbsp; </div>
+    <div class="span-5 last"><strong>Invoice </strong></div><div class="span-6"> <?=$value['invoiceNumber'];  ?> &nbsp; </div>
 
-    <div class="span-11">User ID : <?=$value['userId'];  ?> </div>
-    <div class="span-11 last">Tax Number : <?=$value['taxNumber'];  ?> </div>
+    <div class="span-5"><strong>User ID </strong></div><div class="span-6"> <?=$value['userId'];  ?> &nbsp; </div>
+    <div class="span-5 last"><strong>Tax Number </strong></div><div class="span-6"> <?=$value['taxNumber'];  ?> &nbsp; </div>
 
-    <div class="span-11">Tax Company : <?=$value['taxCompany'];  ?> </div>
-    <div class="span-11">Tax Address : <?=$value['taxAddress'];  ?> </div>
+    <div class="span-5"><strong>Tax Company </strong></div><div class="span-6"> <?=$value['taxCompany'];  ?> &nbsp; </div>
+    <div class="span-5 last"><strong>Tax Address </strong></div><div class="span-6"> <?=$value['taxAddress'];  ?> &nbsp; </div>
 
-    <div class="span-11">Tax City : <?=$value['taxCity'];  ?> </div>
-    <div class="span-11">Tax Zip : <?=$value['taxZip'];  ?> </div>
+    <div class="span-5"><strong>Tax City </strong></div><div class="span-6"> <?=$value['taxCity'];  ?> &nbsp; </div>
+    <div class="span-5 last"><strong>Tax Zip </strong></div><div class="span-6"> <?=$value['taxZip'];  ?> &nbsp; </div>
 
-    <div class="span-11">Tax Province : <?=$value['taxProvince'];  ?> </div>
-    <div class="span-11">Tax Country : <?=$value['taxCountryId'];  ?> </div>
+    <div class="span-5"><strong>Tax Province </strong></div><div class="span-6"> <?=$value['taxProvince'];  ?> &nbsp; </div>
+    <div class="span-5 last"><strong>Tax Country </strong></div><div class="span-6"> <?=$value['taxCountryId'];  ?> &nbsp; </div>
 
-    <div class="span-11">Telephone : <?=$value['telephone'];  ?> </div>
+    <div class="span-5"><strong>Telephone </strong></div><div class="span-6"> <?=$value['telephone'];  ?> &nbsp; </div>
 
-    <div class="span-11">Payment Method :<?=$value['paymentMethod'];  ?> </div>
-    <div class="span-11">Payment Menthode Note : <?=$value['paymentMethodNote'];  ?> </div>
+    <div class="span-5 last"><strong>Payment Method </strong></div><div class="span-6"><?=$value['paymentMethod'];  ?> &nbsp; </div>
+    <div class="span-5"><strong>Payment Menthode Note</strong> </div><div class="span-6"> <?=$value['paymentMethodNote'];  ?> &nbsp; </div>
 
-    <div class="span-11">Last Modified : <?=$value['lastModified'];  ?> </div>
-    <div class="span-11">Date Purchased : <?=$value['datePurchased'];  ?> </div>
+    <div class="span-5 last"><strong>Last Modified </strong></div><div class="span-6"> <?=strftime("%Y-%m-%d", strtotime($value['lastModified']));  ?> &nbsp; </div>
+    <div class="span-5"><strong>Date Purchased </strong></div><div class="span-6"> <?=$value['datePurchased'];  ?> &nbsp; </div>
 
-    <div class="span-11">Order Status : <?=$value['orderStatus'];  ?> </div>
-    <div class="span-11">Date Order Finished :<?=$value['dateOrderFinished'];  ?> </div>
+    <div class="span-5 last"><strong>Order Status </strong></div><div class="span-6"> <?=$value['ordersStatus'];  ?> &nbsp; </div>
+    <div class="span-5"><strong>Date Order Finished </strong></div><div class="span-6"><?
+	if(empty($value['dateOrderFinished'])){
+		echo 'Unknown';
+	}else{
+		echo strftime("%Y-%m-%d", strtotime($value['dateOrderFinished']));
+	}?> &nbsp; </div>
 
-    <div class="span-11">Currency : <?=$value['currency'];  ?> </div>
-    <div class="span-11">Currency Value : <?=$value['currencyValue'];  ?> </div>
+    <div class="span-5 last"><strong>Currency </strong></div><div class="span-6"> <?=$value['currency'];  ?> &nbsp; </div>
+    <div class="span-5"><strong>Currency Value </strong></div><div class="span-6"> <?=$value['currencyValue'];  ?> &nbsp; </div>
 
-    <div class="span-11">Total Order : <?=$value['orderTotal'];  ?> </div>
-    <div class="span-11">Total Orde Tax : <?=$value['orderTax'];  ?> </div>
+    <div class="span-5 last"><strong>Total Order </strong></div><div class="span-6"> <?=$value['orderTotal'];  ?> &nbsp; </div>
+    <div class="span-5"><strong>Total Orde Tax </strong></div><div class="span-6"> <?=$value['orderTax'];  ?> &nbsp; </div>
 
-    <div class="span-11">Paypal IPN ID : <?=$value['paypalIpnId'];  ?> </div>
-    <div class="span-11">IP Address : <?=$value['ipAddress'];  ?> </div>
+    <div class="span-5 last"><strong>Paypal IPN ID </strong></div><div class="span-6"> <?=$value['paypalIpnId'];  ?> &nbsp; </div>
+    <div class="span-5"><strong>IP Address </strong></div><div class="span-6"> <?=$value['ipAddress'];  ?> &nbsp; </div>
 <? endforeach;  ?>
 <hr />
-DETAIL : 
-<table width="200" border="1">
-  <tr>
-    <td>No.</td>
-    <td>Product ID</td>
-    <td>Order ID</td>
-    <td>Item ID</td>
-    <td>Item Name</td>
-    <td>Price</td>
-    <td>Final Price</td>
-    <td>Tax</td>
-    <td>Quantity</td>
-  </tr>
+<h3>DETAIL</h3>
+<hr />
+<strong>
+<div class="span-1" align="center">No.</div>
+<div class="span-4" align="center">Item ID</div>
+<div class="span-4" align="center">Item Name</div>
+<div class="span-2" align="center">Price</div>
+<div class="span-2" align="center">Final Price</div>
+<div class="span-2" align="center">Tax (%)</div>
+<div class="span-2" align="center">Quantity</div>
+</strong>
+<hr />
 <? $i=1; foreach($this->listOrderDetail as $valueDetail): ?>
-<tr>
-<td><?=$i?></td>
-<td><?=$valueDetail['orderProductId']; ?> </td>
-<td><?=$valueDetail['orderId']; ?> </td>
-<td><?=$valueDetail['itemId']; ?> </td>
-<td><?=$valueDetail['documentName']; ?> </td>
-<td><?=number_format($valueDetail['price'],2); ?> </td>
-<td><?=number_format($valueDetail['finalPrice'],2); ?> </td>
-<td><?=number_format($valueDetail['tax'],2); ?> </td>
-<td><?=number_format($valueDetail['qty'],2); ?> </td>
-</tr>
+<div class="span-1" align="right"><?=$i?></div>
+<div class="span-4"><?=$valueDetail['itemId']; ?> </div>
+<div class="span-4"><?=$valueDetail['documentName']; ?> </div>
+<div class="span-2"align="right"><?=number_format($valueDetail['price'],2); ?> </div>
+<div class="span-2"align="right"><?=number_format($valueDetail['finalPrice'],2); ?> </div>
+<div class="span-2"align="right"><?=number_format($valueDetail['tax'],2); ?> </div>
+<div class="span-2"align="right"><?=number_format($valueDetail['qty'],2); ?> </div>
+<hr />
 <?  $i++; endforeach;  ?>
-</table>
+<hr />

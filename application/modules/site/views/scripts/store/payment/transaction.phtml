@@ -3,8 +3,10 @@
 <div class="span-10">
 	<a href="<? echo KUTU_ROOT_URL;?>/site/myaccount">My Account</a> || 
 	<!-- <input type="button" value= "My Account" onclick="javascript:history.back();" /> -->
-	<a href="<? echo KUTU_ROOT_URL;?>/site/store_payment/list">Order History</a> || 
-	<a href="<? echo KUTU_ROOT_URL;?>/site/store_payment/billing">Edit Billing Info</a> || 
+	<a href="<? echo KUTU_ROOT_URL;?>/site/store_payment/list">Order </a> || 
+	<a href="<? echo KUTU_ROOT_URL;?>/site/store_payment/transaction">Transaction </a> || 
+	<a href="<? echo KUTU_ROOT_URL;?>/site/store_payment/confirm">Confirmation</a> || 
+	<a href="<? echo KUTU_ROOT_URL;?>/site/store_payment/billing">Billing Info</a> || 
 	<a href="<? echo KUTU_ROOT_URL;?>/site/store_payment/document">Documents</a>
 </div>
 <div class="span-14 last" align="right">
@@ -61,14 +63,16 @@ $(document).ready(function(){
 </script>
 <b>Data number <?=($this->offset+1>$this->numCount)?$this->numCount:$this->offset+1; ?> to <?=($this->offset+$this->limit>$this->numCount)?$this->numCount:$this->offset+$this->limit>$this->numCount; ?> from <?=$this->numCount;?> data(s)</b>
 <hr>
-    <div class="span-1">No&nbsp;</div>
-    <div class="span-3">Invoice&nbsp;</div>
-    <div class="span-4">date&nbsp;</div>
-    <div class="span-4">Payment Date&nbsp;</div>
-    <div class="span-3">Total Document&nbsp;</div>
-    <div class="span-3">Total Amount&nbsp;</div>
-    <div class="span-3">Method&nbsp;</div>
-    <div class="span-3 last">Status&nbsp;</div>
+	<strong>
+    <div class="span-1" align="center">No&nbsp;</div>
+    <div class="span-3" align="center">Invoice&nbsp;</div>
+    <div class="span-4" align="center">date&nbsp;</div>
+    <div class="span-4" align="center">Payment Date&nbsp;</div>
+    <div class="span-2" align="center">Total Price&nbsp;</div>
+    <div class="span-1" align="center">Qty&nbsp;</div>
+    <div class="span-2" align="center">Method&nbsp;</div>
+    <div class="span-3 last" align="center">Status&nbsp;</div>
+	</strong>
 <hr />
 <? $i = $this->offset + 1; ?>
 <? if(!empty($_POST['searchid'])):?>
@@ -76,15 +80,24 @@ $(document).ready(function(){
             'action'=>'detail', 'id'=>$_POST['searchid'])));?>
 <? endif; ?>
 <? foreach($this->listOrder as $value): ?>
-    <div class="span-1"><a href="<? echo $this->url(array('controller'=>'store_payment', 
-        'action'=>'trdetail', 'id'=>$value['orderId']));?>"><?=$i;?></a>&nbsp;</div>
-    <div class="span-3"><?=$value['invoiceNumber']; ?>&nbsp;</div>
-    <div class="span-4"><?=$value['datePurchased']; ?>&nbsp;</div>
-    <div class="span-4"><?=$value['dateOrderFinished']; ?>&nbsp;</div>
-    <div class="span-3"><?=$value['orderTotal']; ?>&nbsp;</div>
-    <div class="span-3"><?=$value['countTotal']; ?>&nbsp;</div>
-    <div class="span-3"><?=$value['paymentMethod']; ?>&nbsp;</div>
-    <div class="span-3 last"><?=$value['orderStatus']; ?>&nbsp;</div>
+    <div class="span-1" align="right">
+	<a href="<? echo $this->url(array('controller'=>'store_payment', 'action'=>'trdetail', 'id'=>$value['orderId']));?>"><?=$i;?></a>&nbsp;
+	</div>
+    <div class="span-3">
+	<a href="<? echo $this->url(array('controller'=>'store_payment', 'action'=>'trdetail', 'id'=>$value['orderId']));?>"><?=$value['invoiceNumber']; ?></a>&nbsp;
+	</div>
+    <div class="span-4" align="center"><?=strftime("%Y-%m-%d", strtotime($value['datePurchased'])); ?>&nbsp;</div>
+    <div class="span-4" align="center"><?
+	if(empty($value['dateOrderFinished'])){
+		echo 'unknown';
+	}else{
+		echo strftime("%Y-%m-%d", strtotime($value['dateOrderFinished'])); 
+	}
+	?>&nbsp;</div>
+    <div class="span-2" align="right"><?=$value['orderTotal']; ?>&nbsp;</div>
+    <div class="span-1" align="center"><?=$value['countTotal']; ?>&nbsp;</div>
+    <div class="span-2"><?=$value['paymentMethod']; ?>&nbsp;</div>
+    <div class="span-3 last"><?=$value['ordersStatus']; ?>&nbsp;</div>
     <hr />
 <? $i++; endforeach;  ?>
 <table width='100%'>

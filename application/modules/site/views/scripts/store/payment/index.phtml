@@ -1,6 +1,7 @@
 <?if($this->type == 'postpaid'){?>
 <fieldset><legend>Postpaid</legend>
 <div class="span-23">
+<form method="post" action="../../postpaid">
 	<div class="span-4">Total Postpaid Limit</div> 
 		<div class="span-4" align="right"><?=$this->limit;?></div>
 	<div class="span-4">Outstanding Postpaid Account</div>
@@ -10,11 +11,21 @@
 	<div class="span-4">Remaining Limit</div>
 		<div class="span-4" align="right"><?=$this->netLimit; ?> </div>
 	<hr class="space">
+	<input type="hidden" name="taxNumber" value="<?=$this->taxInfo['taxNumber']?>">
+	<input type="hidden" name="taxCompany" value="<?=$this->taxInfo['taxCompany']?>">
+	<input type="hidden" name="taxAddress" value="<?=$this->taxInfo['taxAddress']?>">
+	<input type="hidden" name="taxCity" value="<?=$this->taxInfo['taxCity']?>">
+	<input type="hidden" name="taxZip" value="<?=$this->taxInfo['taxZip']?>">
+	<input type="hidden" name="taxProvince" value="<?=$this->taxInfo['taxProvince']?>">
+	<input type="hidden" name="taxCountry" value="<?=$this->taxInfo['taxCountry']?>">
+	
 	<div class="span-18" align="center">
 	<input type="button" value= "back" onclick="javascript:history.back();" />
-	<input type="button" value="Pay(Postpaid)" onClick="parent.location.href='../../postpaid'" />
+	<input type="submit" value="Pay(Postpaid)"  />
+
 	</div>
 </div>
+</form>
 </fieldset>
 <?}else{?>
 

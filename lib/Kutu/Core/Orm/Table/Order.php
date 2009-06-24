@@ -36,17 +36,6 @@ class Kutu_Core_Orm_Table_Order extends Zend_Db_Table_Abstract
 									KU.guid = KO.userid
                                 AND
                                      ".$where);
-		/*echo("Select count(orderId) AS count 
-                                FROM 
-                                    KutuOrder AS KO,
-                                    KutuOrderStatus AS KOS,
-									KutuUser as KU
-                                WHERE 
-                                    KOS.orderStatusId = KO.orderStatus
-								AND
-									KU.guid = KO.userid
-                                AND
-                                     ".$where);*/
     	$dataFetch = $db->fetchAll(Zend_Db::FETCH_ASSOC);
     	
     	return ($dataFetch[0]['count']);
@@ -92,19 +81,6 @@ class Kutu_Core_Orm_Table_Order extends Zend_Db_Table_Abstract
                                 GROUP BY(KO.orderId) DESC
                                 LIMIT $offset, $limit");
     	$dataFetch = $db->fetchAll(Zend_Db::FETCH_ASSOC);
-    	/*echo ("SELECT KO.*,KOS.ordersStatus,
-                                COUNT(itemid) AS countTotal,KU.* 
-                                from
-                                ((Kutuorder AS KO 
-                                Left join kutuorderdetail AS KOD 
-                                    ON KOD.orderid=KO.orderid)
-                                LEFT JOIN kutuuser AS KU 
-                                    ON KU.guid = KO.userid)
-                                LEFT JOIN kutuorderstatus AS KOS 
-                                    ON KOS.orderstatusid = KO.orderstatus
-                                WHERE $where
-                                GROUP BY(KO.orderId) DESC
-                                LIMIT $offset, $limit");*/
         $data  = array(
             'table'    => $this,
             'data'     => $dataFetch,
@@ -135,19 +111,7 @@ class Kutu_Core_Orm_Table_Order extends Zend_Db_Table_Abstract
                                 WHERE $where
                                 GROUP BY(KO.orderId) DESC");
     	$dataFetch = $db->fetchAll(Zend_Db::FETCH_ASSOC);
-    	/*echo ("SELECT KO.*,KOS.ordersStatus,
-                                COUNT(itemid) AS countTotal,KU.* 
-                                from
-                                ((Kutuorder AS KO 
-                                Left join kutuorderdetail AS KOD 
-                                    ON KOD.orderid=KO.orderid)
-                                LEFT JOIN kutuuser AS KU 
-                                    ON KU.guid = KO.userid)
-                                LEFT JOIN kutuorderstatus AS KOS 
-                                    ON KOS.orderstatusid = KO.orderstatus
-                                WHERE $where
-                                GROUP BY(KO.orderId) DESC
-                                LIMIT $offset, $limit");*/
+
         $data  = array(
             'table'    => $this,
             'data'     => $dataFetch,
@@ -195,6 +159,10 @@ class Kutu_Core_Orm_Table_Order extends Zend_Db_Table_Abstract
 									KO.orderId = KOD.orderId
 								AND
 									userId = '$userId'
+								AND
+									(KO.orderStatus = 3 
+									OR
+									KO.orderStatus = 5)
 								AND 
 									documentName LIKE '%$where%'
                                 LIMIT $offset, $limit");
@@ -221,6 +189,10 @@ class Kutu_Core_Orm_Table_Order extends Zend_Db_Table_Abstract
 									KO.orderId = KOD.orderId
 								AND
 									userId = '$userId'
+								AND
+									(KO.orderStatus = 3 
+									OR
+									KO.orderStatus = 5)
 								AND 
 									documentName LIKE '%$where%'");
     	
@@ -237,15 +209,15 @@ class Kutu_Core_Orm_Table_Order extends Zend_Db_Table_Abstract
                             LEFT JOIN 
                                 kutuuserfinance AS KUF 
                             ON
-                                kuf.userid = ku.guid)
+                                KUF.userid = KU.guid)
                             LEFT JOIN
-                                kutuorder AS ko
+                                kutuorder AS KO
                             ON
-                                ko.userid = kuf.userid)
+                                ko.userid = KUF.userid)
                             WHERE 
                                 isPostpaid =1
                             GROUP BY
-                                kuf.userid
+                                KUF.userid
                             LIMIT $offset, $limit");
         //$db = $this->_db->query();
     	$dataFetch = $db->fetchAll(Zend_Db::FETCH_ASSOC);        
@@ -261,9 +233,7 @@ class Kutu_Core_Orm_Table_Order extends Zend_Db_Table_Abstract
         return new $this->_rowsetClass($data);
 	}
 	public function getPostpaidSummaryCount(){
-        //echo $where;
-    
-	$db = $this->_db->query("SELECT 
+        $db = $this->_db->query("SELECT 
                             KO.userId,
 							SUM(orderTotal) AS total
 							FROM
@@ -277,7 +247,9 @@ class Kutu_Core_Orm_Table_Order extends Zend_Db_Table_Abstract
                             ON
                                 ko.userid = kuf.userid)
                             WHERE 
-                                isPostpaid =1 AND orderStatus =5 
+                                isPostpaid =1 
+								AND paymentMethod = 'postpaid'
+								AND (orderStatus =5 OR orderStatus =4)
                             GROUP BY
                                 kuf.userid");
         //$db = $this->_db->query();
@@ -309,4 +281,115 @@ class Kutu_Core_Orm_Table_Order extends Zend_Db_Table_Abstract
     	
     	return ($dataFetch[0]['countPostpaid']);
     }
+    public function getTransactionToConfirm($userId /*, $limit, $offset*/){
+        $db = $this->_db->query("SELECT 
+                                    KO.*,KOS.ordersStatus,
+                                    COUNT(itemid) AS countTotal,KU.guid 
+                                FROM
+                                    ((Kutuorder AS KO 
+                                LEFT JOIN kutuorderdetail AS KOD 
+                                    ON KOD.orderid = KO.orderid)
+                                LEFT JOIN kutuuser AS KU 
+                                    ON KU.guid = KO.userid)
+                                LEFT JOIN kutuorderstatus AS KOS 
+                                    ON KOS.orderstatusid = KO.orderstatus
+                                WHERE 
+                                    KO.userId = '$userId' 
+                                AND 
+                                    ((
+                                    paymentmethod = 'postpaid' 
+                                OR 
+                                    paymentmethod = 'bank'
+                                    ) 
+                                AND
+                                    (
+                                    orderstatus = 5 
+									OR orderstatus = 1  
+									OR orderstatus = 4
+									OR orderstatus = 6
+                                    ))
+                                GROUP BY(KO.orderId) ASC");
+                                /*LIMIT 
+                                    $offset,$limit");*/
+        //$db = $this->_db->query();
+    	$dataFetch = $db->fetchAll(Zend_Db::FETCH_ASSOC);        
+		    	
+        $data  = array(
+            'table'    => $this,
+            'data'     => $dataFetch,
+            'rowClass' => $this->_rowClass,
+            'stored'   => true
+        );
+
+        Zend_Loader::loadClass($this->_rowsetClass);
+        return new $this->_rowsetClass($data);
+    }
+    public function getTransactionToConfirmCount($userId){
+        $db = $this->_db->query("SELECT 
+                                    COUNT(orderId) AS countConfirm
+                                FROM
+                                    kutuorder 
+                                WHERE 
+                                    userId = '$userId' 
+                                AND 
+                                    ((
+                                    paymentmethod = 'postpaid' 
+                                OR 
+                                    paymentmethod = 'bank'
+                                    ) 
+                                AND
+                                    (
+                                    orderstatus = 5 
+									OR orderstatus = 1 
+									OR orderstatus = 4 
+									OR orderstatus = 6 
+                                    ))");
+    	
+    	$dataFetch = $db->fetchAll(Zend_Db::FETCH_ASSOC);
+    	
+    	return ($dataFetch[0]['countConfirm']);
+    }
+	public function getOrderAndStatus($orderId){
+        $db = $this->_db->query("SELECT 
+                            KO.*, KOS.* 
+                            FROM
+                                KutuOrder AS KO,
+                                KutuOrderStatus AS KOS
+                            WHERE 
+                                orderStatus =orderStatusId
+                            AND 
+								orderId = $orderId");
+        //$db = $this->_db->query();
+    	$dataFetch = $db->fetchAll(Zend_Db::FETCH_ASSOC);        
+		    	
+        $data  = array(
+            'table'    => $this,
+            'data'     => $dataFetch,
+            'rowClass' => $this->_rowClass,
+            'stored'   => true
+        );
+
+        Zend_Loader::loadClass($this->_rowsetClass);
+        return new $this->_rowsetClass($data);
+	}
+	public function getLastTransactionDate($userId){
+		        $db = $this->_db->query("SELECT KUF.userId, datePurchased 
+										FROM kutuUserFinance AS KUF
+										LEFT JOIN kutuOrder AS KO
+										ON KO.userId = KUF.userId
+										WHERE KUF.userId = '$userId' 
+										ORDER BY datePurchased DESC 
+										LIMIT 0,1");
+        //$db = $this->_db->query();
+    	$dataFetch = $db->fetchAll(Zend_Db::FETCH_ASSOC);        
+		    	
+        $data  = array(
+            'table'    => $this,
+            'data'     => $dataFetch,
+            'rowClass' => $this->_rowClass,
+            'stored'   => true
+        );
+        Zend_Loader::loadClass($this->_rowsetClass);
+        return new $this->_rowsetClass($data);
+	}
 }

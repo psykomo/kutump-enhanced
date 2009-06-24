@@ -45,29 +45,27 @@
     
 </script>
 <?=$this->render('header.phtml');?>
-total data <?=$this->totalItems;?>
-<table>
-	<tr>
-<table>
-	<tr>
-		<td>No</td>
-        <td>ID</td>
-		<td>Value</td>
-        <td>Note</td>
-        <td>Action</td>
-    <tr>
+<hr class="space">
+
+<div class="span-1">No</div>
+<div class="span-4">ID</div>
+<div class="span-6">Value</div>
+<div class="span-9">Note</div>
+<div class="span-4 last">Action</div>
+<hr class="space"/>
 <? $i=1; foreach($this->rows as $row): ?>
-	<tr>
-        <td><?=$i?></td>
-        <td><?=$row->settingKey;?></td>
-        <td><?=$row->settingValue;?></td>
-        <td><?=$row->note;?></td>
-        <td><a href="<? echo $this->url(array('controller'=>'store', 
-            'action'=>'editPaymentSetting', 'id'=>$row->settingId));?>">edit</a></td>
-    </tr>
+
+<div class="span-1"><?=$i?></div>
+<div class="span-4"><?=$row->settingKey;?>&nbsp;</div>
+<div class="span-6"><?=$row->settingValue;?>&nbsp;</div>
+<div class="span-9">
+<?=htmlentities($row->note);?>&nbsp;
+</div>
+<div class="span-4 last"><a href="<? echo $this->url(array('controller'=>'store', 
+	'action'=>'editPaymentSetting', 'id'=>$row->settingId));?>">edit</a></div>
+<hr class="">
 <? $i++; endforeach;?>
-</table>
-</table>
+
 <table width='100%'>
 	<tr>
 		<td width=35%>&nbsp;</td>
