@@ -1,75 +1,87 @@
 <?=$this->render('header.phtml');?>
 <hr />
-Transaction : 
+<fieldset class="span-20">
+<legend>Transaction</legend>
 <? foreach($this->listOrder as $value): ?>
-    <div class="span-11">Order ID : <?=$value['orderId'];  ?> &nbsp;</div>
-    <div class="span-11 last">Invoice : <?=$value['invoiceNumber'];  ?> &nbsp;</div>
-
-    <div class="span-11">User ID : <?=$value['userId'];  ?> &nbsp;</div>
-    <div class="span-11 last">Tax Number : <?=$value['taxNumber'];  ?> &nbsp;</div>
-
-    <div class="span-11">Tax Company : <?=$value['taxCompany'];  ?> &nbsp;</div>
-    <div class="span-11">Tax Address : <?=$value['taxAddress'];  ?> &nbsp;</div>
-
-    <div class="span-11">Tax City : <?=$value['taxCity'];  ?> &nbsp;</div>
-    <div class="span-11">Tax Zip : <?=$value['taxZip'];  ?> &nbsp;</div>
-
-    <div class="span-11">Tax Province : <?=$value['taxProvince'];  ?> &nbsp;</div>
-    <div class="span-11">Tax Country : <?=$value['taxCountryId'];  ?> &nbsp;</div>
-
-    <div class="span-11">Telephone : <?=$value['telephone'];  ?> &nbsp;</div>
-
-    <div class="span-11">Payment Method :<?=$value['paymentMethod'];  ?> &nbsp;</div>
-    <div class="span-11">Payment Menthode Note : <?=$value['paymentMethodNote'];  ?> &nbsp;</div>
-
-    <div class="span-11">Last Modified : <?=$value['lastModified'];  ?> &nbsp;</div>
-    <div class="span-11">Date Purchased : <?=$value['datePurchased'];  ?> &nbsp;</div>
-
-    <div class="span-11">Order Status : <?=$value['orderStatus'];  ?> &nbsp;</div>
-    <div class="span-11">Date Order Finished :<?=$value['dateOrderFinished'];  ?> &nbsp;</div>
-
-    <div class="span-11">Currency : <?=$value['currency'];  ?> &nbsp;</div>
-    <div class="span-11">Currency Value : <?=$value['currencyValue'];  ?> &nbsp;</div>
-
-    <div class="span-11">Total Order : <?=$value['orderTotal'];  ?> &nbsp;</div>
-    <div class="span-11">Total Orde Tax : <?=$value['orderTax'];  ?> &nbsp;</div>
-
-    <div class="span-11">Paypal IPN ID : <?=$value['paypalIpnId'];  ?> &nbsp;</div>
-    <div class="span-11">IP Address : <?=$value['ipAddress'];  ?> &nbsp;</div>
+    <div class="span-4"><strong>Order ID</strong></div> <div class="span-5"><?=$value['orderId'];  ?> &nbsp;</div>
+    <div class="span-4"><strong>Invoice</strong></div> <div class="span-5"><?=$value['invoiceNumber'];  ?> &nbsp;</div>
+    <hr />
+    <div class="span-4"><strong>User ID</strong></div> <div class="span-5"><?=$value['userId'];  ?> &nbsp;</div>
+    <div class="span-4"><strong>Tax Number</strong></div> <div class="span-5"><?=$value['taxNumber'];  ?> &nbsp;</div>
+    <hr />
+    <div class="span-4"><strong>Tax Company</strong></div> <div class="span-5"><?=$value['taxCompany'];  ?> &nbsp;</div>
+    <div class="span-4"><strong>Tax Address</strong></div> <div class="span-5"><?=$value['taxAddress'];  ?> &nbsp;</div>
+    <hr />
+    <div class="span-4"><strong>Tax City</strong></div> <div class="span-5"><?=$value['taxCity'];  ?> &nbsp;</div>
+    <div class="span-4"><strong>Tax Zip</strong></div> <div class="span-5"><?=$value['taxZip'];  ?> &nbsp;</div>
+    <hr />
+    <div class="span-4"><strong>Tax Province</strong></div> <div class="span-5"><?=$value['taxProvince'];  ?> &nbsp;</div>
+    <div class="span-4"><strong>Tax Country</strong></div> <div class="span-5"><?=$value['taxCountryId'];  ?> &nbsp;</div>
+    <hr />
+    <div class="span-4"><strong>Telephone</strong></div> <div class="span-5"><?=$value['telephone'];  ?> &nbsp;</div>
+    <div class="span-4"><strong>Payment Method</strong></div> <div class="span-5"><?=$value['paymentMethod'];  ?> &nbsp;</div>
+    <hr />
+    <div class="span-4"><strong>Payment Menthode Note</strong></div> <div class="span-5"><?=$value['paymentMethodNote'];  ?> &nbsp;</div>
+    <div class="span-4"><strong>Last Modified</strong></div> <div class="span-5">
+    <?=(!empty($value['lastModified']))?strftime("%Y-%m-%d",strtotime($value['lastModified'])):'undefined'; ?> &nbsp;</div>
+    <hr />
+    <div class="span-4"><strong>Date Purchased</strong></div> <div class="span-5">
+    <?=(!empty($value['datePurchased']))?strftime("%Y-%m-%d",strtotime($value['datePurchased'])):'undefined'; ?> &nbsp;</div>
+    <div class="span-4"><strong>Order Status</strong></div> <div class="span-5"><?=$value['orderStatus'];  ?> &nbsp;</div>
+    <hr />
+    <div class="span-4"><strong>Date Order Finished </strong></div> <div class="span-5">
+    <?=(!empty($value['dateOrderFinished']))?strftime("%Y-%m-%d",strtotime($value['dateOrderFinished'])):'undefined'; ?> &nbsp;</div>
+    <div class="span-4"><strong>Currency</strong></div> <div class="span-5"><?=$value['currency'];  ?> &nbsp;</div>
+    <hr />
+    <div class="span-4"><strong>Currency Value</strong></div> <div class="span-5"><?=$value['currencyValue'];  ?> &nbsp;</div>
+    <div class="span-4"><strong>Total Order</strong></div> <div class="span-5"><?=$value['orderTotal'];  ?> &nbsp;</div>
+    <hr />
+    <div class="span-4"><strong>Total Orde Tax</strong></div> <div class="span-5"><?=$value['orderTax'];  ?> &nbsp;</div>
+    <div class="span-4"><strong>Paypal IPN ID</strong></div> <div class="span-5"><?=$value['paypalIpnId'];  ?> &nbsp;</div>
+    <hr />
+    <div class="span-4"><strong>IP Address</strong></div> <div class="span-5"><?=$value['ipAddress'];  ?> &nbsp;</div>
+    <div class="span-4"><strong>Payment Date</strong></div> <div class="span-5">
+    <?=(!empty($value['paidDate']))?strftime("%Y-%m-%d",strtotime($value['paidDate'])):'undefined'; ?>  &nbsp;</div>
+    
 <? endforeach;  ?>
+</fieldset>
 <hr />
-Detail : 
-<div class="span-2">No.&nbsp;</div>
-<div class="span-3">Product ID&nbsp;</div>
-<div class="span-3">Item ID&nbsp;</div>
-<div class="span-4">Item Name&nbsp;</div>
-<div class="span-2">Price&nbsp;</div>
-<div class="span-2">Final Price&nbsp;</div>
-<div class="span-1">Tax&nbsp;</div>
-<div class="span-3">Quantity&nbsp;</div>
+<fieldset>
+<legend>Detail</legend>
+    <strong>
+    <div class="span-1" align="center">No</div>
+    <div class="span-3" align="center">Item ID</div>
+    <div class="span-5" align="center">Name</div>
+    <div class="span-2" align="center">Price</div>
+    <div class="span-2" align="center">Final Price</div>
+    <div class="span-2" align="center">Tax</div>
+    <div class="span-1 last" align="center">Quantity</div>
+    </strong>
 <hr />
 <? $i=1; foreach($this->listOrderDetail as $valueDetail): ?>
-<div class="span-2"><?=$i?>&nbsp;</div>
-<div class="span-3"><?=$valueDetail['orderProductId']; ?> &nbsp;</div>
+<div class="span-1"><?=$i?>&nbsp;</div>
 <div class="span-3"><?=$valueDetail['itemId']; ?> &nbsp;</div>
-<div class="span-4"><?=$valueDetail['documentName']; ?> &nbsp;</div>
-<div class="span-2"><?=number_format($valueDetail['price'],2); ?> &nbsp;</div>
-<div class="span-2"><?=number_format($valueDetail['finalPrice'],2); ?> &nbsp;</div>
-<div class="span-1"><?=number_format($valueDetail['tax'],2); ?> &nbsp;</div>
-<div class="span-3"><?=number_format($valueDetail['qty'],2); ?> &nbsp;</div>
+<div class="span-5"><?=$valueDetail['documentName']; ?> &nbsp;</div>
+<div class="span-2" align="right"><?=number_format($valueDetail['price'],2); ?> &nbsp;</div>
+<div class="span-2" align="right"><?=number_format($valueDetail['finalPrice'],2); ?> &nbsp;</div>
+<div class="span-2" align="right"><?=number_format($valueDetail['tax'],2); ?> %&nbsp;</div>
+<div class="span-1" align="center"><?=$valueDetail['qty']; ?> &nbsp;</div>
 <hr />
 <?  $i++; endforeach;  ?>
+</fieldset>
 <hr />
-Payment History :
-<div class="span-2">No.&nbsp;</div>
+<fieldset>
+<legend>Payment History</legend>
+<div class="span-1">No.&nbsp;</div>
 <div class="span-3">Date&nbsp;</div>
 <div class="span-3">Status&nbsp;</div>
 <div class="span-4">Note&nbsp;</div>
 <hr />
 <? $i=1; foreach($this->rowsetHistory as $valueHistory): ?>
-<div class="span-2"><?=$i?>&nbsp;</div>
-<div class="span-3"><?=$valueHistory['dateCreated']; ?> &nbsp;</div>
+<div class="span-1" align="right"><?=$i?>&nbsp;</div>
+<div class="span-3"><?=strftime("%Y-%m-%d",strtotime($valueHistory['dateCreated'])); ?> &nbsp;</div>
 <div class="span-3"><?=$valueHistory['ordersStatus']; ?> &nbsp;</div>
 <div class="span-4"><?=$valueHistory['note']; ?> &nbsp;</div>
 <hr />
 <?  $i++; endforeach;  ?>
+</fieldset>

@@ -81,6 +81,7 @@ class Admin_StoreController extends Kutu_Controller_Action
         }
     }
     public function orderAction(){
+    $this->_xl();
     	$tblOrder= new Kutu_Core_Orm_Table_Order();
 		//View catalogs
 		
@@ -341,7 +342,6 @@ class Admin_StoreController extends Kutu_Controller_Action
 		
 	}
     public function postpaidAction(){
-        $tblUserFinance = new Kutu_Core_Orm_Table_UserFinance();
         $tblOrder = new Kutu_Core_Orm_Table_Order();
         
 		$where ='';
@@ -353,7 +353,7 @@ class Admin_StoreController extends Kutu_Controller_Action
 		$offset = ($r->getParam('offset'))?$r->getParam('offset'):0;
 		$this->view->offset = $offset;
 		$this->view->Query = ($r->getParam('Query'))?$r->getParam('Query'):'';
-        //$sort = ($r->getParam('sort')== 'Exist')?' ORDER BY ':;
+        $sort = ($r->getParam('sort'))?($r->getParam('sort')):'';
 		
 		if($this->_request->get('Query')){
 		$Query = $this->_request->get('Query');
@@ -363,9 +363,15 @@ class Admin_StoreController extends Kutu_Controller_Action
 		OR KU.firstname LIKE '%" . $Query . "%'
 		OR KU.company LIKE '%" . $Query . "%') ";
 		}
+        if($sort == 'exist'){
+            $order = "ORDER BY total DESC";
+        }elseif($sort == 'notExist'){
+            $order = "ORDER BY total ASC";
+        }else{
+            $order = "";
+        }
 		//echo($where);
-        $rowset = $tblOrder->getPostpaidSummary($where,$limit, $offset);
-        $rowset2 = $tblOrder->getPostpaidSummaryCount($where);
+        $rowset = $tblOrder->getPostpaidSummary($where, $limit, $offset, $order);
         $total = $tblOrder->getPostpaidCount($where);
 		
 		for($i=0;$i<count($rowset);$i++){
@@ -373,15 +379,12 @@ class Admin_StoreController extends Kutu_Controller_Action
 		}
 		for($i=0;$i<count(@$last);$i++){
 			$coba = ($tblOrder->getLastTransactionDate($last[$i]));
-			
 			$lastTransaction[$coba[0]->userId] = $coba[0]->datePurchased;//$dateP);
-			
 		}
         @$this->view->lastTransaction = $lastTransaction;
         $this->view->totalItems = $total;
         $this->view->rowset = $rowset;
-        $this->view->rowset2 = $rowset2;
-        //$this->view->sort = $sort;
+        $this->view->sort = $sort;
 	}
     public function ppeditAction(){
         $userId = $this->_request->getParam('id');
@@ -610,20 +613,32 @@ class Admin_StoreController extends Kutu_Controller_Action
         $orderId = $this->_request->getParam('id');
         
         $tblOrder = new Kutu_Core_Orm_Table_Order();
+        $tblOrderDetail = new Kutu_Core_Orm_Table_OrderDetail();
+        $rowset = $tblOrder->getOrderAndStatus($orderId);
+        $rowsetDetail = $tblOrderDetail->fetchAll($tblOrderDetail->select()->where("orderId = ". $orderId));
+        
+		$this->view->id = $orderId;
+   		$this->view->rows = $rowset;
+   		$this->view->rowsDetail = $rowsetDetail;
+        //echo $orderId;
+    }
+	public function refundedAction(){
+        $orderId = $this->_request->getParam('id');
+        print_r($this->_request->getParams());
+        $tblOrder = new Kutu_Core_Orm_Table_Order();
+        $tblOrderDetail = new Kutu_Core_Orm_Table_OrderDetail();
         $tblOrderHistory = new Kutu_Core_Orm_Table_OrderHistory();
         
         $data['orderStatus'] = 2;
         $rowOrder = $tblOrder->update($data, 'orderId = '.$orderId);
         
-        //$data2 = $tblOrderHistory->fetchNew();
         $data2['orderId'] = $orderId;
         $data2['orderStatusId'] = 2;
         $data2['dateCreated'] = date('Y-m-d H:i:s');
         $data2['userNotified'] = '1';
         $data2['note'] = 'Refund Payment on process';
-        //$updateHistory = $tblOrderHistory->insert($data2);
-        //$this->_helper->redirector('transaction');
-        echo $orderId;
+        $updateHistory = $tblOrderHistory->insert($data2);
+        $this->_helper->redirector('transaction');
     }
 	public function confirmAction(){
 		$tblConfirm = new Kutu_Core_Orm_Table_PaymentConfirmation();
@@ -673,7 +688,9 @@ class Admin_StoreController extends Kutu_Controller_Action
         $rowset = $tblOrder->getOrderAndStatus($idOrder);
         $rowsetDetail = $tblOrderDetail->fetchAll($tblOrderDetail->select()->where("orderId = ". $idOrder));
 		$rowsetConfirm = $tblConfirm->fetchAll($tblConfirm->select()->where("orderId = ". $idOrder));
+		$Paid = $tblConfirm->fetchAll($tblConfirm->select()->where("orderId = ". $idOrder)->order('paymentId DESC')->limit(0,1));
 		
+        $this->view->Paid = $Paid[0]->paymentDate;
 		$this->view->idOrder = $idOrder;
 		$this->view->rowset = $rowset;
 		$this->view->rowsetDetail = $rowsetDetail;
@@ -742,7 +759,7 @@ class Admin_StoreController extends Kutu_Controller_Action
 		$this->Mailer($id, 'user-confirm', 'user');
 		//update paymentconfirmation
 		$dataConfirm['confirmed'] =1;
-		//$tblConfirm->update($dataConfirm, "orderId = ". $id);
+		$tblConfirm->update($dataConfirm, "orderId = ". $id);
 		
 		//add history
 		$dataHistory = $tblHistory->fetchNew();
@@ -861,12 +878,18 @@ class Admin_StoreController extends Kutu_Controller_Action
 							'STATUS' => $status);
         $mail->SendFileMail($sMailSource, $sMailEmailTo, $sMailSubject, $sMailEmailFrom, $sMailHeader, $aMailDataSet);
     }
-	
-	public function xlAction($data_array, $filename='excel'){
+    
+	protected function _xl($data_array='', $filename='excel'){
 	$headers = ''; // Nama/Header Kolom
 	$data = ''; // Data Kolom
-	$data_array=array('s','sss','sdasd');
-	
+    
+    
+	$data_array[]=array('A' => 'A1','B' => 'B1','C' => 'C1');
+    $data_array[]=array('A' => 'A2','B' => 'B2','C' => 'C2');
+    /*echo '<pre>';
+    var_dump($data_array);
+    echo '</pre>';
+    exit;*/
 	if(count($data_array) == 0){
 		echo '<p>Tidak ada data untuk diexport</p>';
 	}else{

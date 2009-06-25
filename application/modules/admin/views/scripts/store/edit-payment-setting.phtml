@@ -10,13 +10,12 @@
         Value :<hr class="space"/>
         <input type="text" name="value" value="<?=$row->settingValue;?>" size="70" /><hr />
         Notes :<hr class="space"/>
-        <textarea cols="90" name="note"><?=$row->note;?></textarea>
+        <textarea id="note" cols="20" rows="5" name="note"><?=$row->note;?></textarea>
         <hr />
         <input type="hidden" name="id" value="<?=$this->id;?>" />
 <? endforeach;?>
     <input type="button" value= "back" onclick="document.location.href='<?=KUTU_ROOT_URL?>/admin/store/paymentsetting'" />
     <input type="reset" value="reset" />
     <input type="submit" name="save" value="save" />
-    <hr />
 </form>
 </fieldset>

@@ -4,82 +4,89 @@
 <?=$this->render('header.phtml');?>
 <hr class="space">
 <form id="myForm" name="myForm">
-<h3>Order :</h3>
-<hr class="span-20">
+<fieldset class="span-20">
+<legend>Order</legend>
+<hr />
 <?foreach($this->rowset as $row) :?>
-<div class="span-5">Order ID&nbsp;</div> <div class="span-5"><?=$row->orderId; ?>&nbsp;</div>
-<div class="span-5">Invoice&nbsp;</div> <div class="span-5"><?=$row->invoiceNumber; ?>&nbsp;</div>
-<hr class="span-20">
-<div class="span-5">USer ID&nbsp;</div> <div class="span-5"><?=$row->userId; ?>&nbsp;</div>
-<div class="span-5">Tax Number&nbsp;</div> <div class="span-5"><?=$row->taxNumber; ?>&nbsp;</div>
-<hr class="span-20">
-<div class="span-5">Tax Company&nbsp;</div> <div class="span-5"><?=$row->taxCompany; ?>&nbsp;</div>
-<div class="span-5">Tax Address&nbsp;</div> <div class="span-5"><?=$row->taxAddress; ?>&nbsp;</div>
-<hr class="span-20">
-<div class="span-5">tax City&nbsp;</div> <div class="span-5"> <?=$row->taxCity; ?>&nbsp;</div>
-<div class="span-5">Tax ZIP&nbsp;</div> <div class="span-5"><?=$row->taxZip; ?>&nbsp;</div>
-<hr class="span-20">
-<div class="span-5">Tax Province&nbsp;</div> <div class="span-5"> <?=$row->taxProvince; ?>&nbsp;</div>
-<div class="span-5">Tax Country&nbsp;</div> <div class="span-5"> <?=$row->taxCountryId; ?>&nbsp;</div>
-<hr class="span-20">
-<div class="span-5">Telephone&nbsp;</div> <div class="span-5"> <?=$row->telephone; ?>&nbsp;</div>
-<div class="span-5">Payment Method&nbsp;</div> <div class="span-5"> <?=$row->paymentMethod; ?>&nbsp;</div>
-<hr class="span-20">
-<div class="span-5">Payment Method Note&nbsp;</div> <div class="span-5"> <?=$row->paymentMethodNote; ?>&nbsp;</div>
-<div class="span-5">Last Modified&nbsp;</div> <div class="span-5"> <?=$row->lastModified; ?>&nbsp;</div>
-<hr class="span-20">
-<div class="span-5">Date Purchased&nbsp;</div> <div class="span-5"> <?=$row->datePurchased; ?>&nbsp;</div>
-<div class="span-5">Order Status&nbsp;</div> <div class="span-5"> <?=$row->ordersStatus; ?>&nbsp;</div>
-<hr class="span-20">
-<div class="span-5">Date Order Finished&nbsp;</div> <div class="span-5"> <?=$row->dateOrderFinished; ?>&nbsp;</div>
-<div class="span-5">Currency&nbsp;</div> <div class="span-5"> <?=$row->currency; ?>&nbsp;</div>
-<hr class="span-20">
-<div class="span-5">Currency Value&nbsp;</div> <div class="span-5"> <?=$row->currencyValue; ?>&nbsp;</div>
-<div class="span-5">Order Total&nbsp;</div> <div class="span-5"> <?=$row->orderTotal; ?>&nbsp;</div>
-<hr class="span-20">
-<div class="span-5">Order Tax&nbsp;</div> <div class="span-5"> <?=$row->orderTax ; ?>&nbsp;</div>
-<div class="span-5">Paypal IPN ID&nbsp;</div> <div class="span-5"> <?=$row->paypalIpnId; ?>&nbsp;</div>
-<hr class="span-20">
-<div class="span-5">IP Address&nbsp;</div> <div class="span-5"> <?=$row->ipAddress; ?>&nbsp;</div>
-<div class="span-5">Payment Date&nbsp;</div>
-<div class="span-5" id="paidDate" name="paidDate"><?=date('Y-m-d')?></div>
+<div class="span-4"><strong>Order ID&nbsp;</strong></div> <div class="span-5"><?=$row->orderId; ?>&nbsp;</div>
+<div class="span-4"><strong>Invoice&nbsp;</strong></div> <div class="span-5"><?=$row->invoiceNumber; ?>&nbsp;</div>
+<hr />
+<div class="span-4"><strong>USer ID&nbsp;</strong></div> <div class="span-5"><?=$row->userId; ?>&nbsp;</div>
+<div class="span-4"><strong>Tax Number&nbsp;</strong></div> <div class="span-5"><?=$row->taxNumber; ?>&nbsp;</div>
+<hr />
+<div class="span-4"><strong>Tax Company&nbsp;</strong></div> <div class="span-5"><?=$row->taxCompany; ?>&nbsp;</div>
+<div class="span-4"><strong>Tax Address&nbsp;</strong></div> <div class="span-5"><?=$row->taxAddress; ?>&nbsp;</div>
+<hr />
+<div class="span-4"><strong>tax City&nbsp;</strong></div> <div class="span-5"> <?=$row->taxCity; ?>&nbsp;</div>
+<div class="span-4"><strong>Tax ZIP&nbsp;</strong></div> <div class="span-5"><?=$row->taxZip; ?>&nbsp;</div>
+<hr />
+<div class="span-4"><strong>Tax Province&nbsp;</strong></div> <div class="span-5"> <?=$row->taxProvince; ?>&nbsp;</div>
+<div class="span-4"><strong>Tax Country&nbsp;</strong></div> <div class="span-5"> <?=$row->taxCountryId; ?>&nbsp;</div>
+<hr />
+<div class="span-4"><strong>Telephone&nbsp;</strong></div> <div class="span-5"> <?=$row->telephone; ?>&nbsp;</div>
+<div class="span-4"><strong>Payment Method&nbsp;</strong></div> <div class="span-5"> <?=$row->paymentMethod; ?>&nbsp;</div>
+<hr />
+<div class="span-4"><strong>Payment Method Note&nbsp;</strong></div> <div class="span-5"> <?=$row->paymentMethodNote; ?>&nbsp;</div>
+<div class="span-4"><strong>Last Modified&nbsp;</strong></div> <div class="span-5"> 
+<?=(!empty($row->lastModified))?strftime("%Y-%m-%d",strtotime($row->lastModified)):'undefined'; ?>&nbsp;</div>
+<hr />
+<div class="span-4"><strong>Date Purchased&nbsp;</strong></div> <div class="span-5"> 
+<?=(!empty($row->datePurchased))?strftime("%Y-%m-%d",strtotime($row->datePurchased)):'undefined'; ?>&nbsp;</div>
+<div class="span-4"><strong>Order Status&nbsp;</strong></div> <div class="span-5"> <?=$row->ordersStatus; ?>&nbsp;</div>
+<hr />
+<div class="span-4"><strong>Date Order Finished&nbsp;</strong></div> <div class="span-5"> <?=(!empty($row->dateOrderFinished))?strftime("%Y-%m-%d",strtotime($row->dateOrderFinished)):'undefined'; ?>&nbsp;</div>
+<div class="span-4"><strong>Currency&nbsp;</strong></div> <div class="span-5"> <?=$row->currency; ?>&nbsp;</div>
+<hr />
+<div class="span-4"><strong>Currency Value&nbsp;</strong></div> <div class="span-5"> <?=$row->currencyValue; ?>&nbsp;</div>
+<div class="span-4"><strong>Order Total&nbsp;</strong></div> <div class="span-5"> <?=$row->orderTotal; ?>&nbsp;</div>
+<hr />
+<div class="span-4"><strong>Order Tax&nbsp;</strong></div> <div class="span-5"> <?=$row->orderTax ; ?>&nbsp;</div>
+<div class="span-4"><strong>Paypal IPN ID&nbsp;</strong></div> <div class="span-5"> <?=$row->paypalIpnId; ?>&nbsp;</div>
+<hr />
+<div class="span-4"><strong>IP Address&nbsp;</strong></div> <div class="span-5"> <?=$row->ipAddress; ?>&nbsp;</div>
+<div class="span-4"><strong>Payment Date&nbsp;</strong></div>
+<div class="span-4" id="paidDate" name="paidDate"><?=strftime("%Y-%m-%d",strtotime($this->Paid)); ?></div>
 <input type="hidden" name="id" value="<?=$this->id;?>">
 <?endforeach;?>
-<hr class="span-20">
-<h3>Detail :</h3>
-<hr class="span-20">
-<div class="span-1">No&nbsp;</div>
-<div class="span-3">Product ID&nbsp;</div>
-<div class="span-3">Item ID&nbsp;</div>
-<div class="span-4">Name&nbsp;</div>
-<div class="span-2">Price&nbsp;</div>
-<div class="span-3">Final Price&nbsp;</div>
-<div class="span-2">Tax&nbsp;</div>
-<div class="span-2 last">Quantity&nbsp;</div>
-<hr class="span-20">
-<?$i =1;foreach($this->rowsetDetail as $rowDetail) :?>
-<div class="span-1"><?=$i;?>&nbsp;</div>
-<div class="span-3"><?=$rowDetail['orderProductId']; ?>&nbsp;</div>
-<div class="span-3"><?=$rowDetail['itemId']; ?>&nbsp;</div>
-<div class="span-4"><?=$rowDetail['documentName']; ?>&nbsp;</div>
-<div class="span-2"><?=$rowDetail['price']; ?>&nbsp;</div>
-<div class="span-3"><?=$rowDetail['finalPrice']; ?>&nbsp;</div>
-<div class="span-2"><?=$rowDetail['tax']; ?>&nbsp;</div>
-<div class="span-2 last"><?=$rowDetail['qty']; ?>&nbsp;</div><br/>
-<hr class="span-20">
-<?$i++; endforeach;?>
-<hr class="span-20">
-<h3>Confirmation History :</h3>
-<hr class="span-23">
+</fieldset>
+<hr />
+<fieldset class="span-21">
+    <legend>Detail</legend>
+    <strong>
+    <div class="span-1" align="center">No</div>
+    <div class="span-3" align="center">Item ID</div>
+    <div class="span-5" align="center">Name</div>
+    <div class="span-2" align="center">Price</div>
+    <div class="span-2" align="center">Final Price</div>
+    <div class="span-2" align="center">Tax</div>
+    <div class="span-1 last" align="center">Quantity</div>
+    </strong>
+    <hr />
+<?$i =1; foreach($this->rowsetDetail as $rowDetail): ?>
+    <div class="span-1" align="center"><?=$i;?></div>
+    <div class="span-3" align="center"><?=$rowDetail['itemId']; ?></div>
+    <div class="span-5" align="left"><?=$rowDetail['documentName']; ?></div>
+    <div class="span-2" align="right"><?=number_format($rowDetail['price'],2); ?></div>
+    <div class="span-2" align="right"><?=number_format($rowDetail['finalPrice'],2); ?></div>
+    <div class="span-2" align="right"><?=number_format($rowDetail['tax'],2); ?> %</div>
+    <div class="span-1 last" align="right"><?=$rowDetail['qty']; ?></div>
+    <hr />
+<? $i++; endforeach; ?>
+</fieldset>
+<hr />
+<fieldset>
+<legend>Confirmation History</legend>
+<strong>
 <div class="span-1">No</div>
 <div class="span-2">Date</div>
 <div class="span-3">Method</div>
 <div class="span-4">Destination</div>
 <div class="span-4">Sender</div>
-<div class="span-3">Amount</div>
+<div class="span-2">Amount</div>
 <div class="span-4">Note</div>
 <div class="span-1">Extra</div>
-<hr class="span-23">
+</strong>
+<hr>
 <?$i=1;foreach($this->rowsetConfirm as $rowConfirm) :?>
 <div class="span-1"><?=$i?></div>
 <div class="span-2"><?=$rowConfirm->paymentDate;?>&nbsp;</div>
@@ -90,43 +97,28 @@
 <?=$rowConfirm->senderAccountName;?><br/>
 <?=$rowConfirm->bankName;?><br/>
 &nbsp;</div>
-<div class="span-3"><?=$rowConfirm->amount;?>&nbsp;</div>
+<div class="span-2" align="right"><?=number_format($rowConfirm->amount,2);?>&nbsp;</div>
 <div class="span-4"><?=$rowConfirm->note;?>&nbsp;</div>
 <?
 if($rowConfirm->confirmed == 0){
 	$col = "green";
 	$ext = "Unconfirmed";
-?>
-<script>
-document.getElementById('paidDate').innerHTML = '<?=$rowConfirm->paymentDate;?>';
-</script>
-<?
 }else{
 	$col = "red";
 	$ext = "Rejected";
 }
 ?>
 <div class="span-1"><b><font color="<?=$col?>"><?=$ext?></font></b></div>
-<hr class="span-23">
+<hr>
 <?$i++; endforeach;?>
+</fieldset>
 <div class="span-23" align="center">
-<a href="<? echo $this->url(array('controller'=>'store', 
+<a class="success" href="<? echo $this->url(array('controller'=>'store', 
             'action'=>'payconfirmyes', 'id'=>$this->idOrder));?>">
-            Accept [Confirm] </a> | 
-<a href="<? echo $this->url(array('controller'=>'store', 
-            'action'=>'payconfirmno', 'method'=>$row->paymentMethod, 'id'=>$this->idOrder ));?>">
-            Reject </a> | 
-<a href="#" onClick="javascript:history.back();">Back</a>
+            Accept [Confirm] </a>&nbsp;  
+<a class="error" href="<? echo $this->url(array('controller'=>'store', 
+            'action'=>'payconfirmno', 'method'=>$row->paymentMethod, 'id'=>$this->idOrder ));?>">Reject </a> &nbsp;
+<a class="notice" href="#" onClick="javascript:history.back();">Back</a>
 </div>
 </form>
-<hr class="span-23">
-
-<hr class="space">
-<hr class="space">
-<hr class="space">
-<hr class="space">
-
-
-
-
-
+<p>&nbsp;</p>

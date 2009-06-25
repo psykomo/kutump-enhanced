@@ -5,23 +5,25 @@ $statusId = $this->statusId;
 $status = $this->status;
 $rowset = $this->rowset;
 ?>
-<pre>
-</pre>
+
 <?
 for($i=0;$i<count($status);$i++){
 ?>
-<div class="span-14"><b>Status : <?=$status[$i];?>, Jumlah : <?=$this->total[$i];?></b></div>
+<fieldset class="span-18">
+<div class="span-8"><b>Status : <?=$status[$i];?>, Jumlah : <?=$this->total[$i];?></b></div>
     <div class="span-9" align="right">
     <a href="<? echo $this->url(array('controller'=>'store', 
             'action'=>'Order', 'status'=>$this->statusId[$i]));?>">View All <?=$status[$i];?> Orders</a>
     </div>
 	<hr/>
+    <strong>
     <div class="span-1" align="center">No</div>
     <div class="span-4" align="center">Description</div>
     <div class="span-3" align="center">Payment Method</div>
     <div class="span-2" align="center">Order Total</div>
     <div class="span-2" align="center">Total Count</div>
     <div class="span-4 last" align="center">Action</div>
+    </strong>
 	<hr />
 <? for($x=0;$x<count($rowset[$i]);$x++){ ?>
 
@@ -36,6 +38,6 @@ for($i=0;$i<count($status);$i++){
             'action'=>'detailOrder', 'id'=>$rowset[$i][$x]->orderId));?>">Detail</a>&nbsp;</div>
 	<hr />
 <?}?>
-<hr class="space" />
+</fieldset>
+<hr  />
 <?}?>
-

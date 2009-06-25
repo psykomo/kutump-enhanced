@@ -147,15 +147,17 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
                 }
                 $paymentObject->addField('tax_cart',$cart['taxAmount']);
                 $paymentObject->addField('currency_code',$this->_defaultCurrency);
-
-				//$paymentObject->dumpFields();
+                
+                $this->saveOrder($cart);
+				$this->updateInvoiceMethod('paypal', 1, 0, 'paid with paypal method');
+                //$paymentObject->dumpFields();
                 $paymentObject->submitPayment();
                 echo "<pre>";
 				//print_r($paymentObject);
                 echo "</pre>";
 				//print_r($this->completeItem());
                 //$this->saveOrder($cart);
-				//$this->updateInvoiceMethod('pending', 1, 0, 'paid with paypal method');
+				
 				//setting payment and status as pending (1), notify = 0, notes = 'paid with...'
                 break;
             case '2co':
@@ -248,7 +250,7 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
 					$this->view->netLimit = $netLimit;
 					$this->view->taxInfo = $this->_request->getParams();
 					echo '<pre>';
-					//print_r($cart);
+					//print_r($_SESSION['jCart']);
 					echo '</pre>';
                 }
                 break;
@@ -472,7 +474,7 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
 		$rowset = $tblOrder->getLastOrder($userId);
 		$this->view->rowset = $rowset;
 		//print_r($rowset);
-		unset($_SESSION['jCart']->items);
+		$_SESSION['jCart'] ='';
 	}
 	public function postpaidlimitAction(){
 	
@@ -676,8 +678,8 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
 		
 	}
 	public function paypalsave($status){
-	
-
+        $tblOrder = new Kutu_Core_Orm_Table_Order();
+        $orderId = $_SESSION['orderIdNumber'];
 		$cart = $this->completeItem();
 		//save order
 		@$this->saveOrder($cart);		
@@ -730,6 +732,7 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
 		$row['dateAdded'] = date('Y-m-d');
 		
 		$row->save();
+        
 	}
     public function confirmAction(){
         $userId = $this->_userInfo->userId;

@@ -1,0 +1,79 @@
+
+<?=$this->render('header.phtml');?>
+<h3>Order to Refund</h3>
+<?  foreach($this->rows as $row): ?>
+<fieldset class="span-20">
+    <legend>Order No : <?=$this->id;?></legend>
+    <div class="span-18" align="right">
+    <a class="success" href="<?=KUTU_ROOT_URL;?>/admin/store/refunded/id/<?=$this->id?>">Refund</a>
+    <a class="error" href="#" onClick="javascript:history.back();">Cancel/Back</a>
+    </div>
+    <hr class="space" />
+    <hr class="space" />
+    <hr />
+    <div class="span-4"><strong>Invoice</strong></div> <div class="span-5"><?=$row->invoiceNumber; ?>&nbsp;</div>
+    <div class="span-4"><strong>USer ID</strong></div> <div class="span-5"><?=$row->userId; ?>&nbsp;</div>
+    <hr />
+    <div class="span-4"><strong>Tax Number</strong></div> <div class="span-5"><?=$row->taxNumber; ?>&nbsp;</div>
+    <div class="span-4"><strong>Tax Company</strong></div> <div class="span-5"><?=$row->taxCompany; ?>&nbsp;</div>
+    <hr />
+    <div class="span-4"><strong>Tax Address</strong></div> <div class="span-5"><?=$row->taxAddress; ?>&nbsp;</div>
+    <div class="span-4"><strong>tax City</strong></div> <div class="span-5"> <?=$row->taxCity; ?>&nbsp;</div>
+    <hr />
+    <div class="span-4"><strong>Tax ZIP</strong></div> <div class="span-5"><?=$row->taxZip; ?>&nbsp;</div>
+    <div class="span-4"><strong>Tax Province</strong></div> <div class="span-5"> <?=$row->taxProvince; ?>&nbsp;</div>
+    <hr />
+    <div class="span-4"><strong>Tax Country</strong></div> <div class="span-5"> <?=$row->taxCountryId; ?>&nbsp;</div>
+    <div class="span-4"><strong>Telephone</strong></div> <div class="span-5"> <?=$row->telephone; ?>&nbsp;</div>
+    <hr />
+    <div class="span-4"><strong>Payment Method</strong></div> <div class="span-5"> <?=$row->paymentMethod; ?>&nbsp;</div>
+    <div class="span-4"><strong>Payment Method Note</strong></div> <div class="span-5"> <?=$row->paymentMethodNote; ?>&nbsp;</div>
+    <hr />
+    <div class="span-4"><strong>Last Modified</strong></div> <div class="span-5"> 
+    <?=(!empty($row->lastModified))?strftime("%Y-%m-%d",strtotime($row->lastModified)):'undefined'; ?>&nbsp;</div>
+    <div class="span-4"><strong>Date Purchased</strong></div> <div class="span-5"> 
+    <?=(!empty($row->datePurchased))?strftime("%Y-%m-%d",strtotime($row->datePurchased)):'undefined'; ?>&nbsp;</div>
+    <hr />
+    <div class="span-4"><strong>Order Status</strong></div> <div class="span-5"> <?=$row->ordersStatus; ?>&nbsp;</div>
+    <div class="span-4"><strong>Date Order Finished</strong></div> <div class="span-5">
+    <?=(!empty($row->dateOrderFinished))?strftime("%Y-%m-%d",strtotime($row->dateOrderFinished)):'undefined'; ?>&nbsp;</div>
+    <hr />
+    <div class="span-4"><strong>Currency</strong></div> <div class="span-5"> <?=$row->currency; ?>&nbsp;</div>
+    <div class="span-4"><strong>Currency Value</strong></div> <div class="span-5"> <?=$row->currencyValue; ?>&nbsp;</div>
+    <hr />
+    <div class="span-4"><strong>Order Total</strong></div> <div class="span-5"> <?=$row->orderTotal; ?>&nbsp;</div>
+    <div class="span-4"><strong>Order Tax</strong></div> <div class="span-5"> <?=$row->orderTax ; ?>&nbsp;</div>
+    <hr />
+    <div class="span-4"><strong>Paypal IPN ID</strong></div> <div class="span-5"> <?=$row->paypalIpnId; ?>&nbsp;</div>
+    <div class="span-4"><strong>IP Address</strong></div> <div class="span-5"> <?=$row->ipAddress; ?>&nbsp;</div>
+    <hr />
+    <div class="span-4"><strong>Payment Date</strong></div> <div class="span-4">
+    <?=(!empty($row->paidDate))?strftime("%Y-%m-%d",strtotime($row->paidDate)):'undefined'; ?>&nbsp;</div>
+    <div class="span-4"><input type="hidden" name="id" value="<?=$this->id;?>"></div>
+</fieldset>
+<? endforeach;?>
+<hr />
+<fieldset class="span-21">
+    <legend>Detail</legend>
+    <strong>
+    <div class="span-1" align="center">No</div>
+    <div class="span-3" align="center">Item ID</div>
+    <div class="span-5" align="center">Name</div>
+    <div class="span-2" align="center">Price</div>
+    <div class="span-2" align="center">Final Price</div>
+    <div class="span-2" align="center">Tax</div>
+    <div class="span-1 last" align="center">Quantity</div>
+    </strong>
+    <hr />
+<?$i =1; foreach($this->rowsDetail as $rowDetail): ?>
+    <div class="span-1" align="center"><?=$i;?></div>
+    <div class="span-3" align="center"><?=$rowDetail['itemId']; ?></div>
+    <div class="span-5" align="left"><?=$rowDetail['documentName']; ?></div>
+    <div class="span-2" align="right"><?=number_format($rowDetail['price'],2); ?></div>
+    <div class="span-2" align="right"><?=number_format($rowDetail['finalPrice'],2); ?></div>
+    <div class="span-2" align="right"><?=number_format($rowDetail['tax'],2); ?> %</div>
+    <div class="span-1 last" align="right"><?=$rowDetail['qty']; ?></div>
+    <hr />
+<? $i++; endforeach; ?>
+<hr />
+</fieldset>

@@ -1,46 +1,36 @@
+<script src="<?echo KUTU_ROOT_URL;?>/lib/calendar.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" media="all" href="<?echo KUTU_ROOT_URL;?>/lib/calendar/calendar-mos.css" title="green">
+<script src="<?echo KUTU_ROOT_URL;?>/lib/calendar/calendar_mini.js" type="text/javascript"></script>
+<script src="<?echo KUTU_ROOT_URL;?>/lib/calendar/lang/calendar-en.js" type="text/javascript"></script>
 <?=$this->render('header.phtml');?>
-<script type="text/javascript">
-	$(function() {
-		$("#datepicker").datepicker();
-	});
-	</script>
-<hr class="space">
-Editing data with id number<?=$this->id;?>
-<p>
-
+<fieldset class="span-19">
+<legend>Editing data number <?=$this->id;?></legend>
 <form method="post">
-<table width="400px">
-    <tr>
         <?  foreach($this->rows as $row): ?>
-        <td>Invoice</td> <td><input type="text" name="invoiceNumber" value="<?=$row->invoiceNumber; ?>" /></td>
-        <td>USer ID</td> <td><input type="text" name="userId" value="<?=$row->userId; ?>"  /></td>
-    </tr>
-    <tr>
-        <td>Tax Number</td> <td> <input type="text" name="taxNumber" value="<?=$row->taxNumber; ?>"  /></td>
-        <td>Tax Company</td> <td> <input type="text" name="taxCompany" value="<?=$row->taxCompany; ?>"  /></td>
-    </tr>
-    <tr>
-        <td>Tax Address</td> <td> <input type="text" name="taxAddress" value="<?=$row->taxAddress; ?>"  /></td>
-        <td>tax City</td> <td> <input type="text" name="taxCity" value="<?=$row->taxCity; ?>" /></td>
-    </tr>
-    <tr>
-        <td>Tax ZIP</td> <td><input type="text" name="taxZip" value="<?=$row->taxZip; ?>"  /></td>
-        <td>Tax Province</td> <td> <input type="text" name="taxProvince" value="<?=$row->taxProvince; ?>"  /></td>
-    </tr>
-    <tr>
-        <td>Tax Country</td> <td> <input type="text" name="taxCountryId" value="<?=$row->taxCountryId; ?>"  /></td>
-        <td>Telephone</td> <td> <input type="text" name="telephone" value="<?=$row->telephone; ?>"  /></td>
-    </tr>
-    <tr>
-        <td>Payment Method</td> <td> <input type="text" name="paymentMethod" value="<?=$row->paymentMethod; ?>"  /></td>
-        <td>Payment Method Note</td> <td> <input type="text" name="paymentMethodNote" value="<?=$row->paymentMethodNote; ?>"  /></td>
-    </tr>
-    <tr>
-        <td>Last Modified</td> <td> <input type="text" name="lastModified" value="<?=$row->lastModified; ?>"  /></td>
-        <td>Date Purchased</td> <td> <input type="text" name="datePurchased" value="<?=$row->datePurchased; ?>"  /></td>
-    </tr>
-    <tr>
-        <td>Order Status</td> <td> 
+        <div class="span-4"><strong>Invoice</strong></div> <div class="span-5"><input type="text" name="invoiceNumber" value="<?=$row->invoiceNumber; ?>" /></div>
+        <div class="span-4"><strong>USer ID</strong></div> <div class="span-5"><input type="text" name="userId" value="<?=$row->userId; ?>"  /></div>
+    <hr />
+        <div class="span-4"><strong>Tax Number</strong></div> <div class="span-5"> <input type="text" name="taxNumber" value="<?=$row->taxNumber; ?>"  /></div>
+        <div class="span-4"><strong>Tax Company</strong></div> <div class="span-5"> <input type="text" name="taxCompany" value="<?=$row->taxCompany; ?>"  /></div>
+    <hr />
+        <div class="span-4"><strong>Tax Address</strong></div> <div class="span-5"> <input type="text" name="taxAddress" value="<?=$row->taxAddress; ?>"  /></div>
+        <div class="span-4"><strong>tax City</strong></div> <div class="span-5"> <input type="text" name="taxCity" value="<?=$row->taxCity; ?>" /></div>
+    <hr />
+        <div class="span-4"><strong>Tax ZIP</strong></div> <div class="span-5"><input type="text" name="taxZip" value="<?=$row->taxZip; ?>"  /></div>
+        <div class="span-4"><strong>Tax Province</strong></div> <div class="span-5"> <input type="text" name="taxProvince" value="<?=$row->taxProvince; ?>"  /></div>
+    <hr />
+        <div class="span-4"><strong>Tax Country</strong></div> <div class="span-5"> <input type="text" name="taxCountryId" value="<?=$row->taxCountryId; ?>"  /></div>
+        <div class="span-4"><strong>Telephone</strong></div> <div class="span-5"> <input type="text" name="telephone" value="<?=$row->telephone; ?>"  /></div>
+    <hr />
+        <div class="span-4"><strong>Payment Method</strong></div> <div class="span-5"> <input type="text" name="paymentMethod" value="<?=$row->paymentMethod; ?>"  /></div>
+        <div class="span-4"><strong>Payment Method Note</strong></div> <div class="span-5"> <input type="text" name="paymentMethodNote" value="<?=$row->paymentMethodNote; ?>"  /></div>
+    <hr />
+        <div class="span-4"><strong>Last Modified</strong></div> <div class="span-5"> 
+        <input type="text" name="lastModified" id="lastModified" value="<?=$row->lastModified; ?>"  /><input class="button" type="reset" value="..." onclick="return showCalendar('lastModified');" name="cmddprebiddate"/></div>
+        <div class="span-4"><strong>Date Purchased</strong></div> <div class="span-5"> 
+        <input type="text" name="datePurchased" id="datePurchased" value="<?=$row->datePurchased; ?>"  /><input class="button" type="reset" value="..." onclick="return showCalendar('datePurchased');" name="cmddprebiddate"/></div>
+    <hr />
+        <div class="span-4"><strong>Order Status</strong></div> <div class="span-5"> 
 		<input type="hidden" name="orderaStatus" value="<?=$row->orderStatus; ?>"  />
 		
 		<select name="orderStatus">
@@ -48,31 +38,25 @@ Editing data with id number<?=$this->id;?>
 		<option value="<?=$status['orderStatusId']?>" <? echo ($status['orderStatusId']==$row->orderStatus?'selected=selected':'') ; ?>><?=$status['ordersStatus']?>
 		<? endforeach;?>
 		</select>
-		</td>
-        <td>Date Order Finished</td> <td> <input type="text" id="datepicker" name="dateOrderFinished" value="<?=$row->dateOrderFinished; ?>"  /></td>
-    </tr>
-    <tr>
-        <td>Currency</td> <td> <input type="text" name="currency" value="<?=$row->currency; ?>"  /></td>
-        <td>Currency Value</td> <td> <input type="text" name="currencyValue" value="<?=$row->currencyValue; ?>"  /></td>
-    </tr>
-    <tr>
-        <td>Order Total</td> <td> <input type="text" name="orderTotal" value="<?=$row->orderTotal; ?>"  /></td>
-        <td>Order Tax</td> <td> <input type="text" name="orderTax" value="<?=$row->orderTax ; ?>"  /></td>
-    </tr>
-    <tr>
-        <td>Paypal IPN ID</td> <td> <input type="text" name="paypalIpnId" value="<?=$row->paypalIpnId; ?>"  /></td>
-        <td>IP Address</td> <td> <input type="text" name="ipAddress" value="<?=$row->ipAddress; ?>" /></td>
-    </tr>
-    <tr>
-        <td>
+		</div>
+        <div class="span-4"><strong>Date Order Finished</strong></div> <div class="span-5"> <input type="text" id="datepicker" name="dateOrderFinished" value="<?=$row->dateOrderFinished; ?>"  /></div>
+    <hr />
+        <div class="span-4"><strong>Currency</strong></div> <div class="span-5"> <input type="text" name="currency" value="<?=$row->currency; ?>"  /></div>
+        <div class="span-4"><strong>Currency Value</strong></div> <div class="span-5"> <input type="text" name="currencyValue" value="<?=$row->currencyValue; ?>"  /></div>
+    <hr />
+        <div class="span-4"><strong>Order Total</strong></div> <div class="span-5"> <input type="text" name="orderTotal" value="<?=$row->orderTotal; ?>"  /></div>
+        <div class="span-4"><strong>Order Tax</strong></div> <div class="span-5"> <input type="text" name="orderTax" value="<?=$row->orderTax ; ?>"  /></div>
+    <hr />
+        <div class="span-4"><strong>Paypal IPN ID</strong></div> <div class="span-5"> <input type="text" name="paypalIpnId" value="<?=$row->paypalIpnId; ?>"  /></div>
+        <div class="span-4"><strong>IP Address</strong></div> <div class="span-5"> <input type="text" name="ipAddress" value="<?=$row->ipAddress; ?>" /></div>
+    <hr />
+        <div class="span-4">
 		<input type="hidden" name="id" value="<?=$this->id;?>" />
 		<input type="hidden" name="offset" value="<?=$this->offset;?>" />
-		</td>
+		</div>
         <? endforeach;?>
-    </tr>
-</table>
     <input type="button" value= "back" onclick="javascript:history.back();" />
     <input type="reset" value="reset" />
     <input type="submit" name="save" value="save" />
 </form>
-</p>
+</fieldset>
