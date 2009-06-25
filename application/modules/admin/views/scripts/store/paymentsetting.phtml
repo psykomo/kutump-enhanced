@@ -46,17 +46,18 @@
 </script>
 <?=$this->render('header.phtml');?>
 <hr class="space">
-
+<strong>
 <div class="span-1">No</div>
 <div class="span-4">ID</div>
 <div class="span-6">Value</div>
 <div class="span-9">Note</div>
 <div class="span-4 last">Action</div>
+</strong>
 <hr class="space"/>
 <? $i=1; foreach($this->rows as $row): ?>
 
-<div class="span-1"><?=$i?></div>
-<div class="span-4"><?=$row->settingKey;?>&nbsp;</div>
+<div class="span-1" align="right"><?=$i?></div>
+<div class="span-4"><strong><?=$row->settingKey;?></strong>&nbsp;</div>
 <div class="span-6"><?=$row->settingValue;?>&nbsp;</div>
 <div class="span-9">
 <?=htmlentities($row->note);?>&nbsp;

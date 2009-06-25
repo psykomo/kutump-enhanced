@@ -1,3 +1,7 @@
+<script src="<?echo KUTU_ROOT_URL;?>/lib/calendar.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" media="all" href="<?echo KUTU_ROOT_URL;?>/lib/calendar/calendar-mos.css" title="green">
+<script src="<?echo KUTU_ROOT_URL;?>/lib/calendar/calendar_mini.js" type="text/javascript"></script>
+<script src="<?echo KUTU_ROOT_URL;?>/lib/calendar/lang/calendar-en.js" type="text/javascript"></script>
 <link rel="stylesheet" href="<?echo KUTU_ROOT_URL;?>/lib/jquery/pagination.css" />
 <script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.pagination.js"></script>
 <script type="text/javascript">
@@ -16,8 +20,13 @@
 	var currentNode = "<?echo $this->currentNode;?>";
 	var totalItems = <?echo $this->totalItems;?>;
 	var sort = "<?echo $this->sort;?>";
-	
-	
+	<?
+	if(!empty($this->sStatus)){
+		$test = "/Query/$this->Query/";
+	}else{
+		$test = "/0/";
+	}
+	?>
 	var tmpCurrentPageIndex = currentOffset/itemsPerPage;
 	
 	$("#catalogPagination").pagination(totalItems, 
@@ -34,7 +43,7 @@
 			$("Offset").val(nextOffset);
 			$("#frmSearch").submit();
 			
-			var url = "<?echo KUTU_ROOT_URL;?>/admin/store/confirm/"+currentNode+"/offset/"+nextOffset+"/limit/"+limit+"/sort/"+sort+"/";
+			var url = "<?echo KUTU_ROOT_URL;?>/admin/store/confirm/offset/"+nextOffset+"/limit/"+limit+currentNode+"/sort/"+sort+"/sStatus/<?=$this->sStatus;?>/sUsername/<?=$this->sUsername;?>/fdate/<?=$this->fdate?>/ldate/<?=$this->ldate?>";
 			window.location = url;
 		}
 		isFirstTime = 0;
@@ -45,6 +54,22 @@
     
 </script>
 <?=$this->render('header.phtml');?>
+<hr class="space">
+<div class="span-25 last">
+<form id="frmSearch" name="frmSearch" method="POST">
+	Status : <input id="sStatus" name="sStatus" size=10 value="<?echo $this->sStatus;?>">
+	Username : <input id="sUsername" name="sUsername" size=10 value="<?echo $this->sUsername;?>">
+	Date min : <input id="fdate" name="fdate" value="<?=$this->fdate?>">
+	<input class="button" type="reset" value="..." onclick="return showCalendar('fdate');" name="cmddprebiddate"/>
+	Date max : <input id="ldate" name="ldate" value="<?=$this->ldate;?>">
+	<input class="button" type="reset" value="..." onclick="return showCalendar('ldate');" name="cmddprebiddate"/>
+	<input type="hidden" id="limit" name="limit" value="10">
+	<input type="hidden" id="offset" name="offset" value="<?echo $this->offset;?>">
+	<input type="submit" id="btnGoSearch" name="search" value="Search">
+</form>
+</div>
+<hr class="space">
+<br />
 <div class="span-14">
 	<b>Data number <?=($this->offset+1>$this->totalItems)?$this->totalItems:$this->offset+1; ?> to <?=($this->offset+$this->limit>$this->totalItems)?$this->totalItems:$this->offset+$this->limit; ?> from <?=$this->totalItems;?> data(s)</b>
 </div>
@@ -52,12 +77,14 @@
 
 </div>
 <hr class="space">
+<strong>
 <div class="span-1">No</div>
 <div class="span-4">User</div>
 <div class="span-4">Order</div>
 <div class="span-4">Sender Detail</div>
 <div class="span-4">Destination</div>
 <div class="span-4">Action</div>
+</strong>
 <hr class="span-20" />
 
 <? $i = $this->offset + 1;

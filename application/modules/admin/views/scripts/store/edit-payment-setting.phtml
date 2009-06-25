@@ -1,20 +1,22 @@
 <?=$this->render('header.phtml');?>
 <hr class="space">
-Editing data with id number : <?=$this->id;?>
+<fieldset class="span-10">
+<legend>Editing data with id number : <?=$this->id;?></legend>
 <p>
 <form method="post">
 <?  foreach($this->rows as $row): ?>
-	    Key :<br />
-        <input type="text" name="key" value="<?=$row->settingKey;?>" size="70" /><br />
-        Value :<br />
-        <input type="text" name="value" value="<?=$row->settingValue;?>" size="70" /><br />
-        Notes : <br />
+	    <strong>Key :<hr class="space"/>
+        <?=$row->settingKey;?></strong><hr />
+        Value :<hr class="space"/>
+        <input type="text" name="value" value="<?=$row->settingValue;?>" size="70" /><hr />
+        Notes :<hr class="space"/>
         <textarea cols="90" name="note"><?=$row->note;?></textarea>
-        <br />
+        <hr />
         <input type="hidden" name="id" value="<?=$this->id;?>" />
 <? endforeach;?>
     <input type="button" value= "back" onclick="document.location.href='<?=KUTU_ROOT_URL?>/admin/store/paymentsetting'" />
     <input type="reset" value="reset" />
     <input type="submit" name="save" value="save" />
+    <hr />
 </form>
-</p>
+</fieldset>

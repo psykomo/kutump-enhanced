@@ -84,24 +84,22 @@ class Admin_StoreController extends Kutu_Controller_Action
     	$tblOrder= new Kutu_Core_Orm_Table_Order();
 		//View catalogs
 		
-		$r = $this->getRequest();
-		$limit = ($r->getParam('limit'))?$r->getParam('limit'):10;
+		$limit = ($this->_request->getParam('limit'))?$this->_request->getParam('limit'):10;
 		$this->view->limit =$limit;
 		$itemsPerPage = $limit;
 		$this->view->itemsPerPage = $itemsPerPage;
-		$offset = ($r->getParam('offset'))?$r->getParam('offset'):0;
+		$offset = ($this->_request->getParam('offset'))?$this->_request->getParam('offset'):0;
 		$this->view->offset = $offset;
-		$Query = ($r->getParam('Query'))?$r->getParam('Query'):'';
-		$fdate = ($r->getParam('fdate'))?$r->getParam('fdate'):date('Y-m-d');
+		$sStatus = ($this->_request->getPost('sStatus'))?$this->_request->getPost('sStatus'):($this->_request->getParam('sStatus'));
+		$this->view->sStatus = $sStatus;
+		$sUsername = ($this->_request->getPost('sUsername'))?$this->_request->getPost('sUsername'):($this->_request->getParam('sUsername'));
+		$this->view->sUsername = $sUsername;
+		$fdate = ($this->_request->getPost('fdate'))?$this->_request->getPost('fdate'):($this->_request->getParam('fdate'));
 		$this->view->fdate = $fdate;
-		$ldate = ($r->getParam('ldate'))?$r->getParam('ldate'):date('Y-m-d');
+		$ldate = ($this->_request->getPost('ldate'))?$this->_request->getPost('ldate'):($this->_request->getParam('ldate'));
 		$this->view->ldate = $ldate;
 		
-		
-		/*$tblConfirm = new Kutu_Core_Orm_Table_PaymentConfirmation();
-		$rowsConfirm = $tblConfirm->fetchAll($tblConfirm->select()->where('confirmed = 0'));
-		
-		$this->view->rowsConfirm = $rowsConfirm;*/
+
 		$where ='';
 		$tblStatus = new Kutu_Core_Orm_Table_OrderStatus();
 		if($this->_request->get('status')){
@@ -115,32 +113,25 @@ class Admin_StoreController extends Kutu_Controller_Action
             $valStatus = ' ';
         }
 		
-        /*$status = $tblStatus->getStatus();
-        for($i =0 ;$i<count($status);$i++){
-            $statusId[$i] = $status[$i]->orderStatusId;
-            $orderStatus[$i] = $status[$i]->ordersStatus;
-        }*/
-        if($this->_request->get('Query')){
-            $val = $Query;
-            $where .= " (AND KOS.ordersStatus LIKE '%$val%' OR KU.username LIKE '%$val%') ";
-        }/*else{
-            $where .= " AND KO.orderStatus !=0 ";
-        }*/
-		if($this->_request->get('ldate')){
-            $where .= " AND datePurchased BETWEEN '$fdate' AND '$ldate'  ";
+		if(!empty($sStatus)){
+			$where .= " AND KOS.ordersStatus LIKE '%$sStatus%'";
+		}
+		if(!empty($sStatus)){
+            $where .= " AND KU.username LIKE '%$sUsername%'";
+        }
+		if(!empty($fdate)){
+			$where .= " AND datePurchased > '$fdate'";
+		}
+		if(!empty($ldate)){
+            $where .= " AND datePurchased < '$ldate'  ";
         }
 		
-		//print_r("'".$val);
-        $rowset = $tblOrder->getOrderSummaryAdmin($where,$limit, $offset);
+		$rowset = $tblOrder->getOrderSummaryAdmin($where,$limit, $offset);
 		$numi = $tblOrder->countOrdersAdmin($where);
         
-        $this->view->Query = $Query;
-        //$this->view->statusId = $statusId;
-        //$this->view->orderStatus = $orderStatus;
         $this->view->totalItems = $numi;
 		$this->view->rows = $rowset;
-        //print_r($r->getParams());
-    }
+	}
     public function editorderAction(){
         $idOrder = $this->_request->getParam('id');
         $tblOrder = new Kutu_Core_Orm_Table_Order();
@@ -282,21 +273,39 @@ class Admin_StoreController extends Kutu_Controller_Action
 	public function transactionAction(){
 		$tblOrder= new Kutu_Core_Orm_Table_Order();
 		//View catalogs
-		
-		$r = $this->getRequest();
-		$limit = ($r->getParam('limit'))?$r->getParam('limit'):10;
+		$limit = ($this->_request->getParam('limit'))?$this->_request->getParam('limit'):10;
 		$this->view->limit =$limit;
 		$itemsPerPage = $limit;
 		$this->view->itemsPerPage = $itemsPerPage;
-		$offset = ($r->getParam('offset'))?$r->getParam('offset'):0;
+		$offset = ($this->_request->getParam('offset'))?$this->_request->getParam('offset'):0;
 		$this->view->offset = $offset;
-		$Query = ($r->getParam('Query'))?$r->getParam('Query'):'';
+		$sStatus = ($this->_request->getPost('sStatus'))?$this->_request->getPost('sStatus'):($this->_request->getParam('sStatus'));
+		$this->view->sStatus = $sStatus;
+		$sUsername = ($this->_request->getPost('sUsername'))?$this->_request->getPost('sUsername'):($this->_request->getParam('sUsername'));
+		$this->view->sUsername = $sUsername;
+		$fdate = ($this->_request->getPost('fdate'))?$this->_request->getPost('fdate'):($this->_request->getParam('fdate'));
+		$this->view->fdate = $fdate;
+		$ldate = ($this->_request->getPost('ldate'))?$this->_request->getPost('ldate'):($this->_request->getParam('ldate'));
+		$this->view->ldate = $ldate;
 		
 		//print_r($Query);
 		$db = Zend_Db_Table::getDefaultAdapter();
 		
 		$tblStatus = new Kutu_Core_Orm_Table_OrderStatus();
-        $where = 'KO.orderStatus = 3 OR KO.orderStatus = 5 OR KO.orderStatus = 2 ';
+        $where = '(KO.orderStatus = 3 OR KO.orderStatus = 5 OR KO.orderStatus = 2) ';
+		
+		if(!empty($sStatus)){
+			$where .= " AND KOS.ordersStatus LIKE '%$sStatus%'";
+		}
+		if(!empty($sStatus)){
+            $where .= " AND KU.username LIKE '%$sUsername%'";
+        }
+		if(!empty($fdate)){
+			$where .= " AND datePurchased > '$fdate'";
+		}
+		if(!empty($ldate)){
+            $where .= " AND datePurchased < '$ldate'  ";
+        }
         
         $valStatus = ' ';
 		
@@ -335,6 +344,7 @@ class Admin_StoreController extends Kutu_Controller_Action
         $tblUserFinance = new Kutu_Core_Orm_Table_UserFinance();
         $tblOrder = new Kutu_Core_Orm_Table_Order();
         
+		$where ='';
         $r = $this->getRequest();
 		$limit = ($r->getParam('limit'))?$r->getParam('limit'):10;
 		$this->view->limit =$limit;
@@ -342,33 +352,37 @@ class Admin_StoreController extends Kutu_Controller_Action
 		$this->view->itemsPerPage = $itemsPerPage;
 		$offset = ($r->getParam('offset'))?$r->getParam('offset'):0;
 		$this->view->offset = $offset;
-		$this->view->Query = ($r->getParam('Query'))?$r->getParam('Query'):' ';
-        
-        $rowset = $tblOrder->getPostpaidSummary($limit, $offset);
-        $rowset2 = $tblOrder->getPostpaidSummaryCount($limit, $offset);
-        $total = $tblOrder->getPostpaidCount();
+		$this->view->Query = ($r->getParam('Query'))?$r->getParam('Query'):'';
+        //$sort = ($r->getParam('sort')== 'Exist')?' ORDER BY ':;
+		
+		if($this->_request->get('Query')){
+		$Query = $this->_request->get('Query');
+		$where .=" (KU.username LIKE '%" . $Query . "%'
+		OR KO.orderStatus LIKE '%" . $Query . "%'
+		OR KU.lastname LIKE '%" . $Query . "%'
+		OR KU.firstname LIKE '%" . $Query . "%'
+		OR KU.company LIKE '%" . $Query . "%') ";
+		}
+		//echo($where);
+        $rowset = $tblOrder->getPostpaidSummary($where,$limit, $offset);
+        $rowset2 = $tblOrder->getPostpaidSummaryCount($where);
+        $total = $tblOrder->getPostpaidCount($where);
 		
 		for($i=0;$i<count($rowset);$i++){
 			$last[] =$rowset[$i]->guid;
 		}
-		for($i=0;$i<count($last);$i++){
-			echo '<pre>';
+		for($i=0;$i<count(@$last);$i++){
 			$coba = ($tblOrder->getLastTransactionDate($last[$i]));
-			($coba[0]->datePurchased!='')?($dateP= $coba[0]->datePurchased) : ($dateP =  '123');
+			
 			$lastTransaction[$coba[0]->userId] = $coba[0]->datePurchased;//$dateP);
-			//$dina[] = array($coba[0]->userId => $coba[0]->datePurchased);//$dateP);
-			echo '</pre>';
+			
 		}
-        echo '<pre>';
-		print_r($lastTransaction);
-		//print_r($coba[1][0]);
-		echo '</pre>';
-        $this->view->lastTransaction = $lastTransaction;
+        @$this->view->lastTransaction = $lastTransaction;
         $this->view->totalItems = $total;
         $this->view->rowset = $rowset;
         $this->view->rowset2 = $rowset2;
-		//print_r($this->_request->getParams());
-    }
+        //$this->view->sort = $sort;
+	}
     public function ppeditAction(){
         $userId = $this->_request->getParam('id');
         $tblUserFinance = new Kutu_Core_Orm_Table_UserFinance();
@@ -607,24 +621,43 @@ class Admin_StoreController extends Kutu_Controller_Action
         $data2['dateCreated'] = date('Y-m-d H:i:s');
         $data2['userNotified'] = '1';
         $data2['note'] = 'Refund Payment on process';
-        $updateHistory = $tblOrderHistory->insert($data2);
-        $this->_helper->redirector('transaction');
+        //$updateHistory = $tblOrderHistory->insert($data2);
+        //$this->_helper->redirector('transaction');
         echo $orderId;
     }
 	public function confirmAction(){
 		$tblConfirm = new Kutu_Core_Orm_Table_PaymentConfirmation();
-		
-		$r = $this->getRequest();
-		$limit = ($r->getParam('limit'))?$r->getParam('limit'):10;
+		$where ='';
+		$limit = ($this->_request->getParam('limit'))?$this->_request->getParam('limit'):10;
 		$this->view->limit =$limit;
 		$itemsPerPage = $limit;
 		$this->view->itemsPerPage = $itemsPerPage;
-		$offset = ($r->getParam('offset'))?$r->getParam('offset'):0;
+		$offset = ($this->_request->getParam('offset'))?$this->_request->getParam('offset'):0;
 		$this->view->offset = $offset;
+		$sStatus = ($this->_request->getPost('sStatus'))?$this->_request->getPost('sStatus'):($this->_request->getParam('sStatus'));
+		$this->view->sStatus = $sStatus;
+		$sUsername = ($this->_request->getPost('sUsername'))?$this->_request->getPost('sUsername'):($this->_request->getParam('sUsername'));
+		$this->view->sUsername = $sUsername;
+		$fdate = ($this->_request->getPost('fdate'))?$this->_request->getPost('fdate'):($this->_request->getParam('fdate'));
+		$this->view->fdate = $fdate;
+		$ldate = ($this->_request->getPost('ldate'))?$this->_request->getPost('ldate'):($this->_request->getParam('ldate'));
+		$this->view->ldate = $ldate;
 		
+		if(!empty($sStatus)){
+			$where .= " AND KOS.ordersStatus LIKE '%$sStatus%'";
+		}
+		if(!empty($sStatus)){
+            $where .= " AND KU.username LIKE '%$sUsername%'";
+        }
+		if(!empty($fdate)){
+			$where .= " AND datePurchased > '$fdate'";
+		}
+		if(!empty($ldate)){
+            $where .= " AND datePurchased < '$ldate'  ";
+        }
 		
-		$rowset = $tblConfirm->unconfirmList($limit, $offset);
-		$count = $tblConfirm->unconfirmListCount();
+		$rowset = $tblConfirm->unconfirmList($where,$limit, $offset);
+		$count = $tblConfirm->unconfirmListCount($where);
 		echo '<pre>';
 		//print_r(($rowset));
 		echo '</pre>';
@@ -724,6 +757,42 @@ class Admin_StoreController extends Kutu_Controller_Action
 		//redirect to confirmation page
 		$this->_helper->redirector('confirm');
 	}
+	public function postpaidaddAction(){
+		$act = $this->_request->get('act');
+		$this->view->action = $act;
+		if($act == 'select'){
+			$tblUserFinance = new Kutu_Core_Orm_Table_UserFinance();
+			$userList = $tblUserFinance->getUser($this->_request->getParam('username'));
+			$this->view->userList = $userList;
+			$this->view->Query = $this->_request->getParam('username');
+			$lmt = $this->_request->getParam('creditLimit');
+			if(empty($lmt)){
+				$limit = 'unlimited';
+			}else{
+				$limit = $this->_request->getParam('creditLimit');
+			}
+			$this->view->creditLimit = $limit;
+		}elseif($act == 'conf'){
+			$id = $this->_request->getParam('id');
+			$CL = $this->_request->getParam('CL');
+			$tblUserFinance = new Kutu_Core_Orm_Table_UserFinance();
+			$rowset = $tblUserFinance->getUserFinance($id);
+			
+			$this->view->rowset = $rowset;
+			$this->view->CL = $CL;
+			//print_r($this->_request->getParams());
+		}elseif($act == 'done'){
+			$tblUserFinance = new Kutu_Core_Orm_Table_UserFinance();
+			if($this->_request->getParam('CL')=='unlimited'){
+				$data['creditLimit'] = 0;
+			}else{
+				$data['creditLimit'] = $this->_request->getParam('CL');
+			}
+			$data['isPostpaid'] = 1;
+			$userId = $this->_request->getParam('id');
+			$tblUserFinance->update($data, "userId = '".$userId."'");
+		}
+	}
 	public function Mailer($idOrder, $key, $userTo){
         $mail = new PaymentGateway_HtmlMail();
 		
@@ -792,5 +861,40 @@ class Admin_StoreController extends Kutu_Controller_Action
 							'STATUS' => $status);
         $mail->SendFileMail($sMailSource, $sMailEmailTo, $sMailSubject, $sMailEmailFrom, $sMailHeader, $aMailDataSet);
     }
+	
+	public function xlAction($data_array, $filename='excel'){
+	$headers = ''; // Nama/Header Kolom
+	$data = ''; // Data Kolom
+	$data_array=array('s','sss','sdasd');
+	
+	if(count($data_array) == 0){
+		echo '<p>Tidak ada data untuk diexport</p>';
+	}else{
+		$n_count=0;
+		foreach($data_array as $row){
+			$line = '';
+			foreach($row as $field=>$value){
+			if($n_count==0){
+				$headers .= '"'. $field . '"' . "\t";
+			}
+			if((!isset($value)) || ($value == "")){
+				$value = "\t";
+			}else{
+				$value = str_replace('"', '""', $value);
+				$value = '"' . $value . '"' . "\t";
+			}
+			$line .= $value;
+			}
+			$n_count++;
+			$data .= trim($line)."\n";
+		}
+
+		$data = str_replace("\r","",$data);
+								 
+				header("Content-type: application/x-msdownload");
+				header("Content-Disposition: attachment; filename=$filename.xls");
+				echo "$headers\n$data";  
+	}
+}
 }
 ?>

@@ -3,7 +3,7 @@ class Kutu_Core_Orm_Table_PaymentConfirmation extends Zend_Db_Table_Abstract
 {
 	protected $_name = 'kutupaymentconfirmation';
 	
-	function unconfirmListCount(){
+	function unconfirmListCount($where){
     	$db = $this->_db->query("Select count(paymentId) AS count 
                                 FROM 
 									kutupaymentconfirmation AS KPC, 
@@ -14,12 +14,13 @@ class Kutu_Core_Orm_Table_PaymentConfirmation extends Zend_Db_Table_Abstract
 								AND 
 									KU.guid = KO.userid
 								AND 
-									confirmed = 0");
+									confirmed = 0
+								$where");
     	$dataFetch = $db->fetchAll(Zend_Db::FETCH_ASSOC);
     	
     	return ($dataFetch[0]['count']);
     }	
-	public function unconfirmList($limit,$offset){
+	public function unconfirmList($where, $limit, $offset){
         $db = $this->_db->query("SELECT 
 									KPC.*,KO.*, KU.*, KOS.ordersStatus 
 								FROM 
@@ -35,6 +36,7 @@ class Kutu_Core_Orm_Table_PaymentConfirmation extends Zend_Db_Table_Abstract
 									confirmed = 0
 								AND
 									KO.orderStatus = KOS.orderStatusId
+								$where
                                 LIMIT $offset, $limit");
     	$dataFetch = $db->fetchAll(Zend_Db::FETCH_ASSOC);
         $data  = array(

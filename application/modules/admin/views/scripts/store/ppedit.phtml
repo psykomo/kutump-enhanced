@@ -47,35 +47,30 @@
 <?=$this->render('header.phtml');?>
 <hr class="space">
 <form method="post">
+<fieldset class="span-14">
 <?foreach($this->rowset as $row) : ?>
-<b>Editing user : <?=$row->userId;?> - <?=$row->FN;?> <?=$row->LN;?></b>
+<legend><b>Editing user : <?=$row->userId;?> - <?=$row->FN;?> <?=$row->LN;?></b></legend>
 <hr class="space">
 <div class="span-5">Tax Number </div>
-<div class="span-5"><input type="text" name="taxNumber" value="<?=$row->taxNumber; ?>"></div>
+<div class="span-5"><input type="text" name="taxNumber" value="<?=$row->taxNumber; ?>"></div><hr />
 <div class="span-5">Company</div>
-<div class="span-5"><input type="text" name="taxCompany" value="<?=$row->taxCompany; ?>"></div> 
-<hr class="space" />
+<div class="span-5"><input type="text" name="taxCompany" value="<?=$row->taxCompany; ?>"></div> <hr />
 <div class="span-5">Address</div>
-<div class="span-5"><input type="text" name="taxAddress" value="<?=$row->taxAddress; ?>"></div> 
+<div class="span-5"><textarea name="taxAddress"><?=$row->taxAddress; ?></textarea></div> <hr />
 <div class="span-5">City</div>
-<div class="span-5"><input type="text" name="taxCity" value="<?=$row->taxCity; ?>"></div> 
-<hr class="space" />
-<div class="span-5">ZIP</div><div class="span-5"><input type="text" name="taxZip" value="<?=$row->taxZip; ?>"></div>
+<div class="span-5"><input type="text" name="taxCity" value="<?=$row->taxCity; ?>"></div> <hr />
+<div class="span-5">ZIP</div><div class="span-5"><input type="text" name="taxZip" value="<?=$row->taxZip; ?>"></div><hr />
 <div class="span-5">Province</div>
-<div class="span-5"><input type="text" name="taxProvince" value="<?=$row->taxProvince; ?>"></div> 
-<hr class="space" /> 
+<div class="span-5"><input type="text" name="taxProvince" value="<?=$row->taxProvince; ?>"></div> <hr />
 <div class="span-5">Country ID</div>
-<div class="span-5"><input type="text" name="taxCountryId" value="<?=$row->taxCountryId; ?>"></div>
+<div class="span-5"><input type="text" name="taxCountryId" value="<?=$row->taxCountryId; ?>"></div><hr />
 <div class="span-5">Limit </div>
-<div class="span-5"><input type="text" name="creditLimit" value="<?=$row->creditLimit; ?>"></div>
-<hr class="space" /> 
-<div class="span-20">
+<div class="span-5"><input type="text" name="creditLimit" value="<?=$row->creditLimit; ?>"></div><hr />
 <input type="button" value="Back" onclick="javascript:history.back();">
 <input type="reset">
 <input type="submit" name="update" value="Update">
-
-</div>
 <?endforeach; ?>
+</fieldset>
 </form>
 <table width='100%'>
 	<tr>

@@ -16,7 +16,7 @@
 	var currentNode = "<?echo $this->currentNode;?>";
 	var totalItems = <?echo $this->totalItems;?>;
 	var sort = "<?echo $this->sort;?>";
-	
+	var Query = "<?=$this->Query;?>";
 	
 	var tmpCurrentPageIndex = currentOffset/itemsPerPage;
 	
@@ -34,25 +34,35 @@
 			$("Offset").val(nextOffset);
 			$("#frmSearch").submit();
 			
-			var url = "<?echo KUTU_ROOT_URL;?>/admin/store/postpaid/Query/"+<?=$this->Query;?>+currentNode+"/offset/"+nextOffset+"/limit/"+limit+"/sort/"+sort+"/";
+			var url = "<?echo KUTU_ROOT_URL;?>/admin/store/postpaid/offset/"+nextOffset+"/limit/"+limit+"/sort/"+sort+"/Query/"+Query+currentNode;
 			window.location = url;
 		}
 		isFirstTime = 0;
 		return false;
 	}
-
-	});
+});
     
 </script>
 <?=$this->render('header.phtml');?>
 <hr class="space">
-<div class="span-7">
+<div class="span-6">
 	<b>Data number <?=($this->offset+1>$this->totalItems)?$this->totalItems:$this->offset+1; ?> to <?=($this->offset+$this->limit>$this->totalItems)?$this->totalItems:$this->offset+$this->limit; ?> from <?=$this->totalItems;?> data(s)</b>
 </div>
-<div class="span-7">
-<input type="button"  name="add" value="Add Postpaid User" onclick="javascript:location='<?echo KUTU_ROOT_URL;?>/admin/'">
+<div class="span-6">
+	<form method="get">
+	Bills Sort
+	<select name="sort">
+		<option value="All">All
+		<option value="exist">Exist
+		<option value="notExist">Not Exist
+	</select>
+	<input type="submit" value="sort">
+	</form>
 </div>
-<div class="span-10 last">
+<div class="span-4">
+<input type="button"  name="add" value="Add Postpaid User" onclick="javascript:location='<?echo KUTU_ROOT_URL;?>/admin/store/postpaidadd'">
+</div>
+<div class="span-8 last">
 <form id="frmSearch" name="frmSearch" method="GET">
 	<input id="Query" name="Query" size=30 value='<?echo $this->Query;?>'>
 	<input type="hidden" id="limit" name="limit" value="10">
@@ -61,7 +71,7 @@
 	<input type="submit" id="btnGoSearch" name="search" value="Search">
 </form>
 </div>
-<hr class="space">
+<hr />
 <strong>
 <div class="span-1" align="center">No</div>
 <div class="span-4" align="center">User</div>
@@ -75,8 +85,21 @@
 
 <? $i = $this->offset + 1;
 foreach ($this->rowset as $row):?>
+<?
+foreach ($this->rowset2 as $row2){
+		if($row->guid == $row2->userId){
+		$total = $row2->total;
+		}else{
+		$total = 0;
+		}
+	}
+if($this->sort == 'All'){
+	
+}
+?>
 	<div class="span-1" align="right"><?=$i;?></div>
-	<div class="span-4"><?=$row->username;?><br/>
+	<div class="span-4">
+	<a href="<?=KUTU_ROOT_URL?>/admin/user/edit/guid/<?=$row->guid;?>"><?=$row->username;?></a><br/>
 	<?=$row->firstname?> <?=$row->lastname;?><br />
 	<?=$row->company;?>
 	&nbsp; </div>
@@ -89,18 +112,9 @@ foreach ($this->rowset as $row):?>
 	}
 	?>
 	<div class="span-3" align="center"><?=$lastDate ;?>&nbsp;</div>
-	<div class="span-2" align="right"><?=$row->creditLimit;?>&nbsp;</div>
-	<?
-	foreach ($this->rowset2 as $row2){
-		if($row->guid == $row2->userId){
-		$total = $row2->total;
-		}else{
-		$total = 0;
-		}
-	}
-	?>
+	<div class="span-2" align="right"><?=($row->creditLimit==0)?'Unlimited':($row->creditLimit);?>&nbsp;</div>
 	<div class="span-2" align="right"><?=$total;?>&nbsp;</div>
-	<div class="span-2" align="right"><?=($row->creditLimit-$total);?>&nbsp;</div>
+	<div class="span-2" align="right"><?=($row->creditLimit==0)?'Unlimited':($row->creditLimit-$total);?>&nbsp;</div>
 	<div class="span-2" align="center"><a href="<? echo $this->url(array('controller'=>'store', 
 				'action'=>'ppedit','id'=>$row->guid));?>">Edit</a></div>
 	<hr class="space">

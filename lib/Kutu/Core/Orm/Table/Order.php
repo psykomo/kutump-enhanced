@@ -200,8 +200,12 @@ class Kutu_Core_Orm_Table_Order extends Zend_Db_Table_Abstract
     	
     	return ($dataFetch[0]['totalDoc']);
     }
-    public function getPostpaidSummary($limit,$offset){
-        //echo $where;
+    public function getPostpaidSummary($where,$limit,$offset){
+        if(!empty($where)){
+			$and = "AND $where";
+		}else{
+			$and = '';
+		}
         $db = $this->_db->query("SELECT 
                             KU.*, KUF.creditlimit AS creditLimit 
                             FROM
@@ -216,11 +220,11 @@ class Kutu_Core_Orm_Table_Order extends Zend_Db_Table_Abstract
                                 ko.userid = KUF.userid)
                             WHERE 
                                 isPostpaid =1
+							$and
                             GROUP BY
                                 KUF.userid
                             LIMIT $offset, $limit");
-        //$db = $this->_db->query();
-    	$dataFetch = $db->fetchAll(Zend_Db::FETCH_ASSOC);        
+        $dataFetch = $db->fetchAll(Zend_Db::FETCH_ASSOC);        
 		    	
         $data  = array(
             'table'    => $this,
@@ -250,7 +254,7 @@ class Kutu_Core_Orm_Table_Order extends Zend_Db_Table_Abstract
                                 isPostpaid =1 
 								AND paymentMethod = 'postpaid'
 								AND (orderStatus =5 OR orderStatus =4)
-                            GROUP BY
+							GROUP BY
                                 kuf.userid");
         //$db = $this->_db->query();
     	$dataFetch = $db->fetchAll(Zend_Db::FETCH_ASSOC);        
@@ -265,7 +269,12 @@ class Kutu_Core_Orm_Table_Order extends Zend_Db_Table_Abstract
         Zend_Loader::loadClass($this->_rowsetClass);
         return new $this->_rowsetClass($data);
 	}
-    public function getPostpaidCount(){
+    public function getPostpaidCount($where){
+	    if(!empty($where)){
+			$and = "AND $where";
+		}else{
+			$and = '';
+		}	
         $db = $this->_db->query("SELECT 
                                     COUNT(KU.guid) AS countPostpaid
                                 FROM
@@ -275,7 +284,8 @@ class Kutu_Core_Orm_Table_Order extends Zend_Db_Table_Abstract
                                 ON
                                     kuf.userid = ku.guid
                                 WHERE
-                                    ispostpaid = 1");
+                                    ispostpaid = 1
+								");
     	
     	$dataFetch = $db->fetchAll(Zend_Db::FETCH_ASSOC);
     	

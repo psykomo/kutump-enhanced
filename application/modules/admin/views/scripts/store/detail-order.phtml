@@ -1,116 +1,53 @@
-<link rel="stylesheet" href="<?echo KUTU_ROOT_URL;?>/lib/jquery/pagination.css
-<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.pagination.js"></script>
-<script type="text/javascript">
-	$(document).ready(function(){
-		//$('#menu').flickrmenu();
-        $('ul.sf-menu').superfish();
-    
-    var isFirstTime = 1;
-	
-	// First Parameter: number of items
-	// Second Parameter: options object
-	var myPageIndex = 0;
-	var itemsPerPage = <?echo $this->itemsPerPage;?>;
-	var currentOffset = <?echo $this->offset;?>;
-	var limit = <?echo $this->limit;?>;
-	var currentNode = "<?echo $this->currentNode;?>";
-	var totalItems = <?echo $this->totalItems;?>;
-	var sort = "<?echo $this->sort;?>";
-	var idOrder = <? echo  $this->id; ?>;
-	
-	
-	var tmpCurrentPageIndex = currentOffset/itemsPerPage;
-	
-	$("#catalogPagination").pagination(totalItems, 
-	{items_per_page:itemsPerPage, callback:handlePaginationClick, current_page:tmpCurrentPageIndex}
-	);
-	
-	function handlePaginationClick(new_page_index, pagination_container) 
-	{
-		if(!isFirstTime)
-		{
-			myPageIndex = new_page_index;
-			var nextOffset = (itemsPerPage * myPageIndex);
-		
-			$("Offset").val(nextOffset);
-			$("#frmSearch").submit();
-			
-			var url = "<?echo KUTU_ROOT_URL;?>/admin/store/detailOrder/id"+idOrder+"/node/"currentNode+"/offset/"+nextOffset+"/limit/"+limit+"/sort/"+sort+"/";
-			window.location = url;
-		}
-		isFirstTime = 0;
-		return false;
-	}
 
-	});
-    
-</script>
 <?=$this->render('header.phtml');?>
 <?  foreach($this->rows as $row): ?>
-<table width="400px">
-    <tr>
-    <td colspan="2">
-    Order No : <?=$this->id;?>
-    </td>
-    <td colspan="2"><div align="right">
+<fieldset class="span-20">
+    <legend>Order No : <?=$this->id;?></legend>
+    <div class="span-18" align="right">
     <form>
     <input type="button" value="Edit" onclick="window.location.href='<?=KUTU_ROOT_URL?>/admin/store/editOrder/id/<?=$this->id;?>'" />
     &nbsp;
     <input type="button" value="Back" onclick="javascript:history.back();" />
     &nbsp;&nbsp;&nbsp;&nbsp;
     </form>
-    </div></td>
-    </tr>
-    <tr>
-        <td>Invoice</td> <td><?=$row->invoiceNumber; ?></td>
-        <td>USer ID</td> <td><?=$row->userId; ?></td>
-    </tr>
-    <tr>
-        <td>Tax Number</td> <td><?=$row->taxNumber; ?></td>
-        <td>Tax Company</td> <td><?=$row->taxCompany; ?></td>
-    </tr>
-    <tr>
-        <td>Tax Address</td> <td><?=$row->taxAddress; ?></td>
-        <td>tax City</td> <td> <?=$row->taxCity; ?></td>
-    </tr>
-    <tr>
-        <td>Tax ZIP</td> <td><?=$row->taxZip; ?></td>
-        <td>Tax Province</td> <td> <?=$row->taxProvince; ?></td>
-    </tr>
-    <tr>
-        <td>Tax Country</td> <td> <?=$row->taxCountryId; ?></td>
-        <td>Telephone</td> <td> <?=$row->telephone; ?></td>
-    </tr>
-    <tr>
-        <td>Payment Method</td> <td> <?=$row->paymentMethod; ?></td>
-        <td>Payment Method Note</td> <td> <?=$row->paymentMethodNote; ?></td>
-    </tr>
-    <tr>
-        <td>Last Modified</td> <td> <?=$row->lastModified; ?></td>
-        <td>Date Purchased</td> <td> <?=$row->datePurchased; ?></td>
-    </tr>
-    <tr>
-        <td>Order Status</td> <td> <?=$row->ordersStatus; ?></td>
-        <td>Date Order Finished</td> <td> <?=$row->dateOrderFinished; ?></td>
-    </tr>
-    <tr>
-        <td>Currency</td> <td> <?=$row->currency; ?></td>
-        <td>Currency Value</td> <td> <?=$row->currencyValue; ?></td>
-    </tr>
-    <tr>
-        <td>Order Total</td> <td> <?=$row->orderTotal; ?></td>
-        <td>Order Tax</td> <td> <?=$row->orderTax ; ?></td>
-    </tr>
-    <tr>
-        <td>Paypal IPN ID</td> <td> <?=$row->paypalIpnId; ?></td>
-        <td>IP Address</td> <td> <?=$row->ipAddress; ?></td>
-    </tr>
-    <tr>
-        <td>Payment Date</td>
-        <td><?=$row->paidDate;?></td>
-        <td><input type="hidden" name="id" value="<?=$this->id;?>"></td>
-    </tr>
-</table>
+    </div>
+    <hr />
+    <div class="span-4"><strong>Invoice</strong></div> <div class="span-5"><?=$row->invoiceNumber; ?>&nbsp;</div>
+    <div class="span-4"><strong>USer ID</strong></div> <div class="span-5"><?=$row->userId; ?>&nbsp;</div>
+    <hr />
+    <div class="span-4"><strong>Tax Number</strong></div> <div class="span-5"><?=$row->taxNumber; ?>&nbsp;</div>
+    <div class="span-4"><strong>Tax Company</strong></div> <div class="span-5"><?=$row->taxCompany; ?>&nbsp;</div>
+    <hr />
+    <div class="span-4"><strong>Tax Address</strong></div> <div class="span-5"><?=$row->taxAddress; ?>&nbsp;</div>
+    <div class="span-4"><strong>tax City</strong></div> <div class="span-5"> <?=$row->taxCity; ?>&nbsp;</div>
+    <hr />
+    <div class="span-4"><strong>Tax ZIP</strong></div> <div class="span-5"><?=$row->taxZip; ?>&nbsp;</div>
+    <div class="span-4"><strong>Tax Province</strong></div> <div class="span-5"> <?=$row->taxProvince; ?>&nbsp;</div>
+    <hr />
+    <div class="span-4"><strong>Tax Country</strong></div> <div class="span-5"> <?=$row->taxCountryId; ?>&nbsp;</div>
+    <div class="span-4"><strong>Telephone</strong></div> <div class="span-5"> <?=$row->telephone; ?>&nbsp;</div>
+    <hr />
+    <div class="span-4"><strong>Payment Method</strong></div> <div class="span-5"> <?=$row->paymentMethod; ?>&nbsp;</div>
+    <div class="span-4"><strong>Payment Method Note</strong></div> <div class="span-5"> <?=$row->paymentMethodNote; ?>&nbsp;</div>
+    <hr />
+    <div class="span-4"><strong>Last Modified</strong></div> <div class="span-5"> <?=$row->lastModified; ?>&nbsp;</div>
+    <div class="span-4"><strong>Date Purchased</strong></div> <div class="span-5"> <?=$row->datePurchased; ?>&nbsp;</div>
+    <hr />
+    <div class="span-4"><strong>Order Status</strong></div> <div class="span-5"> <?=$row->ordersStatus; ?>&nbsp;</div>
+    <div class="span-4"><strong>Date Order Finished</strong></div> <div class="span-5"> <?=$row->dateOrderFinished; ?>&nbsp;</div>
+    <hr />
+    <div class="span-4"><strong>Currency</strong></div> <div class="span-5"> <?=$row->currency; ?>&nbsp;</div>
+    <div class="span-4"><strong>Currency Value</strong></div> <div class="span-5"> <?=$row->currencyValue; ?>&nbsp;</div>
+    <hr />
+    <div class="span-4"><strong>Order Total</strong></div> <div class="span-5"> <?=$row->orderTotal; ?>&nbsp;</div>
+    <div class="span-4"><strong>Order Tax</strong></div> <div class="span-5"> <?=$row->orderTax ; ?>&nbsp;</div>
+    <hr />
+    <div class="span-4"><strong>Paypal IPN ID</strong></div> <div class="span-5"> <?=$row->paypalIpnId; ?>&nbsp;</div>
+    <div class="span-4"><strong>IP Address</strong></div> <div class="span-5"> <?=$row->ipAddress; ?>&nbsp;</div>
+    <hr />
+    <div class="span-4"><strong>Payment Date</strong></div> <div class="span-4"><?=$row->paidDate;?>&nbsp;</div>
+    <div class="span-4"><strong><input type="hidden" name="id" value="<?=$this->id;?>"></div>
+</fieldset>
 <? endforeach;?>
 <hr />
 <table>

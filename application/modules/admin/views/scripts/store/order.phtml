@@ -21,7 +21,7 @@
 	var totalItems = <?echo $this->totalItems;?>;
 	var sort = "<?echo $this->sort;?>";
 	<?
-	if(!empty($this->Query)){
+	if(!empty($this->sStatus)){
 		$test = "/Query/$this->Query/";
 	}else{
 		$test = "/0/";
@@ -43,7 +43,7 @@
 			$("Offset").val(nextOffset);
 			$("#frmSearch").submit();
 			
-			var url = "<?echo KUTU_ROOT_URL;?>/admin/store/order/offset/"+nextOffset+"/limit/"+limit+"<?=$test?>"+currentNode+"/sort/"+sort;
+			var url = "<?echo KUTU_ROOT_URL;?>/admin/store/order/offset/"+nextOffset+"/limit/"+limit+currentNode+"/sort/"+sort+"/sStatus/<?=$this->sStatus;?>/sUsername/<?=$this->sUsername;?>/fdate/<?=$this->fdate?>/ldate/<?=$this->ldate?>";
 			window.location = url;
 		}
 		isFirstTime = 0;
@@ -56,8 +56,9 @@
 <?=$this->render('header.phtml');?>
 <hr class="space">
 <div class="span-25 last">
-<form id="frmSearch" name="frmSearch" method="GET">
-	Query : <input id="Query" name="Query" size=30 value="<?echo $this->Query;?>">
+<form id="frmSearch" name="frmSearch" method="POST">
+	Status : <input id="sStatus" name="sStatus" size=10 value="<?echo $this->sStatus;?>">
+	Username : <input id="sUsername" name="sUsername" size=10 value="<?echo $this->sUsername;?>">
 	Date min : <input id="fdate" name="fdate" value="<?=$this->fdate?>">
 	<input class="button" type="reset" value="..." onclick="return showCalendar('fdate');" name="cmddprebiddate"/>
 	Date max : <input id="ldate" name="ldate" value="<?=$this->ldate;?>">
