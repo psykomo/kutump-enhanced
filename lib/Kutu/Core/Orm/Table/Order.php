@@ -40,11 +40,11 @@ class Kutu_Core_Orm_Table_Order extends Zend_Db_Table_Abstract
     	
     	return ($dataFetch[0]['count']);
     }	
-    function countOrders($userId)
+    function countOrders($query, $userId)
     {
     	$db = $this->_db->query
-    	("Select count(orderId) AS count From KutuOrder as KO
-    	where userId=$userId");
+    	("Select count(KO.orderId) AS count From KutuOrder as KO, KutuOrderDetail AS KOD
+    	where KOD.orderID =KO.orderID AND KO.userId=$userId $query");
     	
     	$dataFetch = $db->fetchAll(Zend_Db::FETCH_ASSOC);
     	
@@ -122,19 +122,20 @@ class Kutu_Core_Orm_Table_Order extends Zend_Db_Table_Abstract
         Zend_Loader::loadClass($this->_rowsetClass);
         return new $this->_rowsetClass($data);
 	}    
-    public function getOrderSummary($where,$limit,$offset){
+    public function getOrderSummary($query, $where,$limit,$offset){
         //echo $where;
         $db = $this->_db->query("SELECT KO.*,KOS.ordersStatus,
                                 COUNT(itemid) AS countTotal,KU.* 
-                                from
+                                FROM
                                 ((Kutuorder AS KO 
-                                Left join kutuorderdetail AS KOD 
+                                LEFT JOIN kutuorderdetail AS KOD 
                                     ON KOD.orderid=KO.orderid)
                                 LEFT JOIN kutuuser AS KU 
                                     ON KU.guid = KO.userid)
                                 LEFT JOIN kutuorderstatus AS KOS 
                                     ON KOS.orderstatusid = KO.orderstatus
                                 WHERE KO.userId = $where
+								$query
                                 GROUP BY(KO.orderId) DESC
                                 LIMIT $offset, $limit");
         //$db = $this->_db->query();
@@ -200,14 +201,16 @@ class Kutu_Core_Orm_Table_Order extends Zend_Db_Table_Abstract
     	
     	return ($dataFetch[0]['totalDoc']);
     }
-    public function getPostpaidSummary($where,$limit,$offset){
+    public function getPostpaidSummary($where, $limit, $offset, $order){
         if(!empty($where)){
 			$and = "AND $where";
 		}else{
 			$and = '';
 		}
         $db = $this->_db->query("SELECT 
-                            KU.*, KUF.creditlimit AS creditLimit 
+                                KU.*, 
+                                KUF.creditlimit AS creditLimit, 
+                                SUM(orderTotal) AS total
                             FROM
                                 ((kutuuser AS KU
                             LEFT JOIN 
@@ -217,12 +220,15 @@ class Kutu_Core_Orm_Table_Order extends Zend_Db_Table_Abstract
                             LEFT JOIN
                                 kutuorder AS KO
                             ON
-                                ko.userid = KUF.userid)
+                                ko.userid = KUF.userid 
+                                AND paymentMethod = 'postpaid'
+                                AND (orderStatus =5 OR orderStatus =4))
                             WHERE 
                                 isPostpaid =1
 							$and
                             GROUP BY
                                 KUF.userid
+                            $order
                             LIMIT $offset, $limit");
         $dataFetch = $db->fetchAll(Zend_Db::FETCH_ASSOC);        
 		    	
@@ -236,40 +242,7 @@ class Kutu_Core_Orm_Table_Order extends Zend_Db_Table_Abstract
         Zend_Loader::loadClass($this->_rowsetClass);
         return new $this->_rowsetClass($data);
 	}
-	public function getPostpaidSummaryCount(){
-        $db = $this->_db->query("SELECT 
-                            KO.userId,
-							SUM(orderTotal) AS total
-							FROM
-                                ((kutuuser AS KU
-                            LEFT JOIN 
-                                kutuuserfinance AS KUF 
-                            ON
-                                kuf.userid = ku.guid)
-                            LEFT JOIN
-                                kutuorder AS ko
-                            ON
-                                ko.userid = kuf.userid)
-                            WHERE 
-                                isPostpaid =1 
-								AND paymentMethod = 'postpaid'
-								AND (orderStatus =5 OR orderStatus =4)
-							GROUP BY
-                                kuf.userid");
-        //$db = $this->_db->query();
-    	$dataFetch = $db->fetchAll(Zend_Db::FETCH_ASSOC);        
-		    	
-        $data  = array(
-            'table'    => $this,
-            'data'     => $dataFetch,
-            'rowClass' => $this->_rowClass,
-            'stored'   => true
-        );
-
-        Zend_Loader::loadClass($this->_rowsetClass);
-        return new $this->_rowsetClass($data);
-	}
-    public function getPostpaidCount($where){
+	public function getPostpaidCount($where){
 	    if(!empty($where)){
 			$and = "AND $where";
 		}else{
