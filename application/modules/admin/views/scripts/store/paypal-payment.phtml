@@ -60,8 +60,8 @@
 	<b>Data number <?=($this->offset+1>$this->totalItems)?$this->totalItems:$this->offset+1; ?> to <?=($this->offset+$this->limit>$this->totalItems)?$this->totalItems:$this->offset+$this->limit; ?> from <?=$this->totalItems;?> data(s)</b>
 </div>
 <div class="span-13 last" align="right"> 
-<a href="<? echo $this->url(array('controller'=>'store', 
-            'action'=> 'excell', 'Query'=> 'KO.orderStatus = 3 OR KO.orderStatus = 5 AND'.$this->Query,"ctrl"=>'transactionAdmin' ));?>">Download</a>
+<a href="#<?/* echo $this->url(array('controller'=>'store', 
+            'action'=> 'excell', 'Query'=> 'KO.orderStatus = 3 OR KO.orderStatus = 5 AND'.$this->Query,"ctrl"=>'transactionAdmin' ));*/?>">Download</a>
 		<!--
 		<?for($i=0;$i<count($this->orderStatus);$i++){?>
         [<a href="<? echo $this->url(array('controller'=>'store', 

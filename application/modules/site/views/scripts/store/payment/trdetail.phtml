@@ -10,51 +10,53 @@
 	<a href="<? echo KUTU_ROOT_URL;?>/site/store_payment/document">Documents</a>
 </div>
 <hr />
-<h3>Transaction </h3>
-<hr />
+<fieldset><legend>Transaction </legend>
 <? foreach($this->listOrder as $value): ?>
     <div class="span-5"><strong>OrderID </strong> </div><div class="span-6"> <?=$value['orderId'];  ?> &nbsp; </div>
     <div class="span-5 last"><strong>Invoice </strong></div><div class="span-6"> <?=$value['invoiceNumber'];  ?> &nbsp; </div>
-
+    <hr />
     <div class="span-5"><strong>User ID </strong></div><div class="span-6"> <?=$value['userId'];  ?> &nbsp; </div>
     <div class="span-5 last"><strong>Tax Number </strong></div><div class="span-6"> <?=$value['taxNumber'];  ?> &nbsp; </div>
+    <hr />
 
     <div class="span-5"><strong>Tax Company </strong></div><div class="span-6"> <?=$value['taxCompany'];  ?> &nbsp; </div>
     <div class="span-5 last"><strong>Tax Address </strong></div><div class="span-6"> <?=$value['taxAddress'];  ?> &nbsp; </div>
+    <hr />
 
     <div class="span-5"><strong>Tax City </strong></div><div class="span-6"> <?=$value['taxCity'];  ?> &nbsp; </div>
     <div class="span-5 last"><strong>Tax Zip </strong></div><div class="span-6"> <?=$value['taxZip'];  ?> &nbsp; </div>
+    <hr />
 
     <div class="span-5"><strong>Tax Province </strong></div><div class="span-6"> <?=$value['taxProvince'];  ?> &nbsp; </div>
     <div class="span-5 last"><strong>Tax Country </strong></div><div class="span-6"> <?=$value['taxCountryId'];  ?> &nbsp; </div>
+    <hr />
 
     <div class="span-5"><strong>Telephone </strong></div><div class="span-6"> <?=$value['telephone'];  ?> &nbsp; </div>
-
     <div class="span-5 last"><strong>Payment Method </strong></div><div class="span-6"><?=$value['paymentMethod'];  ?> &nbsp; </div>
+    <hr />
     <div class="span-5"><strong>Payment Menthode Note</strong> </div><div class="span-6"> <?=$value['paymentMethodNote'];  ?> &nbsp; </div>
-
-    <div class="span-5 last"><strong>Last Modified </strong></div><div class="span-6"> <?=strftime("%Y-%m-%d", strtotime($value['lastModified']));  ?> &nbsp; </div>
-    <div class="span-5"><strong>Date Purchased </strong></div><div class="span-6"> <?=$value['datePurchased'];  ?> &nbsp; </div>
-
+    <div class="span-5 last"><strong>Last Modified </strong></div><div class="span-6"> <?=(!empty($value['lastModified']))?strftime("%Y-%m-%d", strtotime($value['lastModified'])):'Undefined';  ?> &nbsp; </div>
+    <hr />
+    <div class="span-5"><strong>Date Purchased </strong></div><div class="span-6"> <?=(!empty($value['datePurchased']))?strftime("%Y-%m-%d", strtotime($value['datePurchased'])):'Undefined';  ?> &nbsp; </div>
     <div class="span-5 last"><strong>Order Status </strong></div><div class="span-6"> <?=$value['ordersStatus'];  ?> &nbsp; </div>
-    <div class="span-5"><strong>Date Order Finished </strong></div><div class="span-6"><?
-	if(empty($value['dateOrderFinished'])){
-		echo 'Unknown';
-	}else{
-		echo strftime("%Y-%m-%d", strtotime($value['dateOrderFinished']));
-	}?> &nbsp; </div>
-
+    <hr />
+    <div class="span-5"><strong>Date Order Finished </strong></div><div class="span-6"><?=(!empty($value['dateOrderFinished']))?strftime("%Y-%m-%d", strtotime($value['dateOrderFinished'])):'Undefined';
+	?> &nbsp; </div>
     <div class="span-5 last"><strong>Currency </strong></div><div class="span-6"> <?=$value['currency'];  ?> &nbsp; </div>
+    <hr />
     <div class="span-5"><strong>Currency Value </strong></div><div class="span-6"> <?=$value['currencyValue'];  ?> &nbsp; </div>
-
     <div class="span-5 last"><strong>Total Order </strong></div><div class="span-6"> <?=$value['orderTotal'];  ?> &nbsp; </div>
+    <hr />
     <div class="span-5"><strong>Total Orde Tax </strong></div><div class="span-6"> <?=$value['orderTax'];  ?> &nbsp; </div>
-
     <div class="span-5 last"><strong>Paypal IPN ID </strong></div><div class="span-6"> <?=$value['paypalIpnId'];  ?> &nbsp; </div>
+    <hr />
     <div class="span-5"><strong>IP Address </strong></div><div class="span-6"> <?=$value['ipAddress'];  ?> &nbsp; </div>
+    <hr />
 <? endforeach;  ?>
+</fieldset>
 <hr />
-<h3>DETAIL</h3>
+<fieldset>
+<legend>DETAIL</legend>
 <hr />
 <strong>
 <div class="span-1" align="center">No.</div>
@@ -76,8 +78,10 @@
 <div class="span-2"align="center"><?=number_format($valueDetail['qty'],0); ?> </div>
 <hr />
 <?  $i++; endforeach;  ?>
+</fieldset>
 <hr />
-<h3>Payment History</h3>
+<fieldset>
+<legend>Payment History</legend>
 <strong>
 <div class="span-2">No.&nbsp;</div>
 <div class="span-3">Date&nbsp;</div>
@@ -92,3 +96,4 @@
 <div class="span-4"><?=$valueHistory['note']; ?> &nbsp;</div>
 <hr />
 <?  $i++; endforeach;  ?>
+</fieldset>

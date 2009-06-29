@@ -14,6 +14,8 @@
 </div>
 
 <hr>
+<fieldset class="span-12">
+<legend>Edit Info</legend>
 <form method="post">
 <? foreach($this->rowset as $row) :?>
 <input type="hidden" name="userId" value="<?=$row->userId; ?>" >
@@ -23,27 +25,27 @@
 <input type="hidden" name="modifiedBy" value="<?=$row->modifiedBy; ?>" >
 
 <div class="span-5"><strong>Tax Number</strong></div>
-<div class="span-10"><input type="text" name="taxNumber" value="<?=$row->taxNumber; ?>" ></div>
+<div class="span-6"><input type="text" name="taxNumber" value="<?=$row->taxNumber; ?>" ></div>
 <hr class="space"> 
 
 <div class="span-5"><strong>Tax Company</strong></div>
-<div class="span-10"><input type="text" name="taxCompany" value="<?=$row->taxCompany; ?>" ></div> 
+<div class="span-6"><input type="text" name="taxCompany" value="<?=$row->taxCompany; ?>" ></div> 
 <hr class="space">
 
 <div class="span-5"><strong>Tax Address</strong></div>
-<div class="span-10"><textarea name="taxAddress"><?=$row->taxAddress; ?></textarea></div> 
+<div class="span-6"><textarea name="taxAddress"><?=$row->taxAddress; ?></textarea></div> 
 <hr class="space">
 
 <div class="span-5"><strong>Tax City</strong></div>
-<div class="span-10"><input type="text" name="taxCity" value="<?=$row->taxCity; ?>" ></div> 
+<div class="span-6"><input type="text" name="taxCity" value="<?=$row->taxCity; ?>" ></div> 
 <hr class="space">
 
 <div class="span-5"><strong>Tax Province</strong></div>
-<div class="span-10"><input type="text" name="taxProvince" value="<?=$row->taxProvince; ?>" ></div> 
+<div class="span-6"><input type="text" name="taxProvince" value="<?=$row->taxProvince; ?>" ></div> 
 <hr class="space">
 
 <div class="span-5"><strong>Tax ZIP</strong></div>
-<div class="span-10"><input type="text" name="taxZip" value="<?=$row->taxZip; ?>" ></div> 
+<div class="span-6"><input type="text" name="taxZip" value="<?=$row->taxZip; ?>" ></div> 
 <hr class="space">
 
 <div class="span-5"><strong>Tax Country ID</strong></div>
@@ -52,7 +54,7 @@
 <hr />
 <?
 $remain =  ($row->creditLimit) - ($this->outstandingAmount);
-$limit = '<div class="span-5"><strong>Limit</strong></div><div class="span-10">'
+$limit = '<div class="span-5"><strong>Limit</strong></div><div class="span-6">'
 		.$row->creditLimit.'</div><hr class="space"><div class="span-5">
 		<strong>Otstanding Amount</strong></div><div class="span-5">'
 		.$this->outstandingAmount.'</div><hr class="space">
@@ -62,8 +64,9 @@ $limit = '<div class="span-5"><strong>Limit</strong></div><div class="span-10">'
 ?>
 <?=$value?>
 <?endforeach;?>
-<div class="span-19">
+<div class="span-12">
 <input type="reset" value="reset">
 <input type="submit" name="save" value="save">
 </div>
 </form>
+</fieldset>

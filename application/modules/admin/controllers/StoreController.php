@@ -81,7 +81,7 @@ class Admin_StoreController extends Kutu_Controller_Action
         }
     }
     public function orderAction(){
-    $this->_xl();
+    //$this->_xl();
     	$tblOrder= new Kutu_Core_Orm_Table_Order();
 		//View catalogs
 		
@@ -132,6 +132,15 @@ class Admin_StoreController extends Kutu_Controller_Action
         
         $this->view->totalItems = $numi;
 		$this->view->rows = $rowset;
+		/*$xls = new PaymentGateway_ExcelExport();
+ 
+		$xls->addRow(Array("First Name","Last Name","Website","ID"));
+		$xls->addRow(Array("james","lin","www.chumby.net",0));
+		$xls->addRow(Array("bhaven","mistry","www.mygumballs.com",1));
+		$xls->addRow(Array("erica","truex","www.wholegrainfilms.com",2));
+		$xls->addRow(Array("eliot","gann","www.dissolvedfish.com",3));
+		$xls->addRow(Array("trevor","powell","gradius.classicgaming.gamespy.com",4));
+		$xls->download("websites.xls");*/
 	}
     public function editorderAction(){
         $idOrder = $this->_request->getParam('id');

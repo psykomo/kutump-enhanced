@@ -10,10 +10,10 @@
 	<a href="<? echo KUTU_ROOT_URL;?>/site/store_payment/document">Documents</a>
 </div>
 <div class="span-14 last" align="right">
-<form id="frmSearch" name="frmSearch" method="GET" action="<?=KUTU_ROOT_URL;?>/site/store_payment/search">
-	<input id="sQuery" name="sQuery" size=30 value='<?echo $this->sQuery;?>'> 
-	<input type="hidden" id="sLimit" name="sLimit" value="10">
-	<input type="hidden" id="sOffset" name="sOffset" value="<?echo $this->sOffset;?>">
+<form id="frmSearch" name="frmSearch" method="POST">
+	<input id="Query" name="Query" size=30 value='<?echo $this->Query;?>'> 
+	<input type="hidden" id="Limit" name="Limit" value="10">
+	<input type="hidden" id="Offset" name="Offset" value="<?echo $this->Offset;?>">
 	<input type="submit" id="btnGoSearch" value="Search">
 </form>
 </div>

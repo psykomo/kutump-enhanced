@@ -5,11 +5,11 @@
 <p>
 <form method="post">
 <?  foreach($this->rows as $row): ?>
-	    <strong>Key :<hr class="space"/>
+	    <strong>Key <hr class="space"/>
         <?=$row->settingKey;?></strong><hr />
-        Value :<hr class="space"/>
+        <strong>Value </strong><hr class="space"/>
         <input type="text" name="value" value="<?=$row->settingValue;?>" size="70" /><hr />
-        Notes :<hr class="space"/>
+        <strong>Notes <strong><hr class="space"/>
         <textarea id="note" cols="20" rows="5" name="note"><?=$row->note;?></textarea>
         <hr />
         <input type="hidden" name="id" value="<?=$this->id;?>" />

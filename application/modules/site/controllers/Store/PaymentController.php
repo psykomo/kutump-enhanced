@@ -517,21 +517,28 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
 	public function listAction(){
 		
 		$r = $this->getRequest();
+		
 		$limit = ($r->getParam('limit'))?$r->getParam('limit'):10;
 		$this->view->limit =$limit;
 		$itemsPerPage = $limit;
 		$this->view->itemsPerPage = $itemsPerPage;
 		$offset = ($r->getParam('offset'))?$r->getParam('offset'):0;
 		$this->view->offset = $offset;
-	
+		$Query = (($r->getPost('Query')))?$r->getPost('Query'):$r->getParam('Query');
+		$this->view->Query = $Query;
+		$query ='';
+		if(!empty($Query)){
+			$query = " AND KOD.documentName LIKE '%$Query%' ";
+		}
 		$tblOrder = new Kutu_Core_Orm_Table_Order();
 		
-		$rowsetTotal = $tblOrder->countOrders ("'".$this->_userInfo->userId."'");
         $where=$this->_userInfo->userId;
-		$rowset = $tblOrder->getOrderSummary("'".$where."'",$limit,$offset);
+		$rowsetTotal = $tblOrder->countOrders ($query,"'".$where."'");
+		$rowset = $tblOrder->getOrderSummary($query,"'".$where."'",$limit,$offset);
 
         $this->view->numCount = $rowsetTotal;
 		$this->view->listOrder = $rowset;
+		//print_r($this->_request->getParams());
 	}
     public function detailAction(){
         $orderId = $this->_request->getParam('id');
@@ -590,15 +597,22 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
 		$this->view->itemsPerPage = $itemsPerPage;
 		$offset = ($r->getParam('offset'))?$r->getParam('offset'):0;
 		$this->view->offset = $offset;
-	
+		$Query = (($r->getPost('Query')))?$r->getPost('Query'):$r->getParam('Query');
+		$this->view->Query = $Query;
+		$query ='';
+		if(!empty($Query)){
+			$query = " AND KOD.documentName LIKE '%$Query%' ";
+		}
+		
 		$tblOrder = new Kutu_Core_Orm_Table_Order();
 		
-		$rowsetTotal = $tblOrder->countOrders ("'".$this->_userInfo->userId."' AND (orderStatus = 3 OR orderStatus = 5)");
+		$rowsetTotal = $tblOrder->countOrders ($query,"'".$this->_userInfo->userId."' AND (orderStatus = 3 OR orderStatus = 5)");
         $where="'".$this->_userInfo->userId."' AND (orderStatus = 3 OR orderStatus = 5)";
-		$rowset = $tblOrder->getOrderSummary($where,$limit,$offset);
+		$rowset = $tblOrder->getOrderSummary($query,$where,$limit,$offset);
 		
         $this->view->numCount = $rowsetTotal;
 		$this->view->listOrder = $rowset;
+		//print_r($this->_request->getParams());
 	}
 	public function billingAction(){
 		$userFinance = new Kutu_Core_Orm_Table_UserFinance();
@@ -675,21 +689,28 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
 		$this->view->listOrder = $rowset;
 		$this->view->listOrderDetail = $rowsetDetail;
 		$this->view->rowsetHistory = $rowsetHistory;		
-		
 	}
 	public function paypalsave($status){
         $tblOrder = new Kutu_Core_Orm_Table_Order();
+        $tblHistory = new Kutu_Core_Orm_Table_OrderHistory();
         $orderId = $_SESSION['orderIdNumber'];
-		$cart = $this->completeItem();
+        $dataPrice = $tblOrder->fetchAll($tblOrder->select()->where('orderId = '.$orderId));
+        if($datPrice[0]->orderTotal == $this->_request->getParam('mc_gross')){
+            $payStatus = 3;
+        }else{
+            $payStatus = 7;
+        }
+		/*$cart = $this->completeItem();
 		//save order
-		@$this->saveOrder($cart);		
+		@$this->saveOrder($cart);*/
 		//update invoice
-		$this->updateInvoiceMethod('paypal', 3, 0, 'paid with paypal method');
+		$this->updateInvoiceMethod('paypal', $payStatus, 0, 'paid with paypal method');
 		
 		$tblPaypal = new Kutu_Core_Orm_Table_Paypal();
 		$data = $tblPaypal->fetchNew();
 		//take return value to array
 		$data->mcGross  = $this->_request->getParam('mc_gross'); 
+        
 		$data->addressStatus  = $this->_request->getParam('address_status');  
 		$data->payerId  = $this->_request->getParam('payer_id');  
 		$data->addressStreet  = $this->_request->getParam('address_street');  
@@ -733,6 +754,14 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
 		
 		$row->save();
         
+        
+        $rowHistory = $tblHistory->fetchNew();        
+        $rowHistory->orderId = $orderId;
+        $rowHistory->orderStatusId = $payStatus;
+        $rowHistory->dateCreated = date('YmdHis');
+        $rowHistory->userNotified = '0';
+        $rowHistory->note = '';
+        $rowHistory->save();
 	}
     public function confirmAction(){
         $userId = $this->_userInfo->userId;

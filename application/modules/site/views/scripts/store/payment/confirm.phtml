@@ -13,12 +13,13 @@
 	<a href="<? echo KUTU_ROOT_URL;?>/site/store_payment/document">Documents</a>
 </div>
 <div class="span-14 last" align="right">
-<form id="frmSearch" name="frmSearch" method="GET" action="<?=KUTU_ROOT_URL;?>/site/store_payment/search">
+<!--<form id="frmSearch" name="frmSearch" method="GET" action="<?=KUTU_ROOT_URL;?>/site/store_payment/search">
 	<input id="sQuery" name="sQuery" size=30 value='<?echo $this->sQuery;?>'> 
 	<input type="hidden" id="sLimit" name="sLimit" value="10">
 	<input type="hidden" id="sOffset" name="sOffset" value="<?echo $this->sOffset;?>">
 	<input type="submit" id="btnGoSearch" value="Search">
 </form>
+-->
 </div>
 <script src="<?echo KUTU_ROOT_URL;?>/lib/calendar.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" media="all" href="<?echo KUTU_ROOT_URL;?>/lib/calendar/calendar-mos.css" title="green">
@@ -42,9 +43,10 @@
 		<?}?>
 		 document.getElementById('amount').value=resultMsg
 	}
-	</script>
-
-<b><?=$this->numCount;?> data(s) of unconfirmed payment.</b>
+</script>
+<hr class="space">
+<fieldset>
+<legend><?=$this->numCount;?> data(s) of unconfirmed payment.</legend>
 <hr>
 <form name="payconfirm" id="payconfirm" method="post" action="payconfirm">
 	<strong>
@@ -98,6 +100,7 @@
     <hr />
 	</font>
 <? $i++; endforeach;  ?>
+</fieldset>
 <hr/>
 <fieldset class="span-14">
     <div class="span-14">
@@ -144,7 +147,6 @@
     <div class="span-5 last"><textarea name="note"></textarea></div>
 <hr>
     <div class="span-8"><input type="submit"/></div>
-<hr class="space">
 </div>
 </fieldset>
 </form>
