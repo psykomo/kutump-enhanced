@@ -127,20 +127,17 @@ class Admin_StoreController extends Kutu_Controller_Action
             $where .= " AND datePurchased < '$ldate'  ";
         }
 		
+		$data_array[]=array('A' => 'A1','B' => 'B1','C' => 'C1');
+		$data_array[]=array('A' => 'A2','B' => 'B2','C' => 'C2');
+		
+		
 		$rowset = $tblOrder->getOrderSummaryAdmin($where,$limit, $offset);
 		$numi = $tblOrder->countOrdersAdmin($where);
         
         $this->view->totalItems = $numi;
 		$this->view->rows = $rowset;
-		/*$xls = new PaymentGateway_ExcelExport();
- 
-		$xls->addRow(Array("First Name","Last Name","Website","ID"));
-		$xls->addRow(Array("james","lin","www.chumby.net",0));
-		$xls->addRow(Array("bhaven","mistry","www.mygumballs.com",1));
-		$xls->addRow(Array("erica","truex","www.wholegrainfilms.com",2));
-		$xls->addRow(Array("eliot","gann","www.dissolvedfish.com",3));
-		$xls->addRow(Array("trevor","powell","gradius.classicgaming.gamespy.com",4));
-		$xls->download("websites.xls");*/
+		$this->view->where = $where;
+		//print_r($where);
 	}
     public function editorderAction(){
         $idOrder = $this->_request->getParam('id');
@@ -333,6 +330,7 @@ class Admin_StoreController extends Kutu_Controller_Action
         $this->view->valStatus = $valStatus;
         $this->view->totalItems = $numi;
 		$this->view->rows = $rowset;
+		$this->view->where = $where;
 	}
     public function trdetailAction(){
 	    $orderId = $this->_request->getParam('id');
@@ -617,6 +615,7 @@ class Admin_StoreController extends Kutu_Controller_Action
         $this->view->valStatus = $valStatus;
         $this->view->totalItems = $numi;
 		$this->view->rows = $rowset;
+		$this->view->where = $where;
 	}
     public function refundAction(){
         $orderId = $this->_request->getParam('id');
@@ -888,45 +887,75 @@ class Admin_StoreController extends Kutu_Controller_Action
         $mail->SendFileMail($sMailSource, $sMailEmailTo, $sMailSubject, $sMailEmailFrom, $sMailHeader, $aMailDataSet);
     }
     
-	protected function _xl($data_array='', $filename='excel'){
-	$headers = ''; // Nama/Header Kolom
-	$data = ''; // Data Kolom
-    
-    
-	$data_array[]=array('A' => 'A1','B' => 'B1','C' => 'C1');
-    $data_array[]=array('A' => 'A2','B' => 'B2','C' => 'C2');
-    /*echo '<pre>';
-    var_dump($data_array);
-    echo '</pre>';
-    exit;*/
-	if(count($data_array) == 0){
-		echo '<p>Tidak ada data untuk diexport</p>';
-	}else{
-		$n_count=0;
-		foreach($data_array as $row){
-			$line = '';
-			foreach($row as $field=>$value){
-			if($n_count==0){
-				$headers .= '"'. $field . '"' . "\t";
+	protected function xlAction(){
+		//print_r($this->_request->getParams());
+		$where = $this->_request->getParam('where');
+		$name = $this->_request->getParam('name');
+		$tblOrder = new Kutu_Core_Orm_Table_Order();
+		if($name=='Order'){
+			$data=array();
+			$dataset = $tblOrder->getAllOrderSummaryAdmin($where);
+			//var_dump($dataset);
+			//$data[] = array("A1" => "No","B1" => "Detail");
+			for($i=0;$i<count($dataset); $i++){
+				$data[] = array("No" => ($i+1),
+								"Description" => "User ID : ".$dataset[$i]->userId
+												."\n"."Invoice : ".$dataset[$i]->invoiceNumber
+												."\n"."First Name : ".$dataset[$i]->firstname
+												."\n"."Last Name : ".$dataset[$i]->lastname
+												."\n"."Company : ".$dataset[$i]->company,
+								"Payment Method" => $dataset[$i]->paymentMethod,
+								"Purchasing Date" => strftime("%Y-%m-%d", strtotime($dataset[$i]->datePurchased)),
+								"Order Status" => $dataset[$i]->ordersStatus,
+								"Total Price" => $dataset[$i]->orderTotal,
+								"Qty" => $dataset[$i]->countTotal);
 			}
-			if((!isset($value)) || ($value == "")){
-				$value = "\t";
-			}else{
-				$value = str_replace('"', '""', $value);
-				$value = '"' . $value . '"' . "\t";
+		}elseif($name=='Transaction'){
+			$data=array();
+			$dataset = $tblOrder->getAllOrderSummaryAdmin($where);
+			//var_dump($dataset);
+			//$data[] = array("A1" => "No","B1" => "Detail");
+			for($i=0;$i<count($dataset); $i++){
+				$data[] = array("No" => ($i+1),
+								"Description" => "User ID : ".$dataset[$i]->userId
+												."\n"."Invoice : ".$dataset[$i]->invoiceNumber
+												."\n"."First Name : ".$dataset[$i]->firstname
+												."\n"."Last Name : ".$dataset[$i]->lastname
+												."\n"."Company : ".$dataset[$i]->company,
+								"Payment Method" => $dataset[$i]->paymentMethod,
+								"Purchasing Date" => strftime("%Y-%m-%d", strtotime($dataset[$i]->datePurchased)),
+								"Modified Date" => (!empty($dataset[$i]->lastModified))?strftime("%Y-%m-%d",strtotime($dataset[$i]->lastModified)):'undefined',
+								"Order Status" => $dataset[$i]->ordersStatus,
+								"Total Price" => $dataset[$i]->orderTotal,
+								"Qty" => $dataset[$i]->countTotal);
 			}
-			$line .= $value;
+		}elseif($name=='Paypal'){
+			$data=array();
+			$dataset = $tblOrder->getAllOrderSummaryAdmin($where);
+			//var_dump($dataset);
+			//$data[] = array("A1" => "No","B1" => "Detail");
+			for($i=0;$i<count($dataset); $i++){
+				$data[] = array("No" => ($i+1),
+								"Description" => "User ID : ".$dataset[$i]->userId
+												."\n"."Invoice : ".$dataset[$i]->invoiceNumber
+												."\n"."First Name : ".$dataset[$i]->firstname
+												."\n"."Last Name : ".$dataset[$i]->lastname
+												."\n"."Company : ".$dataset[$i]->company,
+								"Payment Method" => $dataset[$i]->paymentMethod,
+								"Purchasing Date" => strftime("%Y-%m-%d", strtotime($dataset[$i]->datePurchased)),
+								"Modified Date" => (!empty($dataset[$i]->lastModified))?strftime("%Y-%m-%d",strtotime($dataset[$i]->lastModified)):'undefined',
+								"Order Status" => $dataset[$i]->ordersStatus,
+								"Total Price" => $dataset[$i]->orderTotal,
+								"Qty" => $dataset[$i]->countTotal);
 			}
-			$n_count++;
-			$data .= trim($line)."\n";
 		}
-
-		$data = str_replace("\r","",$data);
-								 
-				header("Content-type: application/x-msdownload");
-				header("Content-Disposition: attachment; filename=$filename.xls");
-				echo "$headers\n$data";  
+		$this->_helper->layout->disableLayout();
+		$this->_helper->layout->setLayout('excell');
+		//print_r($data);
+		$xls = new PaymentGateway_ExcelExport();
+		/*$data_array[]=array('A' => 'A1','B' => 'B1','C' => 'C1');
+		$data_array[]=array('A' => 'A2','B' => 'B2','C' => 'C2');*/
+		$xls->toExcell($data, $name.'-'.date('Y-m-d'));
 	}
-}
 }
 ?>

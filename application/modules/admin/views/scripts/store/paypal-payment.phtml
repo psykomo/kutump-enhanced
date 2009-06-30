@@ -60,8 +60,8 @@
 	<b>Data number <?=($this->offset+1>$this->totalItems)?$this->totalItems:$this->offset+1; ?> to <?=($this->offset+$this->limit>$this->totalItems)?$this->totalItems:$this->offset+$this->limit; ?> from <?=$this->totalItems;?> data(s)</b>
 </div>
 <div class="span-13 last" align="right"> 
-<a href="#<?/* echo $this->url(array('controller'=>'store', 
-            'action'=> 'excell', 'Query'=> 'KO.orderStatus = 3 OR KO.orderStatus = 5 AND'.$this->Query,"ctrl"=>'transactionAdmin' ));*/?>">Download</a>
+<a href="<? echo $this->url(array('controller'=>'store', 
+            'action'=> 'xl', 'name'=>'Paypal', 'where' => $this->where)); ?>">Download</a>
 		<!--
 		<?for($i=0;$i<count($this->orderStatus);$i++){?>
         [<a href="<? echo $this->url(array('controller'=>'store', 
@@ -78,10 +78,10 @@
         <div class="span-5" align="center">Description</div>
         <div class="span-3" align="center">Payment Method</div>
         <div class="span-3" align="center">Purchasing Date</div>
-        <div class="span-3" align="center">Modifies Date</div>
+        <div class="span-3" align="center">Modified Date</div>
 		<div class="span-2" align="center">Order Status</div>
-        <div class="span-2" align="center">Order Total</div>
-        <div class="span-2" align="center">Total Count</div>
+        <div class="span-2" align="center">Total Price</div>
+        <div class="span-2" align="center">Qty</div>
         <div class="span-2 last" align="center">Action</div>
 	</strong>
 <hr />
