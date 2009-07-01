@@ -62,6 +62,9 @@ class Sitenlrp_PagesController extends Zend_Controller_Action
 		
 		$this->view->listTitle = $row->title;
 		$this->view->pageTitle = $row->title;
+		$this->view->guid = $guid;
+		$bpm = new Kutu_Cms_Bpm_Menu();
+		$this->view->bpmCms = $bpm;
 		
 		
 		
@@ -111,10 +114,10 @@ class Sitenlrp_PagesController extends Zend_Controller_Action
 			$this->view->widget1 = $w;*/
 			
 			$this->view->showHeadline = 1;
-			$this->view->catalogGuid = $solrResult->response->docs[0]->id;
+			$this->view->catalogGuid = @$solrResult->response->docs[0]->id;
 			
 			$tblCatalog = new Kutu_Core_Orm_Table_Catalog();
-			$row = $tblCatalog->find($solrResult->response->docs[0]->id)->current();
+			$row = $tblCatalog->find(@$solrResult->response->docs[0]->id)->current();
 			$this->view->row = $row;
 		}
 	}
@@ -133,6 +136,11 @@ class Sitenlrp_PagesController extends Zend_Controller_Action
 			$this->_forward('home', "pages", 'sitenlrp', $r->getParams());
 			return true;
 		}
+		if($guid=='search')
+		{
+			$this->_forward('search', "pages", 'sitenlrp', $r->getParams());
+			return true;
+		}
 		
 		$tblFolder = new Kutu_Core_Orm_Table_Folder();
 		$rowset = $tblFolder->find($guid);
@@ -145,7 +153,9 @@ class Sitenlrp_PagesController extends Zend_Controller_Action
 				//check if folder is child of folderLegalDb
 				if(strpos($row->path, $folderLegalDb)===false)
 				{
-					$this->_forward('list', "pages", 'sitenlrp', $r->getParams());
+					$aParam = array('heading'=>1);
+					$aParam = array_merge($aParam, $r->getParams());
+					$this->_forward('list', "pages", 'sitenlrp', $aParam);
 				}
 				else
 				{
@@ -257,6 +267,9 @@ class Sitenlrp_PagesController extends Zend_Controller_Action
 			$this->view->showHeadline = 1;
 			$this->view->listTitle = Kutu_Core_Util::getCatalogAttributeValue($solrResult->response->docs[0]->id, 'fixedTitle');*/
 		}
+		
+		$cms = new Kutu_Cms_Bpm_Folder();
+		$this->view->rows = $cms->fetchCatalogs('nlrp4a40810bd0d63', 0, 5);
 	}
 	protected function _traverseFolder($folderGuid, $sGuid, $level)
 	{
@@ -304,6 +317,28 @@ class Sitenlrp_PagesController extends Zend_Controller_Action
 		
 		
 		
+	}
+	public function searchAction()
+	{
+		$r = $this->getRequest();
+		
+		
+		
+		$sQuery = ($r->getParam('sQuery'))?$r->getParam('sQuery'):'';
+		$this->view->sQuery = $sQuery;
+		$sOffset = $r->getParam('sOffset');
+		$this->view->sOffset = $sOffset;
+		$sLimit = $r->getParam('sLimit');
+		$this->view->sLimit = $sLimit;
+
+		$indexingEngine = Kutu_Search::manager();
+
+		$hits = $indexingEngine->find($sQuery,$sOffset, $sLimit);
+
+		$this->view->hits = $hits;
+
+		$bpm = new Kutu_Core_Bpm_Catalog();
+		$this->view->bpm = $bpm;
 	}
 }
 ?>

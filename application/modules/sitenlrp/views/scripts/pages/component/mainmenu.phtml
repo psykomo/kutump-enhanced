@@ -13,6 +13,17 @@
 					<?foreach($rowsetMenu as $row) {?>
 						<li>
 							<a href="<?echo KUTU_ROOT_URL;?>/pages/g/<?echo $row->guid;?>"><?echo $row->title;?></a>
+							<?
+								$rowsetMenu2 = $this->bpmCms->getMenu($row->guid);
+								if(count($rowsetMenu2)>0) {?>
+									<ul class="sf-menu">
+									<?foreach($rowsetMenu2 as $row) {?>
+										<li>
+											<a href="<?echo KUTU_ROOT_URL;?>/pages/g/<?echo $row->guid;?>"><?echo $row->title;?></a>
+										</li>
+									<?}?>
+									</ul>
+							<?}?>
 						</li>
 					<?}?>
 					</ul>
@@ -29,7 +40,7 @@
 					<a href="<?echo KUTU_ROOT_URL;?>/pages/">Indonesia</a>
 				</li>
 				<li class="current">
-					<a href="<?echo KUTU_ROOT_URL;?>/pages/">English</a>
+					<a href="http://int.nlrp.org/pages/">English</a>
 				</li>
 			</ul>
 	</li>

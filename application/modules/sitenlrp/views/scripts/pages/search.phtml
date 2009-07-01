@@ -1,0 +1,105 @@
+<link rel="stylesheet" href="<?echo KUTU_ROOT_URL;?>/lib/jquery/pagination.css" />
+<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.pagination.js"></script>
+<script>
+
+$(document).ready(function(){
+	
+	var isFirstTime = 1;
+	
+	// First Parameter: number of items
+	// Second Parameter: options object
+	var myPageIndex = 0;
+	var itemsPerPage = 2;
+	var currentQuery = $("#sQuery").val();
+	
+	/*$("#catalogPagination").pagination(<?php echo $this->aData['totalCount'];?>, 
+	{items_per_page:<?php echo $this->aData['limit'];?>, callback:handlePaginationClick}
+	);*/
+	
+	var tmpCurrentPage = $("#sOffset").val()/itemsPerPage;
+	
+	$("#catalogPagination").pagination(<?php echo $this->hits->response->numFound;?>, 
+	{items_per_page:itemsPerPage, callback:handlePaginationClick, current_page:tmpCurrentPage}
+	);
+	
+	function handlePaginationClick(new_page_index, pagination_container) 
+	{
+		if(!isFirstTime)
+		{
+			myPageIndex = new_page_index;
+			//myStart = (<?php echo $this->aData['limit'];?> * myPageIndex);
+			myStart = (itemsPerPage * myPageIndex);
+		
+			$("#sOffset").val(myStart);
+			$("#sQuery").val(currentQuery);
+			//alert($("#sQuery").val());
+			$("#frmSearch").submit();
+		}
+		isFirstTime = 0;
+		return false;
+	}
+	
+	function showCatalogContent()
+	{
+		$('.tblCatalogPager').hide();
+		$('#tblCatalogPager-'+myPageIndex).show();
+		if(!isFirstTime)
+			//window.location.hash = '#a-'+myPageIndex;
+			Scroller.scroll();
+		isFirstTime = 0;
+	}
+	$('input#sQuery').bind('keypress', function(e) {
+	        if(e.keyCode==13){
+	                // Enter pressed... do anything here...
+					$("#sOffset").val(0);
+					$("#frmSearch").submit();
+					return false;
+	        }
+	});
+	$('input#btnGoSearch').bind('click', function(e) {
+			$("#sOffset").val(0);
+			$("#frmSearch").submit();
+			return false;
+	});
+	
+	
+});
+
+</script>
+<form id="frmSearch" name="frmSearch" action="<?echo KUTU_ROOT_URL;?>/pages/g/search" method="GET">
+	<p>
+	<strong>SEARCH OUR DATABASE</strong>
+	<br>
+	<input id="sQuery" name="sQuery" size=30 value='<?echo $this->sQuery;?>'>
+	<input type="hidden" id="sLimit" name="sLimit" value="10">
+	<input type="hidden" id="sOffset" name="sOffset" value="<?echo $this->sOffset;?>">
+	<input type="submit" id="btnGoSearch" value="Search">
+	<br>&nbsp;
+	</p>
+</form>
+<p>
+	<h2 class="alt">Search Result: <?php echo $this->hits->response->numFound;?> Record(s)</h2>
+	<hr class="space">
+	<?php foreach ($this->hits->response->docs as $hit) { ?>
+		<div class='span-1 prepend-1'><p><IMG src='<?php echo KUTU_ROOT_URL.'/common/images/fb/note.png' ?>' width=24 height=24 border=0 align="absmiddle" /></p></div>
+		<div class='span-18 append-1 last'>
+			<p>
+				<?php if($hit->profile == 'kutu_doc'){?>
+					<a href="<?php echo KUTU_ROOT_URL;?>/browser/downloadfile/guid/<?php echo $hit->id;?>"><div class="searchResultTitle">File: <?php try {echo $hit->title;} catch (Exception $e) {echo '';}?></div></a>
+				<?php } else { ?>
+						<a href="<? echo KUTU_ROOT_URL;?>/pages/g/<?php echo $hit->id;?>"><?php try {echo $hit->title;} catch (Exception $e) {echo 'No-Title';}?></a>
+				<?php }?>
+				<?php try {echo (!empty($hit->subTitle))?'<br>'.$hit->subTitle:'';} catch (Exception $e) {echo '';}?>
+				<br>
+				Last modified on: <?php try {echo @$hit->modifiedDate;} catch (Exception $e) {echo '';}?>
+			</p>
+		</div>
+		<hr>
+
+	<?php }; ?>
+	<!-- div class="span-18 prepend-1 last">
+		<br>
+		<div id='catalogPagination' class="pagination"></div>
+		<br>&nbsp;<br>&nbsp;
+	</div -->
+</p>

@@ -1,6 +1,21 @@
 <div id="mainHome">	
-<h2 class="alt"><?echo Kutu_Core_Util::getCatalogAttributeValue($this->row->guid,'fixedTitle');?></h2>
-<br>
-<p><?echo Kutu_Core_Util::getCatalogAttributeValue($this->row->guid,'fixedDescription');?></p>
-<p><a href="<?echo KUTU_ROOT_URL;?>/pages/g/nlrp4a35276c91693">More details</a><p>
+	<h2 class="alt"><?echo Kutu_Core_Util::getCatalogAttributeValue($this->row->guid,'fixedTitle');?></h2>
+	<br>
+	<p><?echo Kutu_Core_Util::getCatalogAttributeValue($this->row->guid,'fixedDescription');?>
+		<a href="<?echo KUTU_ROOT_URL;?>/pages/g/nlrp4a35276c91693">More details about us</a>
+	</p>
+	<h3 class="alt">Latest News</h3>
+	<br>
+	<?foreach ($this->rows as $row) {?>
+		<hr>
+		<p><a href="<?echo KUTU_ROOT_URL;?>/pages/g/<?=$row->guid;?>"><span class="NewsListTitle"><?echo Kutu_Core_Util::getCatalogAttributeValue($row->guid,'fixedTitle');?></span></a><br><?=$row->createdDate;?></p>
+		<p>
+			<!--IMG src="<?=KUTU_ROOT_URL;?>/spacer.gif" height="14px" width="1px" -->
+			<?echo Kutu_Core_Util::getCatalogAttributeValue($row->guid,'fixedDescription');?>
+			<a href="<?echo KUTU_ROOT_URL;?>/pages/g/<?=$row->guid;?>">More details</a>
+		</p>
+		
+	<?}?>
+	<br>&nbsp;
 </div>
+

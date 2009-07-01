@@ -156,5 +156,9 @@ class Sitenlrp_Pages_ComponentController extends Zend_Controller_Action
 		
 		
 	}
+	public function footerAction()
+	{
+		
+	}
 }
 ?>

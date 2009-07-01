@@ -7,20 +7,21 @@
 <div class="span-14">
 	
 	<?
-		if($this->showHeadline)
+		if($this->showHeadline && !empty($this->catalogGuid))
 		{
 			
 	?>
 			<h2><?echo Kutu_Core_Util::getCatalogAttributeValue($this->catalogGuid, 'fixedTitle')?></h2>
 			<p><?echo Kutu_Core_Util::getCatalogAttributeValue($this->catalogGuid, 'fixedSubTitle')?></p>
-			<p><?echo $this->row->modifiedDate?></p>
+			<p><i>[Last updated:<?echo $this->row->modifiedDate?>]</i></p>
 			<p><?echo Kutu_Core_Util::getCatalogAttributeValue($this->catalogGuid, 'fixedDescription')?></p>
 			<?echo Kutu_Core_Util::getCatalogAttributeValue($this->catalogGuid, 'fixedContent')?>
-			
-			<p><a href="<?echo KUTU_ROOT_URL;?>/pages/g/<?echo $this->currentNode;?>/heading/0">View All Articles in <?echo $this->listTitle;?></a></p>
+			<br>
+			<!-- p><a href="<?echo KUTU_ROOT_URL;?>/pages/g/<?echo $this->currentNode;?>/heading/0">View All Articles in <?echo $this->listTitle;?></a></p -->
 			<?
-				echo $this->action('document','pages_component','site',array("g"=>$this->catalogGuid));
+				echo $this->action('document','pages_component','sitenlrp',array("g"=>$this->catalogGuid));
 			?>
+			<br>&nbsp;
 	<? }?>
 	<?
 		if(!$this->showHeadline)
@@ -77,7 +78,7 @@
 	<div style="padding-top:10px"></div>
 	<!--<form id="frmCatalogs" name="frmCatalogs" style="background:;">-->
 	<?php foreach ($this->hits->response->docs as $hit) { ?>
-		<div class='span-1'><IMG src='<?php echo KUTU_ROOT_URL.'/common/images/fb/note.png' ?>' width=24 height=24 border=0 align=absmiddle /></div>
+		<div class='span-1'>&nbsp;<IMG src='<?php echo KUTU_ROOT_URL.'/common/images/fb/note.png' ?>' width=24 height=24 border=0 align=absmiddle /></div>
 		<div class='span-12 last'>
 			<p>
 				<?php if($hit->profile == 'kutu_doc'){?>
@@ -92,8 +93,9 @@
 		</div>
 		<hr>
 	<?php }; ?>
+	<br>
 	<!--</form>-->
-	<div class="span-14 last">
+	<div class="span-13 prepend-1 last">
 		<div id='catalogPagination' class="pagination"></div>
 	</div>
 	<br>&nbsp;
@@ -102,15 +104,35 @@
 </div><!-- end MAIN DIV -->
 <div class="span-6 last"></div>
 <div id="sidebar">
-	<ul class="sidemenu">	
-
-		<li><a href="/project-s-members/" title="Go to the Project's Members page" class="link"><strong>Project's Members</strong></a>
-
-
-		<li><a href="/contact-us/" title="Go to the Contact Us page" class="link"><strong>Contact Us</strong></a>
-
-
-	</ul>
-	<?//echo $this->widget1->render();?>
+	<?
+		//echo $this->guid;
+		$rowsetMenu = $this->bpmCms->getMenu($this->guid);
+		if(count($rowsetMenu)>0) {?>
+			<ul class="sidemenu">
+			<?foreach($rowsetMenu as $row) {?>
+				<li>
+					<a href="<?echo KUTU_ROOT_URL;?>/pages/g/<?echo $row->guid;?>"><strong><?echo $row->title;?></strong></a>
+				</li>
+			<?}?>
+			</ul>
+	<? } 
+		else {
+	?>
+		<?
+			//echo $this->guid;
+			$tblFolder = new Kutu_Core_Orm_Table_Folder();
+			$rowFolder = $tblFolder->find($this->guid)->current();
+			$rowsetMenu = $this->bpmCms->getMenu($rowFolder->parentGuid);
+			if(count($rowsetMenu)>0) {?>
+				<ul class="sidemenu">
+				<?foreach($rowsetMenu as $row) {?>
+					<li>
+						<a href="<?echo KUTU_ROOT_URL;?>/pages/g/<?echo $row->guid;?>"><strong><?echo $row->title;?></strong></a>
+					</li>
+				<?}?>
+				</ul>
+		<? } ?>
+	<? }?>
+	
 	
 </div>

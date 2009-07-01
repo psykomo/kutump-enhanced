@@ -3,7 +3,7 @@ class Site_Pages_DetailsController extends Zend_Controller_Action
 {
 	function preDispatch()
 	{
-		$this->_helper->layout()->setLayout('layout-new1');
+		$this->_helper->layout()->setLayout('layout-final-inside');
 		$saveHandlerManager = new Kutu_Session_SaveHandler_Manager();
 		$saveHandlerManager->setSaveHandler();
 		Zend_Session::start();

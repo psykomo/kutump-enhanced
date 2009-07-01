@@ -7,8 +7,60 @@ jcart-config.php (confignya dirubah: $jcart['path'] = 'http://localhost/kutump-e
 
 java -Xms512M -Xmx1024M -Dsolr.solr.home=multicore -jar start.jar
 
+
+ZEND FRAMEWORK: Online book
+http://www.survivethedeepend.com/zendframeworkbook/en/1.0
+
 generate custom blueprint css:
 ./compress.rb -o /Users/n/tmp/css --column_width=23 --gutter_width=4 --column_count=37
+Details:http://jdclayton.com/blueprints_compress_a_walkthrough.html
+
+CSS: generate custom blueprint
+http://bluecalc.groupion.com/
+
+GIT: remove files yang didelete pake explorer/finder
+git rm $(git ls-files --deleted) and then do git commit.
+
+GIT: set merge tool
+git config –global merge.tool opendiff
+
+GIT: Run merge tool
+git mergetool
+
+GIT:SOLVE CONFLICT in MAC OS
+more details about git merge conflict in MAC OS: http://blog.katipo.co.nz/?p=48
+
+GIT: Create Patches
+https://rails.lighthouseapp.com/projects/8994/sending-patches
+
+GIT: GitX GUI user manual
+http://gitx.frim.nl/user_manual.html
+
+GIT: Simple Workflow
+http://gweezlebur.com/2009/01/19/my-git-workflow.html
+
+CSS: positioning
+http://www.barelyfitz.com/screencast/html-training/css/positioning/
+
+MYSQL: kalo suatu saat ukuran TABLE jadi SANGAT BESAR lebih dari 4GB, pake cara MERGE TABLE
+http://dev.mysql.com/doc/refman/5.0/en/merge-storage-engine.html
+
+MYSQL: Replication Technique
+http://www.onlamp.com/pub/a/onlamp/2006/04/20/advanced-mysql-replication.html?page=1
+
+ZIP: Download as ZIP file
+http://roshanbh.com.np/2008/09/force-download-mutiple-files-zip-archive-php.html
+http://devzone.zend.com/article/2105
+
+BACKUP TOOLS:
+http://www.zmanda.com/
+http://mondorescue.org/about.shtml
+
+APACHE MOD_DEFLATE/COMPRESSION TESTING:
+http://www.whatsmyip.org/http_compression/
+http://www.cyberciti.biz/tips/speed-up-apache-20-web-access-or-downloads-with-mod_deflate.html
+
+
 
 
 DESAIN DATABASE COUPON/PROMO

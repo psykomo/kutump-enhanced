@@ -202,7 +202,7 @@ input.button {
 	width: 820px;
 	background: #CCC url(../images/content.jpg) repeat-y center top;
 	margin: 0 auto;
-	text-align: center;
+	text-align: left;
 }
 #top-bg {
    position: absolute;
@@ -340,6 +340,18 @@ input.button {
 	padding: 10px 0 0px 10px; 			
 }
 #mainHome h2 a {
+	color: #85970C;
+	text-decoration: none;	
+}
+#mainHome h3 {
+	font: bold 1.6em 'Trebuchet MS', Tahoma, Sans-serif;
+	/*color: #85970C;*/ 
+	color: #6c8cd5;
+	/*color: #ff7400;*/
+	text-transform: none;
+	padding: 10px 0 0px 10px; 			
+}
+#mainHome h3 a {
 	color: #85970C;
 	text-decoration: none;	
 }
@@ -559,6 +571,6 @@ img {
 
 /* News List */
 .NewsListTitle {
-	font-size:12px;
+	font-size:11px;
 	font-weight: Bold;
 }

@@ -1,14 +1,15 @@
 <br>
-<?echo $this->action('breadcrumbs','pages_component','site',array('node'=>$this->folderGuid));?>
-<h2 class="alt"><?echo $this->folderTitle;?></h2>
-<hr>
-<div class="span-16 prepend-1 colborder">
+<div class="span-23 prepend-2 colborder">
+	<?echo $this->action('breadcrumbs','pages_component','site',array('node'=>$this->folderGuid));?>
+	<h2 class="alt"><?echo $this->folderTitle;?></h2>
+	<hr>
 	<h3><?echo Kutu_Core_Util::getCatalogAttributeValue($this->catalogGuid, 'fixedTitle')?></h3>
 	<h3><?echo Kutu_Core_Util::getCatalogAttributeValue($this->catalogGuid, 'fixedSubTitle')?></h3>
 	<h4 class="alt"><?echo $this->row->modifiedDate?></h4>
 	<?echo Kutu_Core_Util::getCatalogAttributeValue($this->catalogGuid, 'fixedContent')?>
+	<br>
 </div>
-<div class="span-6 last">
+<div class="span-10 append-1 last">
 	<?//echo $this->widget1->render();?>
 	<?echo $this->action('document','pages_component','site',array("g"=>$this->catalogGuid));?>
 </div>

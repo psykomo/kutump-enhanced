@@ -30,13 +30,15 @@ class Kutu_BaseInit
 		
 		include KUTU_ROOT_DIR.'/lib/jcart/jcart.php';
 		
-		include "Zend/Loader.php"; 		
-		Zend_Loader::registerAutoload();
+		//include "Zend/Loader.php"; 		
+		//Zend_Loader::registerAutoload();
+		require_once 'Zend/Loader/Autoloader.php';
+		$loader = Zend_Loader_Autoloader::getInstance()->setFallbackAutoloader(true);
 		
 		require_once(KUTU_ROOT_DIR.'/lib/phpgacl/gacl.class.php');
 		require_once(KUTU_ROOT_DIR.'/lib/phpgacl/gacl_api.class.php');
 		
-		$config = new Zend_Config_Ini(KUTU_ROOT_DIR.'/application/config/config.ini', 'general'); 
+		$config = new Zend_Config_Ini(KUTU_ROOT_DIR.'/application/config/config-nlrp.ini', 'general'); 
 		$registry = Zend_Registry::getInstance(); 
 		$registry->set('config', $config); 
 		$registry->set('files', $_FILES);

@@ -93,7 +93,7 @@ http://roshanbh.com.np/examples/floating-message-jquery/ */
 	color:#000;
 	text-decoration:none;
 	font:12px/25px Verdana, Arial, Helvetica, sans-serif;
-	background:url(/kutump-enhanced/arrow.gif) no-repeat;
+	background:url(../images/arrow.gif) no-repeat;
 	z-index:20;
 }
  
@@ -111,7 +111,7 @@ http://roshanbh.com.np/examples/floating-message-jquery/ */
 	color:#000;
 	text-decoration:none;
 	font:12px/25px Verdana, Arial, Helvetica, sans-serif;
-	background:url(/kutump-enhanced/arrow.gif) no-repeat 0px -88px;
+	background:url(../images/arrow.gif) no-repeat 0px -88px;
 	z-index:20;
 }
  
