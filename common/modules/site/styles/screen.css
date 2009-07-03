@@ -34,8 +34,8 @@ h1 img, h2 img, h3 img, h4 img, h5 img, h6 img {margin:0;}
 p {margin:0 0 1.5em;}
 p img.left {float:left;margin:1.5em 1.5em 1.5em 0;padding:0;}
 p img.right {float:right;margin:1.5em 0 1.5em 1.5em;}
-a:focus, a:hover {color:#000;}
-a {color:#009;text-decoration:underline;}
+a:focus, a:hover {color:#000;text-decoration:underline;}
+a {color:#009;text-decoration:none;}
 blockquote {margin:1.5em;color:#666;font-style:italic;}
 strong {font-weight:bold;}
 em, dfn {font-style:italic;}
@@ -323,7 +323,6 @@ div.colborder {padding-right:15px;margin-right:15px;border-right:1px solid #eee;
 .prepend-top {margin-top:1.5em;}
 .append-bottom {margin-bottom:1.5em;}
 .box {padding:1.5em;padding-left:1.5em;padding-right:1.0em;margin-bottom:1.5em;} /*background:#E5ECF9;*/
-.boxSideBar {padding:1.5em;padding-left:.5em;padding-right:1.5em;margin-bottom:1.5em;}
 hr {background:#ddd;color:#ddd;clear:both;float:none;width:100%;height:.1em;margin:0 0 1.45em;border:none;}
 hr.space {background:#fff;color:#fff;}
 .clearfix:after, .container:after {content:"\0020";display:block;height:0;clear:both;visibility:hidden;overflow:hidden;}

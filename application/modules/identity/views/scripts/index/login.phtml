@@ -1,34 +1,34 @@
-<hr>
-<h2 class="alt">Please login to get access to more features, or if you don't have one, hurry sign up... IT'S EASY & FREE!</h2>
-<hr>
-<form id="kutu_loginform" action="<?php echo KUTU_ROOT_URL;?>/identity/login" method="post">
-<div class="span-11 colborder">
-	<div class="span-1">&nbsp;</div>
-	<div class="span-2">Username</div>
-	<div class="span-8 last"><input name="username" id="username" size="18" value="" class="gaia le val" type="text"></div>
-	<hr class="space">
-	<div class="span-1">&nbsp;</div>
-	<div class="span-2">Password</div>
-	<div class="span-8 last"><input name="password" id="password" size="18" class="gaia le val" type="password"></div>
-	<hr class="space">
-	<div class="span-1">&nbsp;</div>
-	<div class="span-2"></div>
-	<div class="span-8 last">
-		<input name="PersistentCookie" id="PersistentCookie" value="yes" type="checkbox">&nbsp;Remember Me
+<div class="box">
+	<h2 class="alt">Please login to get access to more features, or if you don't have one, hurry sign up... IT'S EASY & FREE!</h2>
+	<hr>
+	<form id="kutu_loginform" action="<?php echo KUTU_ROOT_URL;?>/identity/login" method="post">
+	<div class="span-17 colborder">
+		<div class="span-1">&nbsp;</div>
+		<div class="span-3">Username</div>
+		<div class="span-13 last"><input name="username" id="username" size="18" value="" class="gaia le val" type="text"></div>
+		<br>&nbsp;
+		<div class="span-1">&nbsp;</div>
+		<div class="span-3">Password</div>
+		<div class="span-13 last"><input name="password" id="password" size="18" class="gaia le val" type="password"></div>
+		<br>&nbsp;
+		<div class="span-1">&nbsp;</div>
+		<div class="span-3">&nbsp;</div>
+		<div class="span-13 last">
+			<input name="PersistentCookie" id="PersistentCookie" value="yes" type="checkbox">&nbsp;Remember Me
+		</div>
+		<br>&nbsp;
+		<div class="span-1">&nbsp;</div>
+	
+		<div class="span-16 last">
+			<input class="gaia le button" name="signIn" value="   Login   " type="submit">
+			&nbsp;<a href="<?echo KUTU_ROOT_URL;?>/identity/index/forgetpassword">Forget Password</a>
+		</div>
+		<br>&nbsp;
+		<br>&nbsp;
 	</div>
-	<hr class="space">
-	<div class="span-1">&nbsp;</div>
-	<div class="span-2">&nbsp;</div>
-	<div class="span-8 last">
-		<input class="gaia le button" name="signIn" value="   Login   " type="submit">
-		&nbsp;<a href="<?echo KUTU_ROOT_URL;?>/identity/index/forgetpassword">Forget Password</a>
+	<input name="returnTo" id="returnTo" value="<? echo $this->returnTo;?>" type="hidden">
+	</form>
+	<div class="span-12 last">
+	  <a href="<?php echo KUTU_ROOT_URL;?>/identity/index/signup"><span style="font-size:22px">SIGN UP</span></a>
 	</div>
-	<hr class="space">
 </div>
-<input name="returnTo" id="returnTo" value="<? echo $this->returnTo;?>" type="hidden">
-</form>
-<div class="span-12 last">
-  <a href="<?php echo KUTU_ROOT_URL;?>/identity/index/signup"><span style="font-size:22px">SIGN UP</span></a>
-</div>
-<hr>
-<hr class="space">

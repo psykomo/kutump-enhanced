@@ -1,42 +1,88 @@
 <div class="container">
 	<div class="span-11">
 		<br>
-		<div class="span-9 prepend-2 last">
-			<p><IMG src="<?echo KUTU_ROOT_URL;?>/common/modules/site/images/logo-lgs-black.png" /></p>
+		<div class="span-11 last">
+			<?= $this->render('lgsleftmenu.phtml');?>
 		</div>
-		<p><IMG src="<?echo KUTU_ROOT_URL;?>/common/modules/site/images/left-bar-1.png" /></p>
+		<br>&nbsp;
+		<p class="leftMenu" style="font-size:1.3em"><strong>CONTACT US</strong></p>
+		<p class="leftMenu">
+			Menara Imperium 30th Floor
+			<br>Jl. H. R. Rasuna Said Kav. 1 Kuningan, 
+			<br>Jakarta 12980, Indonesia. 
+			<br>Telephone : (62-21) 831 5005, 831 5025 
+			<br>Fax : (62-21) 831 5015, 831 5025
+		</p>
+		<p class="leftMenu">
+			Email:
+			<strong>
+				<br>lubis@lgslaw.co.id
+				<br>ganie@lgslaw.co.id
+				<br>surowidjojo@lgslaw.co.id
+			</strong>
+		</p>
 	</div>
 	<div class="span-26 last" style="background: #fff;">
 		<div class="span-18" style="background: #fff;">
 			<div class="box" style="background: #fff;">
-				<h3>LGS Legal Database</h3>
-				This is the most important content of LGS Online. LGS Legal Database consists of LGS database compiled for more than 25 years of corporate law practices in Indonesia.
+				<h3>Message From The Board</h3>
+				<p>This is the most important content of LGS Online. LGS Legal Database consists of LGS database compiled for more than 25 years of corporate law practices in Indonesia.</p>
 				<hr>
-				<h3>News & Opportunities</h3>
+				<h3>Becoming A Member</h3>
 				<p>Lorem ipsum dolor sit amet, <em>consectetuer adipiscing elit</em>. Nunc congue ipsum vestibulum libero. Aenean vitae justo. Nam eget tellus. Etiam convallis, est eu lobortis mattis, lectus tellus tempus felis, a ultricies erat ipsum at metus.</p>
-				<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. <a href="#">Morbi et risus</a>. Aliquam nisl. Nulla facilisi. Cras accumsan vestibulum ante. Vestibulum sed tortor. Praesent <span class="caps">SMALL CAPS</span> tempus fringilla elit. Ut elit diam, sagittis in, nonummy in, gravida non, nunc. Ut orci. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Nam egestas, orci eu imperdiet malesuada, nisl purus fringilla odio, quis commodo est orci vitae justo. Aliquam placerat odio tincidunt nulla. Cras in libero. Aenean rutrum, magna non tristique posuere, erat odio eleifend nisl, non convallis est tortor blandit ligula. Nulla id augue.</p>
+				<div class="span-4">
+					<a href=""><h3>Login Now</h3></a>
+				</div>
+				<div class="span-1">
+					<h4><strong>/</strong></h4>
+				</div>
+				<div class="span-8 last">
+					<a href=""><h3>Register</h3></a>
+				</div>
+				<hr>
+				<!-- div class="span-9">
+					<h3>Login</h3>
+					<form id="kutu_loginform" action="<?php echo KUTU_ROOT_URL;?>/identity/login" method="post">
+					<div class="span-9">
+						<div class="span-9">Username &nbsp; <input name="username" id="username" size="18" value="" class="gaia le val" type="text"></div>
+						<div class="span-9">Password &nbsp;&nbsp; <input name="password" id="password" size="18" class="gaia le val" type="password"></div>
+						<div class="span-2">&nbsp;</div>
+						<div class="span-7 last">
+							<input name="PersistentCookie" id="PersistentCookie" value="yes" type="checkbox">&nbsp;Remember Me
+						</div>
+						<div class="span-9 last">
+							<br>
+							<input class="gaia le button" name="signIn" value="   Login   " type="submit">
+							&nbsp;<a href="<?echo KUTU_ROOT_URL;?>/identity/index/forgetpassword">Forget Password</a>
+							<br>&nbsp;
+						</div>
+	
+					</div>
+					<input name="returnTo" id="returnTo" value="<? echo $this->returnTo;?>" type="hidden">
+					</form>
+				</div>
+				<div class="span-8 last">
+					<h3>Register</h3>
+				</div>
+				<hr -->
+				<h3>News & Opportunities</h3>
+				<?foreach ($this->rowsNews as $row) {?>
+					<?=Kutu_Core_Util::formatDateTimeFromMySql($row->createdDate);?>
+					<p><a href="<?echo KUTU_ROOT_URL;?>/pages/g/<?=$row->guid;?>"><span class="NewsListTitle"><?echo Kutu_Core_Util::getCatalogAttributeValue($row->guid,'fixedTitle');?></span></a></p>
+					<!--p>
+						<IMG src="<?=KUTU_ROOT_URL;?>/spacer.gif" height="14px" width="1px">
+						<?echo Kutu_Core_Util::getCatalogAttributeValue($row->guid,'fixedDescription');?>
+						<a href="<?echo KUTU_ROOT_URL;?>/pages/g/<?=$row->guid;?>">More details</a>
+					</p-->
+					<hr class="dashed">
+				<?}?>
 			</div>
 		</div>
 		<div class="span-8 last" style="background: ;">
-			<div class="boxSideBar" style="background: #fff;">
-				<h3>About LGS Online</h3>
-				<IMG src="<?echo KUTU_ROOT_URL;?>/common/modules/site/images/right-side-icon.png" />
-				<p>This is the most important content of LGS Online. LGS Legal Database consists of LGS database compiled for more than 25 years.</p>
-				<hr class="space">
-				<h3>About LGS Online</h3>
-				<IMG src="<?echo KUTU_ROOT_URL;?>/common/modules/site/images/right-side-icon.png" />
-				<p>This is the most important content of LGS Online. LGS Legal Database consists of LGS database compiled for more than 25 years.</p>
-				<hr class="space">
-				<h3>About LGS Online</h3>
-				<IMG src="<?echo KUTU_ROOT_URL;?>/common/modules/site/images/right-side-icon.png" />
-				<p>This is the most important content of LGS Online. LGS Legal Database consists of LGS database compiled for more than 25 years.</p>
+			<div class="boxRightSideBar" style="background: #fff;">
+				<?=$this->render('lgsolrightmenu.phtml')?>
+				
 			</div>
 		</div>
 	</div>
-</div>
-
-<div class="span-18 prepend-19 last">
-	<br>
-	<h2 class="alt">Changes the Way Legal Services are Provided in Indonesia</h2>
-	<hr>
 </div>

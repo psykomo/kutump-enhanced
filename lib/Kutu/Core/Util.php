@@ -95,4 +95,11 @@ class Kutu_Core_Util
 		$db = Zend_Db_Table::getDefaultAdapter()->query("select value from KutuCatalogAttribute where catalogGuid='$catalogGuid' and attributeGuid='$attributeGuid'");
 		return $db->fetchColumn(0);
 	}
+	
+	static function formatDateTimeFromMySql($datetime)
+	{
+		$time = strtotime($datetime);
+		//return date('Y-m-d \a\t H:i', $time);
+		return date('l, F d, Y', $time);
+	}
 }

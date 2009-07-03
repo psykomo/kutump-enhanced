@@ -1,0 +1,91 @@
+<?php
+$browser = new Misc_Browser();
+if( $browser->getBrowser() == Misc_Browser::BROWSER_IE && $browser->getVersion() <= 6 ) 
+	{
+		echo ''; //echo 'You have IE version 2 or greater';
+	}
+else
+	{
+?>
+<link rel="stylesheet" type="text/css" href="<?echo KUTU_ROOT_URL;?>/lib/jquery/jstree/tree_component.css" />
+<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jstree/_lib/css.js"></script>
+<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jstree/tree_component.js"></script>
+<script>
+/*
+*****************************************
+Author: Vivekanand
+Website: http://www.developersnippets.com
+*****************************************
+*/
+$(document).ready(function(){
+	$(".toggleBtn").click(function(){
+			if($("#slideMenu").hasClass('closed')){
+				$("#slideMenu").animate({left:0}, 500, function(){
+					$(this).removeClass('closed').addClass('opened');
+					$("a#toggleLink").removeClass('toggleBtn').addClass('toggleBtnHighlight');
+				});
+			}//if close
+ 
+			$('#slideMenu').bind("mouseleave",function(){
+				$("#slideMenu").animate({left:-300}, 500, function(){
+					$(this).removeClass('opened').addClass('closed');
+					$("a#toggleLink").removeClass('toggleBtnHighlight').addClass('toggleBtn');
+				});
+			});//bind close
+	});//toggleBtn click close
+ 
+	$("a.anchorLink").click(function () {	
+		elementClick = $(this).attr("href");
+		destination = $(elementClick).offset().top;
+		$("html:not(:animated),body:not(:animated)").animate({ scrollTop: destination}, 1000 );
+		return false;
+	})
+ 
+	//Mouse Enter Event (that is mouseover event)
+	$(".toggleBtn").bind("mouseenter",function(){
+			if($("#slideMenu").hasClass('closed')){
+				$("#slideMenu").animate({left:0}, 500, function(){
+					$(this).removeClass('closed').addClass('opened');
+					$("a#toggleLink").removeClass('toggleBtn').addClass('toggleBtnHighlight');
+				});
+			}//if close
+ 
+			$('#slideMenu').bind("mouseleave",function(){
+				$("#slideMenu").animate({left:-300}, 500, function(){
+					$(this).removeClass('opened').addClass('closed');
+					$("a#toggleLink").removeClass('toggleBtnHighlight').addClass('toggleBtn');
+				});
+			});//bind close
+	});//toggleBtn click close
+	
+	var treeFirstTime = 1;
+	$("#treeSlideMenu").tree({
+	      data  : {
+	        type  : "json", // or "xml_nested" or "xml_nested"
+	        url   : "<?echo KUTU_ROOT_URL;?>/admin/dms_folder/getchildreninjson",
+	        async : true,
+	        async_data : function (NODE) { return { id : $(NODE).attr("id") || 0, my_param : "my_value" } }
+	      },
+		callback    : {
+
+					ondblclk    : function(NODE,TREE_OBJ) { 
+							if(true)
+								window.location = "<?echo KUTU_ROOT_URL;?>/dms/"+TREE_OBJ.selected.attr("id");
+							treeFirstTime = 0;
+						}
+
+				},
+			cookies : { prefix : "treeSlideMenu", opts : { path : '/' }}
+	    });
+ 
+});//ready close
+</script>
+<div id="slideMenu" class="closed">
+	<div class="slideMenuContent">
+		SITEMAP <br><i>(click the arrow to expand or double click the title to jump to the section)</i>
+	<div id="treeSlideMenu" class="demo"></div>
+		
+	</div>
+	<a style="top:100px; right: -42px;" href="#" class="toggleBtn" id="toggleLink"></a>
+</div>
+<?php } ?>

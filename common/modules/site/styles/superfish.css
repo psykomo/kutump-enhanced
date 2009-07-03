@@ -64,7 +64,8 @@ ul.sf-menu li li li.sfHover ul {
 	text-decoration:none;
 }
 .sf-menu a, .sf-menu a:visited  { /* visited pseudo selector so IE6 applies text colour*/
-	color:			#fff;
+	color:			#000;
+	font-weight:bold;
 }
 .sf-menu li {
 	background:		#fd9a01;

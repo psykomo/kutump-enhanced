@@ -89,6 +89,75 @@ class Site_PagesController extends Zend_Controller_Action
 			$this->view->row = $row;
 		}
 	}
+	//list2 action will render layout with left menu
+	public function list2Action()
+	{
+		$r = $this->getRequest();
+		$guid = $r->getParam('f');
+		$g = $r->getParam('g');
+		$guid = (!empty($g))?$r->getParam('g'):$guid;
+		
+		$tblFolder = new Kutu_Core_Orm_Table_Folder();
+		$row = $tblFolder->find($guid)->current();
+		
+		$this->view->listTitle = $row->title;
+		$this->view->pageTitle = $row->title;
+		
+		
+		
+		//View catalogs
+		$limit = ($r->getParam('limit'))?$r->getParam('limit'):12;
+		$this->view->limit =$limit;
+		$itemsPerPage = $limit;
+		$this->view->itemsPerPage = $itemsPerPage;
+		$offset = ($r->getParam('offset'))?$r->getParam('offset'):0;
+		$this->view->offset = $offset;
+		$this->view->currentNode = $guid;
+		
+		$sort = ($r->getParam('sort'))?$r->getParam('sort'):"createdDate desc";  //"regulationType desc, year desc";
+		$this->view->sort = $sort;
+		
+		$db = Zend_Db_Table::getDefaultAdapter()->query
+		("SELECT catalogGuid as guid from KutuCatalogFolder where folderGuid='$guid'");
+		$rowset = $db->fetchAll(Zend_Db::FETCH_OBJ);
+		
+		
+		$solrAdapter = Kutu_Search::manager();
+		
+		$numi = count($rowset);
+		$sSolr = "id:(";
+		for($i=0;$i<$numi;$i++)
+		{
+			$row = $rowset[$i];
+			$sSolr .= $row->guid .' ';
+		}
+		$sSolr .= ')';
+		
+		if(!$numi)
+			$sSolr="id:(hfgjhfdfka)";
+			
+		$solrResult = $solrAdapter->findAndSort($sSolr,$offset,$limit, array($sort));
+		//print_r($solrResult);die('gg');
+		$solrNumFound = count($solrResult->response->docs);
+		$this->view->totalItems = $solrResult->response->numFound;
+		$this->view->hits = $solrResult;
+		
+		
+		if($r->getParam('heading'))
+		{
+			/*$modDir = $this->getFrontController()->getModuleDirectory();
+			require_once($modDir.'/components/Pages/DetailsViewer.php');
+			$w = new Site_Pages_DetailsViewer($solrResult->response->docs[0]->id, 'root');
+			$this->view->widget1 = $w;*/
+			
+			$this->view->showHeadline = 1;
+			$this->view->catalogGuid = $solrResult->response->docs[0]->id;
+			
+			$tblCatalog = new Kutu_Core_Orm_Table_Catalog();
+			$row = $tblCatalog->find($solrResult->response->docs[0]->id)->current();
+			$this->view->row = $row;
+		}
+	}
 	public function indexORIAction()
 	{
 		$r = $this->getRequest();

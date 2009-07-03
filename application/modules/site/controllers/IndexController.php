@@ -24,6 +24,9 @@ class Site_IndexController extends Zend_Controller_Action
 	{
 		$this->_helper->layout()->setLayout('layout-final');
 		$this->view->pageTitle = 'Home';
+		
+		$cms = new Kutu_Cms_Bpm_Folder();
+		$this->view->rowsNews = $cms->fetchCatalogs('lgs4a1d77eb99e7a', 0, 5);
 	}
 	public function aboutAction()
 	{

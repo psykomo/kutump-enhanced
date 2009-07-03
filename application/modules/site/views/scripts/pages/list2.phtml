@@ -1,5 +1,28 @@
-<div class="container" style="background: #fff;">
-	<div class="span-25 prepend-1 append-1">
+<div class="container">
+	<div class="span-11">
+		<br>
+		<div class="span-11 last">
+			<?= $this->render('lgsleftmenu.phtml');?>
+		</div>
+		<br>&nbsp;
+		<p class="leftMenu" style="font-size:1.3em"><strong>CONTACT US</strong></p>
+		<p class="leftMenu">
+			Menara Imperium 30th Floor
+			<br>Jl. H. R. Rasuna Said Kav. 1 Kuningan, 
+			<br>Jakarta 12980, Indonesia. 
+			<br>Telephone : (62-21) 831 5005, 831 5025 
+			<br>Fax : (62-21) 831 5015, 831 5025
+		</p>
+		<p class="leftMenu">
+			Email:
+			<strong>
+				<br>lubis@lgslaw.co.id
+				<br>ganie@lgslaw.co.id
+				<br>surowidjojo@lgslaw.co.id
+			</strong>
+		</p>
+	</div>
+	<div class="span-26 last" style="background: #fff;">
 		<div class="box">
 			<?echo $this->action('breadcrumbs','pages_component','site',array('node'=>$this->currentNode));?>
 			<h2 class="alt"><?echo $this->listTitle;?></h2>
@@ -98,12 +121,4 @@
 			<?php } ?>
 		</div>
 	</div>
-	<div class="span-10 last">
-		<div class="boxRightSideBar" style="background: #fff;">
-			<?//echo $this->widget1->render();?>
-			<?=$this->render('lgsolrightmenu.phtml')?>
-		</div>
-	</div>
 </div>
-
-

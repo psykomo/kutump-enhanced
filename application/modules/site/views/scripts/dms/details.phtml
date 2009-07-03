@@ -8,81 +8,13 @@
 	include(KUTU_ROOT_DIR.'/lib/jcart/jcart-defaults.php');
 ?>
 <script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jcart/jcart-javascript.php"></script>
-<script>
-/*
-*****************************************
-Author: Vivekanand
-Website: http://www.developersnippets.com
-*****************************************
-*/
-$(document).ready(function(){
-	$(".toggleBtn").click(function(){
-			if($("#slideMenu").hasClass('closed')){
-				$("#slideMenu").animate({left:0}, 500, function(){
-					$(this).removeClass('closed').addClass('opened');
-					$("a#toggleLink").removeClass('toggleBtn').addClass('toggleBtnHighlight');
-				});
-			}//if close
- 
-			$('#slideMenu').bind("mouseleave",function(){
-				$("#slideMenu").animate({left:-300}, 500, function(){
-					$(this).removeClass('opened').addClass('closed');
-					$("a#toggleLink").removeClass('toggleBtnHighlight').addClass('toggleBtn');
-				});
-			});//bind close
-	});//toggleBtn click close
- 
-	$("a.anchorLink").click(function () {	
-		elementClick = $(this).attr("href");
-		destination = $(elementClick).offset().top;
-		$("html:not(:animated),body:not(:animated)").animate({ scrollTop: destination}, 1000 );
-		return false;
-	})
- 
-	//Mouse Enter Event (that is mouseover event)
-	$(".toggleBtn").bind("mouseenter",function(){
-			if($("#slideMenu").hasClass('closed')){
-				$("#slideMenu").animate({left:0}, 500, function(){
-					$(this).removeClass('closed').addClass('opened');
-					$("a#toggleLink").removeClass('toggleBtn').addClass('toggleBtnHighlight');
-				});
-			}//if close
- 
-			$('#slideMenu').bind("mouseleave",function(){
-				$("#slideMenu").animate({left:-300}, 500, function(){
-					$(this).removeClass('opened').addClass('closed');
-					$("a#toggleLink").removeClass('toggleBtnHighlight').addClass('toggleBtn');
-				});
-			});//bind close
-	});//toggleBtn click close
- 
-});//ready close
-</script>
+<?=$this->render("slidemenu.phtml")?>
+<br>
 
-<div id="slideMenu" class="closed">
-	<div class="slideMenuContent">
-	<strong>Quick Links</strong>
-		<ul>
-			<li><a href="#myAnchor" class="anchorLink" title="Anchor Link">Anchor Link</a></li>
-			<li><a href="http://www.developersnippets.com/about/" title="About Me">About Me</a> </li>
-			<li>Back to Article</li>
-		</ul>
-		<p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. <a href="#">Morbi et risus</a>. Aliquam nisl. Nulla facilisi. Cras accumsan vestibulum ante. Vestibulum sed tortor. Praesent <span class="caps">SMALL CAPS</span> tempus fringilla elit. Ut elit diam, sagittis in, nonummy in, gravida non, nunc. Ut orci. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Nam egestas, orci eu imperdiet malesuada, nisl purus fringilla odio, quis commodo est orci vitae justo. Aliquam placerat odio tincidunt nulla. Cras in libero. Aenean rutrum, magna non tristique posuere, erat odio eleifend nisl, non convallis est tortor blandit ligula. Nulla id augue.</p>
-
-		<p>Nullam mattis, odio ut tempus facilisis, metus nisl facilisis metus, auctor consectetuer felis ligula nec mauris. Vestibulum odio erat, fermentum at, commodo vitae, ultrices et, urna. Mauris vulputate, mi pulvinar sagittis condimentum, sem nulla aliquam velit, sed imperdiet mi purus eu magna. Nulla varius metus ut eros. Aenean aliquet magna eget orci. Class aptent taciti sociosqu ad litora.</p>
-		<p>Vivamus euismod. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Suspendisse vel nibh ut turpis dictum sagittis. Aliquam vel velit a elit auctor sollicitudin. Nam vel dui vel neque lacinia pretium. Quisque nunc erat, venenatis id, volutpat ut, scelerisque sed, diam. Mauris ante. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Donec mattis. Morbi dignissim sollicitudin libero. Nulla lorem.</p>
-		<blockquote>
-			<p>Integer cursus ornare mauris. Praesent nisl arcu, imperdiet eu, ornare id, scelerisque ut, nunc. Praesent sagittis erat sed velit tempus imperdiet. Ut tristique, ante in interdum hendrerit, erat enim faucibus felis, quis rutrum mauris lorem quis sem. Vestibulum ligula nisi, mattis nec, posuere et, blandit eu, ligula. Nam suscipit placerat odio. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos hymenaeos. Pellentesque tortor libero, venenatis vitae, rhoncus eu, placerat ut, mi. Nulla nulla.</p>
-		</blockquote>
-		<p>Maecenas vel metus quis magna pharetra fermentum. <em>Integer sit amet tortor</em>. Maecenas porttitor, pede sed gravida auctor, nulla augue aliquet elit, at pretium urna orci ut metus. Aliquam in dolor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Sed aliquam, tellus id ornare posuere, quam nunc accumsan turpis, at convallis tellus orci et nisl. Phasellus congue neque a lorem.</p>
-		
-	</div>
-	<a style="top:100px; right: -42px;" href="#" class="toggleBtn" id="toggleLink"></a>
-</div>
-<?echo $this->action('breadcrumbs','dms_component','site',array('node'=>$this->currentNode));?>
-<h2 class="alt"><?echo $this->catalogTitle;?></h2>
-<hr>
-<div class="span-15 prepend-1 colborder">
+<div class="span-23 prepend-2 colborder">
+	<?echo $this->action('breadcrumbs','dms_component','site',array('node'=>$this->currentNode));?>
+	<h2 class="alt"><?echo $this->catalogTitle;?></h2>
+	<hr>
 	<h3><span class="alt"><?echo $this->catalogSubTitle;?></span> </h3>
 	<p><?//echo $this->widget1->render();?></p>
 	<h4>PRICE: <?echo $this->bpm->getPrice($this->catalogGuid);?></h4>
@@ -99,9 +31,9 @@ $(document).ready(function(){
 	</form>
 	<br>
 	<?echo $this->action('relationbox','dms_component','site',array('g'=>$this->catalogGuid));?>
+	<br>&nbsp;
 </div>
-<div class="span-7 last">
-	
+<div class="span-10 append-1 last">
 	<h3>My <span class="alt">Cart</span> </h3>
 	<div id="sidebar">
 		<?php $cart->display_cart($jcart);?>

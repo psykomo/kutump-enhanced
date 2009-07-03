@@ -43,13 +43,13 @@
 </head>
 <?php //flush(); ?>
 <body style="background:#000;">
-	<?=$this->render("header.phtml")?>
+	<?=$this->render("layout-lgs-header.phtml")?>
 	<div class="container" style='background:#fff;'>
 		<!--<div class="lighter"></div>-->
 
 		<?php echo $this->layout()->content; ?>
 
 	</div>
-	<?=$this->render("footer.phtml")?>
+	<?=$this->render("layout-lgs-footer.phtml")?>
 </body>
 </html>

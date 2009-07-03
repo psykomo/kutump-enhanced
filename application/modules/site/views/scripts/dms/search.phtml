@@ -66,11 +66,17 @@ $(document).ready(function(){
 });
 
 </script>
-<h2 class="alt">Search Result: <?php echo $this->hits->response->numFound;?> Record(s)</h2>
-<hr class="space">
+<br>
+<div class="container" style='background:#fff;'>
+	<div class="span-33 prepend-2 append-2" style='background:#fff;'>
+		<h2 class="alt">Search Result: <?php echo $this->hits->response->numFound;?> Record(s)</h2>
+		<hr class="space">
+	<div>
+</div>
+
 <?php foreach ($this->hits->response->docs as $hit) { ?>
-	<div class='span-1'><IMG src='<?php echo KUTU_ROOT_URL.'/common/images/fb/note.png' ?>' width=24 height=24 border=0 align=absmiddle /></div>
-	<div class='span-23 last'>
+	<div class='span-2'><IMG src='<?php echo KUTU_ROOT_URL.'/common/images/fb/note.png' ?>' width=24 height=24 border=0 align=absmiddle /></div>
+	<div class='span-20 last'>
 		<p>
 			<?php if($hit->profile == 'kutu_doc'){?>
 				<a href="<?php echo KUTU_ROOT_URL;?>/browser/downloadfile/guid/<?php echo $hit->id;?>"><div class="searchResultTitle">File: <?php try {echo $hit->title;} catch (Exception $e) {echo '';}?></div></a>
@@ -84,14 +90,10 @@ $(document).ready(function(){
 			<strong>PRICE:</strong> USD <?php echo $this->bpm->getPrice($hit->id);?>
 		</p>
 	</div>
-	<hr>
+	<hr class="dashed">
 
 <?php }; ?>
 <div class="span-24 last">
-	<table width='100%'>
-		<tr>
-			<td width=35%>&nbsp;</td>
-			<td align=right><div id='catalogPagination' class="pagination"></div></td>
-		</tr>
-	</table>
+	<div id='catalogPagination' class="pagination"></div>
 </div>
+<br>&nbsp;

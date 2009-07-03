@@ -38,7 +38,7 @@ class Kutu_BaseInit
 		require_once(KUTU_ROOT_DIR.'/lib/phpgacl/gacl.class.php');
 		require_once(KUTU_ROOT_DIR.'/lib/phpgacl/gacl_api.class.php');
 		
-		$config = new Zend_Config_Ini(KUTU_ROOT_DIR.'/application/config/config-nlrp.ini', 'general'); 
+		$config = new Zend_Config_Ini(KUTU_ROOT_DIR.'/application/config/config.ini', 'general'); 
 		$registry = Zend_Registry::getInstance(); 
 		$registry->set('config', $config); 
 		$registry->set('files', $_FILES);

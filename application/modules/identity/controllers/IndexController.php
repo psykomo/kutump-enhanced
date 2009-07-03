@@ -32,7 +32,7 @@ class Identity_IndexController extends Zend_Controller_Action
 	public function loginAction()
 	{	
 		//$this->_helper->layout->disableLayout();
-		$this->_helper->layout()->setLayout('layout-front');
+		$this->_helper->layout()->setLayout('layout-lgs');
 		
 		$r = $this->getRequest();
 		
@@ -151,7 +151,7 @@ class Identity_IndexController extends Zend_Controller_Action
 	
 	public function signupAction()
 	{
-		$this->_helper->layout()->setLayout('layout');
+		$this->_helper->layout()->setLayout('layout-lgs');
 		
 		$r = $this->getRequest();
 		
@@ -176,6 +176,7 @@ class Identity_IndexController extends Zend_Controller_Action
 	}
 	public function forgetpasswordAction()
 	{
+		$this->_helper->layout()->setLayout('layout-lgs');
 		$r = $this->getRequest();
 		if($r->isPost())
 		{

@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN"
+   "http://www.w3.org/TR/html4/strict.dtd">
+
+<html lang="en">
+<head>
+	<meta http-equiv="Content-Type" content="text/html;">
+	<title><?echo $this->pageTitle;?></title>
+
+  <!-- Framework CSS -->
+	<link rel="stylesheet" href="<?echo KUTU_ROOT_URL;?>/common/modules/site/styles/screen.css" type="text/css" media="screen, projection">
+	<link rel="stylesheet" href="<?echo KUTU_ROOT_URL;?>/common/modules/site/styles/print.css" type="text/css" media="print">
+	
+  <!--[if IE]><link rel="stylesheet" href="<?echo KUTU_ROOT_URL;?>/common/modules/site/styles/ie.css" type="text/css" media="screen, projection"><![endif]-->
+	
+	<!-- Import fancy-type plugin for the sample page. -->
+	<link rel="stylesheet" href="<?echo KUTU_ROOT_URL;?>/common/styles/blueprint/plugins/fancy-type/screen.css" type="text/css" media="screen, projection">
+	<link rel="stylesheet" href="<?echo KUTU_ROOT_URL;?>/common/modules/site/styles/site.css" type="text/css" media="screen, projection">
+	<link rel="stylesheet" href="<?echo KUTU_ROOT_URL;?>/common/modules/site/styles/superfish.css" type="text/css" media="screen, projection">
+
+	<!--[if IE]><script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/js/excanvas.js"></script><![endif]-->
+	<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.js"></script>
+	<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.roundcorners.2.js"></script>
+	<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/splitter.js"></script>
+	<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.cookie.js"></script>
+	<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.flickrmenu.js"></script>
+	<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.validate.js"></script>
+	<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/superfish.js"></script>
+	
+	<script type="text/javascript">
+		$(document).ready(function(){
+			
+		});
+	</script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			 $('ul.sf-menu').superfish();
+
+
+		});
+	</script>
+
+</head>
+<?php //flush(); ?>
+<body style="background:#000;">
+	<div class="container">
+		<div class="logoHeaderBoxContainer">
+			<div class="logoHeaderBox" style="height:124px;"><IMG src="<?echo KUTU_ROOT_URL;?>/common/modules/site/images/logo-lgsonline.png" /></div>
+		</div>
+		<div class="span-17 prepend-20 last">
+		<div class="loginMenu">
+			<?if(empty($this->username)){?>
+					<a href="<?echo KUTU_ROOT_URL;?>/identity/login">Login/Sign up</a> |
+				<?}
+				else { echo "<span style='color:#fff;'>Hello, ". $this->username.", </span>";?>
+					 <a href="<?echo KUTU_ROOT_URL;?>/identity/logout"><span style="color:#fff;">Logout</span></a> <span style="color:#fff;">|</span>
+					<a href="<?echo KUTU_ROOT_URL;?>/site/myaccount"><span style="color:#fff;">My Account</span></a> <span style="color:#fff;">|</span>
+					<a href="<?echo KUTU_ROOT_URL;?>/site/store/checkout"><span style="color:#fff;">View Cart</span></a> <span style="color:#fff;">|</span>
+				<?}?>
+				<a href="#"><span style="color:#fff;">Help</span></a> <span style="color:#fff;">|</span> <a href="#"><span style="color:#fff;">Contact Us</span></a>
+		</div>
+		</div>
+		
+	</div>
+	
+	<div style="background: url(<?=KUTU_ROOT_URL?>/common/modules/site/images/bg-header.png) repeat-x;height:111px">
+		<div class="container">
+			<div class="span-37 last" style="background: url(<?=KUTU_ROOT_URL?>/common/modules/site/images/bg-header.png) repeat-x;">
+				<br>&nbsp;<br>
+				<div class="span-7 colborder">
+				  <!--<h1>LGS Online</h1>-->
+					<p><IMG src="<?echo KUTU_ROOT_URL;?>/common/images/logo-lgs.gif" /></p>
+				</div>
+
+				<div class="span-18">
+					&nbsp;
+				  <!--<h6>&nbsp;&nbsp;Changes dramatically the way legal services are provided in Indonesia</h6>-->
+
+				</div>
+
+				<div class="span-11 last">
+					<div class="span-11 last">
+						<form id="frmSearch" name="frmSearch" action="<?echo KUTU_ROOT_URL;?>/site/dms/search" method="GET">
+							<input id="sQuery" name="sQuery" size=30 value='<?echo $this->sQuery;?>'>
+							<input type="hidden" id="sLimit" name="sLimit" value="10">
+							<input type="hidden" id="sOffset" name="sOffset" value="<?echo $this->sOffset;?>">
+							<input type="submit" id="btnGoSearch" value="Search">
+						</form>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="darker"></div>
+	<div style="background:#fd9a01">
+		<div class="container">
+			<!--<div class="darker"></div>-->
+		
+				<div class="span-37 last" style="background: ;">
+						<?echo $this->action('mainmenu','component','site')?>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="darker"></div>
+	<div class="container">
+		<div class="span-24 last" style="background: #000">
+			<IMG src="<?echo KUTU_ROOT_URL;?>/common/modules/site/images/header.png" />
+		</div>
+	</div>
+	<div class="darker"></div>
+	<div class="container" style='background:#fff;'>
+		<!--<div class="lighter"></div>-->
+		
+		<?php echo $this->layout()->content; ?>
+		
+	</div>
+	<div class="darker"></div>
+	<div class="span-2 prepend-35 last"><IMG src="<?echo KUTU_ROOT_URL;?>/common/images/logo-iso2.jpg" /></div>	
+	
+</body>
+</html>
