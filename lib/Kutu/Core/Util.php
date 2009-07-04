@@ -102,4 +102,57 @@ class Kutu_Core_Util
 		//return date('Y-m-d \a\t H:i', $time);
 		return date('l, F d, Y', $time);
 	}
+	static function splitWordsFromCatalog($catalogGuid, $iLimit)
+	{
+		$desc = Kutu_Core_Util::getCatalogAttributeValue($catalogGuid, 'fixedDescription');
+		$content = Kutu_Core_Util::getCatalogAttributeValue($catalogGuid, 'fixedContent');
+		
+		$desc = Zend_Search_Lucene_Document_Html::loadHTML($desc);
+		$content = Zend_Search_Lucene_Document_Html::loadHTML($content);
+		
+		$desc = $desc->getFieldValue('body');
+		$content = $content->getFieldValue('body');
+		
+		if(!empty($desc))
+		{
+			if($iLimit > str_word_count($desc))
+				return $desc;
+			else
+			{
+				return Kutu_Core_Util::getNumberOfWords($desc, $iLimit);
+			}
+		}
+		if(!empty($content))
+		{
+			if($iLimit > str_word_count($content))
+				return $content;
+			else
+			{
+				return Kutu_Core_Util::getNumberOfWords($content, $iLimit);
+			}
+		}
+		return '';
+	}
+	static function getNumberOfWords($sSentences, $iNumberOfWords)
+	{
+		$sReturn = $sSentences;
+		
+		$arr = preg_split("/[\s]+/", $sReturn,$iNumberOfWords+1);
+		$arr = array_slice($arr,0,$iNumberOfWords);
+		return join(' ',$arr);
+	
+	}
+	function wordCount($string){
+	     $words = "";
+	     $string = eregi_replace(" +", " ", $string);
+	     $array = explode(" ", $string);
+	     for($i=0;$i < count($array);$i++)
+	   {
+	         if (eregi("[0-9A-Za-zÀ-ÖØ-öø-ÿ]", $array[$i]))
+	             $words[$i] = $array[$i];
+
+	     }
+	     return count($words);
+	 }
+	
 }

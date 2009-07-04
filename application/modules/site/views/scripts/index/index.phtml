@@ -26,7 +26,8 @@
 		<div class="span-18" style="background: #fff;">
 			<div class="box" style="background: #fff;">
 				<h3>Message From The Board</h3>
-				<p>This is the most important content of LGS Online. LGS Legal Database consists of LGS database compiled for more than 25 years of corporate law practices in Indonesia.</p>
+				<p><?=Kutu_Core_Util::splitWordsFromCatalog($this->rowMfromBoard->guid,50);?>...<a href="<?=KUTU_ROOT_URL;?>/pages/g/<?=$this->rowMfromBoard->guid;?>">>>more</a></p>
+				
 				<hr>
 				<h3>Becoming A Member</h3>
 				<p>Lorem ipsum dolor sit amet, <em>consectetuer adipiscing elit</em>. Nunc congue ipsum vestibulum libero. Aenean vitae justo. Nam eget tellus. Etiam convallis, est eu lobortis mattis, lectus tellus tempus felis, a ultricies erat ipsum at metus.</p>

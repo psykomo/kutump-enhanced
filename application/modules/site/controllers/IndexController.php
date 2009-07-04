@@ -27,6 +27,13 @@ class Site_IndexController extends Zend_Controller_Action
 		
 		$cms = new Kutu_Cms_Bpm_Folder();
 		$this->view->rowsNews = $cms->fetchCatalogs('lgs4a1d77eb99e7a', 0, 5);
+		
+		$rowsMessage = $cms->fetchCatalogs('lgs4a1d79d321b76', 0, 1);
+		
+		$rowMessage = $rowsMessage[0];
+		$this->view->rowMfromBoard = $rowMessage;
+		
+		
 	}
 	public function aboutAction()
 	{
