@@ -6,3 +6,4 @@
 /application/tmp
 /solr-kutump
 baseinit.php
+*.log

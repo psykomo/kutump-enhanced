@@ -56,7 +56,7 @@ class Kutu_BaseInit
 		    //'cache_dir'                => KUTU_ROOT_DIR.'/data/cache'
 		    );
 		
-/*		$cacheDbTable = Zend_Cache::factory('Core',
+		$cacheDbTable = Zend_Cache::factory('Core',
 		                             'Apc',
 		                             $frontendOptions,
 		                             $backendOptions);
@@ -64,7 +64,7 @@ class Kutu_BaseInit
 	
 		// Next, set the cache to be used with all table objects
 		Zend_Db_Table_Abstract::setDefaultMetadataCache($cacheDbTable);
-*/		
+		
 //		echo "apc: ". ini_get("apc.shm_segments");
 //		//ini_set("apc.shm_size", '90');
 //		echo "apc: ". ini_get("apc.shm_size");

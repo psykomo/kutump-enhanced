@@ -6,8 +6,12 @@ realpath(KUTU_ROOT_DIR . '/lib'),
 '.'
 );
 set_include_path(implode(PATH_SEPARATOR, $paths));
-include "Zend/Loader.php"; 		
-Zend_Loader::registerAutoload();
+//include "Zend/Loader.php"; 		
+//Zend_Loader::registerAutoload();
+
+require_once 'Zend/Loader/Autoloader.php';
+$loader = Zend_Loader_Autoloader::getInstance()->setFallbackAutoloader(true);
+
 	$config = new Zend_Config_Ini(KUTU_ROOT_DIR.'/application/config/config.ini', 'general'); 
 	$registry = Zend_Registry::getInstance(); 
 	$registry->set('config', $config); 
