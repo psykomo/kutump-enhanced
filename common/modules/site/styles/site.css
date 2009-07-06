@@ -10,6 +10,7 @@ h3.rightMenu{font-size:1.3em;line-height:1;margin-bottom:0.5em;color:#EE1625;fon
 .menuBg {background: url(../images/bglogo.jpg) repeat-x;height:40px;}
 hr {background:#ddd;color:#ddd;}
 hr.space {background:#ddd;color:#ddd;}
+hr.white {background:#fff;color:#fff;}
 hr.dashed {
       border-top: 1px dashed #ddd;
       color: #fff;
