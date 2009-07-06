@@ -8,11 +8,11 @@ class Kutu_Cms_Bpm_Menu
 		
 		if($parentGuid == 'root')
     	{
-    		return $tblFolder->fetchAll("parentGuid=guid AND (cmsParams like '%".'"menu":true'."%' OR cmsParams is NULL)",'viewOrder ASC');
+    		return $tblFolder->fetchAll("parentGuid=guid AND (cmsParams like '%".'"menu":true'."%' OR cmsParams is NULL OR cmsParams = '')",'viewOrder ASC');
     	}
     	else 
     	{
-			return $tblFolder->fetchAll("parentGuid = '$parentGuid' AND NOT parentGuid=guid AND (cmsParams like '%".'"menu":true'."%' OR cmsParams is NULL)",'viewOrder ASC');
+			return $tblFolder->fetchAll("parentGuid = '$parentGuid' AND NOT parentGuid=guid AND (cmsParams like '%".'"menu":true'."%' OR cmsParams is NULL OR cmsParams = '')",'viewOrder ASC');
     	}
 	}
 	public function generateUrlPath($guid)

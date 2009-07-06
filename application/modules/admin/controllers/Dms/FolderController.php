@@ -58,6 +58,8 @@ class Admin_Dms_FolderController extends Kutu_Controller_Action
 			$newRow->parentGuid = $node;
 			$newRow->title = $r->getParam('title');
 			$newRow->description = $r->getParam('description');
+			$newRow->viewOrder = $r->getParam('viewOrder');
+			$newRow->cmsParams = $r->getParam('cmsParams');
 			$newRow->save();
 			
 			$message = 'Data was successfully saved.';
@@ -84,6 +86,8 @@ class Admin_Dms_FolderController extends Kutu_Controller_Action
 			//die('post');
 			$rowFolder->title = $r->getParam('title');
 			$rowFolder->description = $r->getParam('description');
+			$rowFolder->viewOrder = $r->getParam('viewOrder');
+			$rowFolder->cmsParams = $r->getParam('cmsParams');
 			$rowFolder->save();
 			$message = 'Data was successfully saved.';
 			

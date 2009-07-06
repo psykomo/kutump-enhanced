@@ -36,6 +36,14 @@
 			<textarea id="description" name="description" class="" cols=35 rows="1"><?echo $this->row->description;?></textarea>
 		</p>
 		<p>
+			<label for="viewOrder">Menu View Order</label>
+			<input id="viewOrder" name="viewOrder" class="" size="10" value="<?echo $this->row->viewOrder;?>" />
+		</p>
+		<p>
+			<label for="cmsParams">Cms Parameters</label>
+			<textarea id="cmsParams" name="cmsParams" class="" cols=50 rows="1" style="width:450px;"><?echo $this->row->cmsParams;?></textarea>
+		</p>
+		<p>
 			<input class="submit" type="submit" value="Save"/>
 		</p>
 	</fieldset>
