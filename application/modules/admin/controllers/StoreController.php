@@ -127,10 +127,6 @@ class Admin_StoreController extends Kutu_Controller_Action
             $where .= " AND datePurchased < '$ldate'  ";
         }
 		
-		$data_array[]=array('A' => 'A1','B' => 'B1','C' => 'C1');
-		$data_array[]=array('A' => 'A2','B' => 'B2','C' => 'C2');
-		
-		
 		$rowset = $tblOrder->getOrderSummaryAdmin($where,$limit, $offset);
 		$numi = $tblOrder->countOrdersAdmin($where);
         

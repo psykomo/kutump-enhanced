@@ -65,13 +65,15 @@ $(document).ready(function(){
 <hr>
 	<strong>
     <div class="span-1" align="center">No&nbsp;</div>
+    <div class="span-2" align="center">Order ID&nbsp;</div>
     <div class="span-3" align="center">Invoice&nbsp;</div>
     <div class="span-4" align="center">date Purchased&nbsp;</div>
     <!-- <div class="span-4">Payment Date&nbsp;</div> -->
     <div class="span-2" align="center">Total Price&nbsp;</div>
     <div class="span-1" align="center">Qty&nbsp;</div>
     <div class="span-2" align="center">Method&nbsp;</div>
-    <div class="span-3 last" align="center">Status&nbsp;</div>
+    <div class="span-3" align="center">Status&nbsp;</div>
+    <div class="span-3 last" align="center">Action&nbsp;</div>
 	</strong>
 <hr />
 <? $i = $this->offset + 1; ?>
@@ -88,6 +90,8 @@ $(document).ready(function(){
 ?>
     <div class="span-1" align="right"><a href="<?=$this->url(array('controller'=>'store_payment', 
         'action'=>$anchor, 'id'=>$value['orderId'])); ?>"><?=$i;?></a>&nbsp;</div>
+	<div class="span-2" align="right"><a href="<?=$this->url(array('controller'=>'store_payment', 
+        'action'=>$anchor, 'id'=>$value['orderId'])); ?>"><?=$value['orderId'];?></a>&nbsp;</div>
     <div class="span-3"><a href="<?=$this->url(array('controller'=>'store_payment', 
         'action'=>$anchor, 'id'=>$value['orderId'])); ?>"><?=$value['invoiceNumber']; ?></a>&nbsp;</div>
     <div class="span-4" align="center"><?=strftime("%Y-%m-%d", strtotime($value['datePurchased'])); ?>&nbsp;</div>
@@ -95,7 +99,19 @@ $(document).ready(function(){
     <div class="span-2" align="right"><?=$value['orderTotal']; ?>&nbsp;</div>
     <div class="span-1" align="center"><?=$value['countTotal']; ?>&nbsp;</div>
     <div class="span-2"><?=$value['paymentMethod']; ?>&nbsp;</div>
-    <div class="span-3 last"><?=$value['ordersStatus']; ?>&nbsp;</div>
+    <div class="span-3"><?=$value['ordersStatus']; ?>&nbsp;</div>
+    <div class="span-3 last">
+	<? if($value['orderStatus']==1){
+	?>
+	<form method="post" action="<?=KUTU_ROOT_URL?>/site/store/paymentselected">
+	<input type="hidden" name="pending" value="yes">
+	<input type="hidden" name="orderId" value="<?=$value['orderId']?>">
+	<input type="submit" value="pay with paypal">
+	</form>
+	<?
+	}
+	?>
+	&nbsp;</div>
     <hr />
 <? $i++; endforeach;  ?>
 <table width='100%'>

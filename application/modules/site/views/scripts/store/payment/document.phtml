@@ -84,7 +84,7 @@ $(document).ready(function(){
 -->
 <div class="span-4" align="center"><?=strftime("%Y-%m-%d", strtotime($valueDetail['purchasingDate'])); ?>&nbsp </div>
 <div class="span-8"><?=$valueDetail['documentName']; ?>&nbsp </div>
-<div class="span-2 last"><a href="#" title="click here to download this document">download</a> </div>
+<div class="span-2 last"><a href="<?=KUTU_ROOT_URL;?>/pages/g/<?=$valueDetail['itemId']; ?>" title="click here to download this document">download</a> </div>
 <hr />
 <?  $i++; endforeach;  ?>
 <table width='100%'>

@@ -29,19 +29,28 @@
 <script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/jquery.pagination.js"></script>
 <script>
 	function showResults() {
-		 var resultMsg=0
+		 var resultMsg1=0
+		 var resultMsg2=0
+		 var invdiv ='';
 		 <?
 		 foreach($this->rowset as $value){
-			$arr[]= $value['orderTotal'];
+			$arr1[] = $value['orderTotal'];
+			$arr2[] = $value['currencyValue'];
+			$inv[]  = $value['orderId'].'/'.$value['orderTotal'].'/'.$value['countTotal'];
 		 }
 		 ?>
-		<? foreach($arr as $key=>$val){?>
+		<? for($i=0;$i<count($arr1);$i++){?>
 		 
-		 if(document.payconfirm.orderId[<? echo $key?>].checked){ 
-		 resultMsg+=parseFloat(<? echo ($val)?>)
+		 if(document.payconfirm.orderId[<? echo $i?>].checked){ 
+		 resultMsg1+=parseFloat(<? echo ($arr1[$i])?>)
+		 resultMsg2+=parseFloat(<? echo ($arr2[$i]*$arr1[$i])?>)
+		 invdiv+="<? echo $inv[$i]?>\n"
 		 }
 		<?}?>
-		 document.getElementById('amount').value=resultMsg
+		 document.getElementById('amountid').innerHTML=resultMsg2		 
+		 document.getElementById('amountus').innerHTML=resultMsg1		 
+		 document.getElementById('invoicex').innerHTML=invdiv		 
+		 //alert(resultMsg1+'*'+resultMsg3+'='+resultMsg2);
 	}
 </script>
 <hr class="space">
@@ -104,8 +113,10 @@
 <hr/>
 <fieldset class="span-14">
     <div class="span-14">
-    <div class="span-5">Payment Method</div>
-    <div class="span-5 last">
+	<div class="span-5"><strong>Order ID/Total/Qty</strong></div>
+    <div class="span-5 last"><textarea id="invoicex" name="invoicex">&nbsp;</textarea></div>
+    <div class="span-5"><strong>Payment Method</strong></div>
+	<div class="span-5 last">
         <select name="paymentMethod">
             <option value="atm transfer">ATM Transfer
             <option value="cash bank">Cash Bank
@@ -114,7 +125,7 @@
         </select>
     </div>
 <hr>
-    <div class="span-5">Bank Account Destination</div>
+    <div class="span-5"><strong>Bank Account Destination</strong></div>
     <div class="span-5 last">
     <select name="destinationAccount">
         <? foreach($this->bankAccount as $destAccount){
@@ -127,26 +138,29 @@
     </select>
     </div>
 <hr>
-    <div class="span-5">Date</div>
+    <div class="span-5"><strong>Date</strong></div>
     <div class="span-5 last">
     <input type="text" name="paymentDate" id="paymentDate" value="<?=date('Y-m-d')?>"><input class="button" type="reset" value="..." onclick="return showCalendar('paymentDate');" name="cmddprebiddate"/></div>
 <hr>
-    <div class="span-5">Amount</div>
-    <div class="span-5 last"><input type="text" name="amount" id="amount" value="0"readonly="readonly"></div>
+    <div class="span-5"><strong>Amount</strong></div>
+    <div class="span-5 last">
+	<input class="span-1" type="radio" name="currency" value="IDR"><strong>IDR :</strong> <div class="span-1" name="amountid" id="amountid">0</div><hr class="space" />
+	<input class="span-1" type="radio" name="currency" checked="checked" value="USD"><strong>USD :</strong> <div class="span-1" name="amountus" id="amountus">0</div>
+	</div>
 <hr>
-    <div class="span-5">Sender Account</div>
+    <div class="span-5"><strong>Sender Account</strong></div>
     <div class="span-5 last"><input type="text" name="senderAccount"></div>
 <hr>
-    <div class="span-5">Sender Account Name</div>
+    <div class="span-5"><strong>Sender Account Name</strong></div>
     <div class="span-5 last"><input type="text" name="senderAccountName"></div>
 <hr>
-    <div class="span-5">Bank Name</div>
+    <div class="span-5"><strong>Bank Name</strong></div>
     <div class="span-5 last"><input type="text" name="bankName"></div>
 <hr>
-    <div class="span-5">Notes</div>
+    <div class="span-5"><strong>Notes</strong></div>
     <div class="span-5 last"><textarea name="note"></textarea></div>
 <hr>
-    <div class="span-8"><input type="submit"/></div>
+    <div class="span-8"><input type="submit" value="Confirm Payment"/></div>
 </div>
 </fieldset>
 </form>

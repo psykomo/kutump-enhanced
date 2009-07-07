@@ -54,6 +54,7 @@ class PaymentGateway_HtmlMail{
 		
 		//send email
         try {
+			ini_set(
             $oSendMail = mail($this->sEmailTo, $this->sSubject, $this->sMessages, $this->sHeader);
             return true;
         } catch (Exception $e) {

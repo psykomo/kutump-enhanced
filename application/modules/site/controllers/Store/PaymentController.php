@@ -20,7 +20,8 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
         */
         $this->_testMode=true;
 		$this->_defaultCurrency='USD';
-        $this->_helper->layout()->setLayout('layout-iht');
+        //$this->_helper->layout()->setLayout('layout-iht');
+        $this->_helper->layout()->setLayout('layout-final-inside');
         
         $saveHandlerManager = new Kutu_Session_SaveHandler_Manager();
         $saveHandlerManager->setSaveHandler();
@@ -74,8 +75,8 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
         for($iCart=0;$iCart<count($cart->items);$iCart++){
             $itemId=$cart->items[$iCart];
             $qty= 1;
-            //$itemPrice=$bpm->getPrice($itemId);
-	    $itemPrice=20;
+            $itemPrice=$bpm->getPrice($itemId);
+            //$itemPrice=20;
             $result['items'][$iCart]['itemId']= $itemId;
             $result['items'][$iCart]['item_name'] = Kutu_Core_Util::getCatalogAttributeValue($itemId,'fixedTitle'); 
             $result['items'][$iCart]['itemPrice']= $itemPrice;
@@ -96,9 +97,15 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
 
 */    
       // Process and order...
-   
-    $paymentMethod=$this->_request->getParam('type');
-    $this->_paymentMethod=$paymentMethod;
+        $this->_checkAuth();
+		
+		$cart = $this->completeItem();
+		$methode = $this->_request->getParam('paymentMethod');
+		if(empty($_SESSION['_orderIdNumber'])){
+		$this->saveOrder($cart,$methode);
+		}
+        $paymentMethod=$this->_request->getParam('type');
+        $this->_paymentMethod=$paymentMethod;
         //$this->submitAction();    
       // There should be no output at this point.  To process the POST data,
       // the submit_paypal_post() function will output all the HTML tags which
@@ -148,18 +155,12 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
                 $paymentObject->addField('tax_cart',$cart['taxAmount']);
                 $paymentObject->addField('currency_code',$this->_defaultCurrency);
                 
-                $this->saveOrder($cart);
-				$this->updateInvoiceMethod('paypal', 1, 0, 'paid with paypal method');
+                //$orderId=$this->saveOrder($cart);
+				$paymentObject->addField('invoice',$this->_orderIdNumber);
+                $this->updateInvoiceMethod('paypal', 1, 0, 'paid with paypal method');
 				
-				$paymentObject->addField('invoice',$_SESSION['orderIdNumber']);
-				
-                //$paymentObject->dumpFields();
+				//$paymentObject->dumpFields();
                 $paymentObject->submitPayment();
-                echo "<pre>";
-				//print_r($paymentObject);
-                echo "</pre>";
-				//print_r($this->completeItem());
-                //$this->saveOrder($cart);
 				
 				//setting payment and status as pending (1), notify = 0, notes = 'paid with...'
                 break;
@@ -234,27 +235,16 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
                     
                 /*====================VALIDATE CREDIT LIMIT=====================*/
                 } else {
-					/*
-                    echo '<div align="center">';
-                    echo 'Limit transaksi anda : ' . $limit . '<br/>';
-                    echo 'total  sebelumnya : ' . number_format($outstandingAmount,2) . '<br/>';
-                    echo 'total  sekarang : ' . number_format($cart['grandTotal'],2). '<br/>';
-                    echo 'sisa limit anda : ' . $netLimit . '<br/>';
-                    echo '<input type="button" value= "back" onclick="javascript:history.back();" />
-                            <input type="button" value="Pay" onClick="parent.location.href=\'../../postpaid\'" />
-                            </div>
-                            ';
-					*/
+
 					/*view file =index.phtml*/
                     $this->view->type = "postpaid";
 					$this->view->limit = $limit;
 					$this->view->outstandingAmount = $outstandingAmount;
 					$this->view->grandTotal = $cart['grandTotal'];
+					print_r($this->_orderIdNumber);
 					$this->view->netLimit = $netLimit;
 					$this->view->taxInfo = $this->_request->getParams();
-					echo '<pre>';
-					//print_r($_SESSION['jCart']);
-					echo '</pre>';
+
                 }
                 break;
             case 'manual':
@@ -262,12 +252,12 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
                  1. update order status
                  2. redirect to instruction page 
                 */
-				$cart = $this->completeItem();
-				$this->saveOrder($cart);
+				//$cart = $this->completeItem();
+				//$this->saveOrder($cart);
 				$this->updateInvoiceMethod('bank', 1, 0, 'paid with manual method');
 				$tblOrder = new Kutu_core_Orm_Table_Order();
-				$orderId = $tblOrder->getLastInsertId();
-		
+				$orderId = $_SESSION['_orderIdNumber'];
+				print_r($orderId);
 				$this->Mailer($orderId, 'admin-order', 'admin');
 				$this->Mailer($orderId, 'user-order', 'user');
 				//setting payment and status as pending (1), notify = 0, notes = 'paid with...'
@@ -288,6 +278,7 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
     }
 	
     public function successAction(){
+        $this->_checkAuth();
             // This is where you would probably want to thank the user for their order
             // or what have you.  The order information at this point is in POST 
             // variables.  However, you don't want to "process" the order until you
@@ -381,51 +372,26 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
 				 $this->Mailer($data['orderId'], 'user-paypal', 'admin');
             }
         }
-        
-        /*if ($this->paypal->validate_ipn()) {
-            
-           // Payment has been recieved and IPN is verified.  This is where you
-           // update your database to activate or process the order, or setup
-           // the database with the user's order details, email an administrator,
-           // etc.  You can access a slew of information via the ipn_data() array.
-    
-           // Check the paypal documentation for specifics on what information
-           // is available in the IPN POST variables.  Basically, all the POST vars
-           // which paypal sends, which we send back for validation, are now stored
-           // in the ipn_data() array.
-    
-           // For this example, we'll just email ourselves ALL the data.
-           $subject = 'Instant Payment Notification - Recieved Payment';
-           $to = 'chenrijano@gmail.com';    //  your email
-           $body =  "An instant payment notification was successfully recieved\n";
-           $body .= "from ".$this->paypal->ipn_data['payer_email']." on ".date('m/d/Y');
-           $body .= " at ".date('g:i A')."\n\nDetails:\n";
-           
-           foreach ($this->paypal->ipn_data as $key => $value) { 
-			$body .= "\n$key: $value"; 
-		}
-           mail($to, $subject, $body);
-        }*/
-
-        $_SESSION['jCart'] = '';  
+        $_SESSION['jCart'] = '';   
     	
 		die();
     }
     
     public function instructionAction(){
-		$userId = $this->_userInfo->userId;
+		$this->_checkAuth();
+        $userId = $this->_userInfo->userId;
 		
 		$tblOrder = new Kutu_Core_Orm_Table_Order();
 		$rowset = $tblOrder->getLastOrder($userId);
 		$this->view->rowset = $rowset;
-		$_SESSION['jCart'] = '';        
+		$_SESSION['jCart'] = '';         
     }
     
     private function getInvoiceNumber(){
         return date('YmdHis');
     }
 	/*========FUNCTION FOR INSERTING A NEW ROW BEFORE PAYMENT PROCESS=============*/
-    private function saveOrder($cart){
+    private function saveOrder($cart,$method){
 		$tblOrder=new Kutu_Core_Orm_Table_Order();
         $row=$tblOrder->fetchNew();
         
@@ -444,7 +410,7 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
 				$row->taxZip=$value['taxZip'];
 				$row->taxProvince=$value['taxProvince'];
 				$row->taxCountryId=$value['taxCountry'];
-			
+				$row->paymentMethod=$method;
         }
         $row->datePurchased=date('YmdHis');
         $row->orderStatus=1; //pending
@@ -457,10 +423,9 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
 		echo '</pre>';
         $row->save();
 		
-        $orderId = $tblOrder->getLastInsertId();
-        $_SESSION['orderIdNumber']=$orderId;
-		$this->_orderIdNumber = $orderId;
-       
+        $orderId = $tblOrder->getLastInsertId();        
+		//$this->_orderIdNumber = $orderId;
+		$_SESSION['_orderIdNumber'] = $orderId;
         $tblOrderDetail=new Kutu_Core_Orm_Table_OrderDetail();
         for($iCart=0;$iCart<count($cart['items']);$iCart++){        
             $rowDetail=$tblOrderDetail->fetchNew();
@@ -476,26 +441,18 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
             $rowDetail->finalPrice=$itemPrice + ($itemPrice * $this->_paymentVars['taxRate'] / 100);                
             $rowDetail->save();
         }
-        
-        $tblHistory = new Kutu_Core_Orm_Table_OrderHistory();
-        $rowHistory = $tblHistory->fetchNew();        
-        $rowHistory->orderId = $orderId;
-        $rowHistory->orderStatusId = '0';
-        $rowHistory->dateCreated = date('YmdHis');
-        $rowHistory->userNotified = '0';
-        $rowHistory->note = '';
-        $rowHistory->save();
-
+        return $orderId;
     }
 	/*========FUNCTION FOR INSERTING A NEW ROW BEFORE PAYMENT PROCESS=============*/
 	
 	public function postpaidAction(){
-		$cart = $this->completeItem();
+		$this->_checkAuth();
+        $cart = $this->completeItem();
 		/*echo '<pre>';
 		print_r($cart);
 		print_r($this->_request->getParams());
 		echo '</pre>';*/
-		$this->saveOrder($cart);
+		//$this->saveOrder($cart);
 		$this->updateInvoiceMethod('postpaid', 5, 0, 'paid with postpaid method');
 		$tblOrder = new Kutu_core_Orm_Table_Order();
 		$orderId = $tblOrder->getLastInsertId();
@@ -508,30 +465,36 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
 	}
 
 	public function postpaidsuccessAction(){
-		$userId = $this->_userInfo->userId;
+		$this->_checkAuth();
+        $userId = $this->_userInfo->userId;
 		
 		$tblOrder = new Kutu_Core_Orm_Table_Order();
 		$rowset = $tblOrder->getLastOrder($userId);
 		$this->view->rowset = $rowset;
 		//print_r($rowset);
-		$_SESSION['jCart'] ='';
+		$_SESSION['jCart'] = '';  
 	}
 	public function postpaidlimitAction(){
-	
+       $this->_checkAuth();
 	}
 	public function notpostpaidAction(){
-	}
+        $this->_checkAuth();
+    }
     //function for updating invoice and add 1 row to history   
-	protected function updateInvoiceMethod($payMethod, $status, $notify, $note){
-		$tblOrder = new Kutu_Core_Orm_Table_Order();
-		$orderId = $this->_orderIdNumber;
-		$row = $tblOrder->find( $orderId )->current();
-
-		$row->invoiceNumber=$this->getInvoiceNumber();
-		$this->_paymentMethod=$payMethod;//set payment method on table
-		$row->paymentMethod=$this->_paymentMethod;
-		$row->orderStatus=$status;
-		$row->save();
+	protected function updateInvoiceMethod($payMethod, $status, $notify, $note){        
+        $tblOrder = new Kutu_Core_Orm_Table_Order();
+		$orderId = $_SESSION['_orderIdNumber'];
+		
+		//$row = $tblOrder->find($orderId)->current();
+		$row = array();
+		if($status==3 || $status==5 || $_SESSION['_method'] =='paypal')$ivnum = $this->getInvoiceNumber();
+		$row=array (
+			'invoiceNumber'	=> $ivnum,
+			'orderStatus'	=> $status);
+		$_SESSION['_method'] = '';
+		/*$this->_paymentMethod=$payMethod;//set payment method on table
+		$row->paymentMethod=$this->_paymentMethod;*/
+		$tblOrder->update($row, 'orderId = '. $orderId);
 		
 		
 		$tblHistory = new Kutu_Core_Orm_Table_OrderHistory();
@@ -555,7 +518,7 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
 		return $ip;
 	}
 	public function listAction(){
-		
+		$this->_checkAuth();
 		$r = $this->getRequest();
 		
 		$limit = ($r->getParam('limit'))?$r->getParam('limit'):10;
@@ -581,6 +544,7 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
 		//print_r($this->_request->getParams());
 	}
     public function detailAction(){
+        $this->_checkAuth();
         $orderId = $this->_request->getParam('id');
         $tblOrder = new Kutu_Core_Orm_Table_Order();
 		$rowset = $tblOrder->getOrderAndStatus($orderId);
@@ -590,7 +554,8 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
 		$this->view->listOrderDetail = $rowsetDetail;
 	}
 	public function searchAction(){
-		$r = $this->getRequest();
+		$this->_checkAuth();
+        $r = $this->getRequest();
 		$sQuery = $r->getParam('sQuery');
 		$this->view->sQuery = $sQuery;
 		$sLimit = ($r->getParam('sLimit'))?$r->getParam('sLimit'):10;
@@ -629,7 +594,7 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
         //print_r($r->getParams());
 	}
 	public function transactionAction(){
-			
+		$this->_checkAuth();	
 		$r = $this->getRequest();
 		$limit = ($r->getParam('limit'))?$r->getParam('limit'):10;
 		$this->view->limit =$limit;
@@ -655,7 +620,8 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
 		//print_r($this->_request->getParams());
 	}
 	public function billingAction(){
-		$userFinance = new Kutu_Core_Orm_Table_UserFinance();
+		$this->_checkAuth();
+        $userFinance = new Kutu_Core_Orm_Table_UserFinance();
 		$userId = $this->_userInfo->userId;
 		$rowset = $userFinance->getUserFinance($userId);
 		/*echo '<pre>';
@@ -684,10 +650,11 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
 		}
 	}
 	public function bilupdsucAction(){
-		$this->_helper->redirector('billing');
+		$this->_checkAuth();
+        $this->_helper->redirector('billing');
 	}
 	public function documentAction(){
-		
+		$this->_checkAuth();
 		$r = $this->getRequest();
 		$limit = ($r->getParam('limit'))?$r->getParam('limit'):10;
 		$this->view->limit =$limit;
@@ -715,7 +682,8 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
 		$this->view->rowset = $rowset;
 	}
 	public function trdetailAction(){
-	    $orderId = $this->_request->getParam('id');
+	    $this->_checkAuth();
+        $orderId = $this->_request->getParam('id');
 		$userId = $this->_userInfo->userId;
         
 		$tblOrder = new Kutu_Core_Orm_Table_Order();
@@ -735,16 +703,11 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
         $tblHistory = new Kutu_Core_Orm_Table_OrderHistory();
         $orderId = $this->_orderIdNumber; //$_SESSION['orderIdNumber'];
         $dataPrice = $tblOrder->fetchAll($tblOrder->select()->where('orderId = '.$orderId));
-        //if($datPrice[0]->orderTotal == $this->_request->getParam('mc_gross'))
-		if(true){
-            $payStatus = 3;
+        if($dataPrice[0]->orderTotal == $this->_request->getParam('mc_gross')){	
+            $payStatus = 3; //paid - completed
         }else{
-            $payStatus = 7;
+            $payStatus = 7; //payment error
         }
-		/*$cart = $this->completeItem();
-		//save order
-		@$this->saveOrder($cart);*/
-		//update invoice
 		$this->updateInvoiceMethod('paypal', $payStatus, 0, 'paid with paypal method');
 		
 		$tblPaypal = new Kutu_Core_Orm_Table_Paypal();
@@ -805,6 +768,7 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
         $rowHistory->save();
 	}
     public function confirmAction(){
+        $this->_checkAuth();
         $userId = $this->_userInfo->userId;
         $tblOrder = new Kutu_Core_Orm_table_Order();
         $tblSetting = new Kutu_Core_Orm_Table_PaymentSetting();
@@ -824,15 +788,24 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
         echo'</pre>';*/
     }
     public function payconfirmAction(){
-		$r = $this->getRequest();
+		$this->_checkAuth();
+		$tblConfirm = new Kutu_Core_Orm_Table_PaymentConfirmation();
+		$tblOrder = new Kutu_Core_Orm_Table_Order();
+        $r = $this->getRequest();
+		
+		$amount = 0;
+		foreach($r->getParam('orderId') as $ksy=>$value){
+			$amount += $tblOrder->getAmount($value,($r->getParam('currency')));
+		}
 		foreach($r->getParam('orderId')as $key=>$row){
-			$tblConfirm = new Kutu_Core_Orm_Table_PaymentConfirmation();
+			
 			$data = $tblConfirm->fetchNew();
 			
 			$data['paymentMethod'] = $r->getParam('paymentMethod');
 			$data['destinationAccount'] = $r->getParam('destinationAccount');
 			$data['paymentDate'] = $r->getParam('paymentDate');
-			$data['amount'] = $r->getParam('amount');
+			$data['amount'] = $amount;
+			$data['currency'] = $r->getParam('currency');
 			$data['senderAccount'] = $r->getParam('senderAccount');
 			$data['senderAccountName'] = $r->getParam('senderAccountName');
 			$data['bankName'] = $r->getParam('bankName');
@@ -840,7 +813,6 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
 			$data['orderId'] = $row;
 			$data->save();
 			
-			$tblOrder = new Kutu_Core_Orm_Table_Order();
 			$statdata['orderStatus'] = 4;
 			$tblOrder->update($statdata, 'orderId = '.$data['orderId']);
 			
@@ -911,4 +883,69 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
 							'LINK' => $link);
         $mail->SendFileMail($sMailSource, $sMailEmailTo, $sMailSubject, $sMailEmailFrom, $sMailHeader, $aMailDataSet);
     }
+    
+    private function _checkAuth(){
+        $auth =  Zend_Auth::getInstance();
+        if(!$auth->hasIdentity()){
+                $this->_redirect(KUTU_ROOT_URL.'/helper/sso/login'.'?returnTo='.$sReturn);
+        }else{
+            // [TODO] else: check if user has access to admin page
+            $username = $auth->getIdentity()->username;
+            $this->view->username = $username;
+        }
+    }
+	public function xxAction(){
+		$idOrder = 394;
+		$key = 'admin-order';
+		$userTo= 'admin';
+		$mail = new PaymentGateway_HtmlMail();
+		
+		$tblSetting = new Kutu_Core_Orm_Table_PaymentSetting();
+		$template = $tblSetting->fetchAll($tblSetting->select()->where("settingKey = '$key'"));
+		
+		$tblOrder = new Kutu_Core_Orm_Table_Order;
+        $tblOrderDetail = new Kutu_Core_Orm_Table_OrderDetail;
+        
+        $rowset = $tblOrder->getOrderAndStatus($idOrder);
+        $rowsetDetail = $tblOrderDetail->fetchAll($tblOrderDetail->select()->where("orderId = ". $idOrder));
+		$tblConfirm = new Kutu_Core_Orm_Table_PaymentConfirmation;
+		
+		$unConfirmed = $tblConfirm->fetchAll($tblConfirm->select()->where("confirmed =0 AND orderId = ". $idOrder));
+		
+		$detail = "ORDER ID : ".$idOrder.'<br/>'
+					.'Detail : <br/><blockquote><ol>';
+		foreach($rowsetDetail as $row){
+				$detail .= '<li><ul>
+							<li>Document Name: '.$row->documentName.'</li>
+							<li>Quantity : '.$row->qty.'</li>
+							<li>Price : USD '.number_format($row->price,2).' </li>
+							<li>Tax : '.number_format($row->tax,2).' %</li>
+							<li>Final Price : '.number_format($row->finalPrice,2).'</li>
+							</ul></li>';
+		}
+		$detail .= '</ol></blockquote>';
+		
+		//print_r($unConfirmed); 
+		$sMailSource=$template[0]->note;
+		if( $userTo == 'admin'){
+			$sMailEmailTo= 'royyan@notsolution.com';
+			$sMailEmailFrom= '';
+			$link = '<a href="'.KUTU_ROOT_URL.'/admin/store/detailOrder/id/'.$idOrder.'">here</a>';
+		}else{
+			$sMailEmailTo= '';
+			$sMailEmailFrom= 'royyan@notsolution.com';
+			$link = '<a href="'.KUTU_ROOT_URL.'/site/store_payment/detail/id/'.$idOrder.'">here</a>';
+		}
+        $sMailSubject="Confirmation for user payment";
+        $sMailHeader='';
+        $aMailDataSet=array('PAYMENTDATE' 	=> @$unConfirmed[0]->paymentDate,
+                            'PAYMENT'	=> $rowset[0]->paymentMethod,
+							'DESCRIPTION'	=> $detail,
+							'TOTALORDER'	=> $rowset[0]->orderTotal,
+							'ORDERTIME'	=> $rowset[0]->datePurchased,
+							'INVOICE'	=>	$rowset[0]->invoiceNumber,
+							'METHOD' =>$rowset[0]->paymentMethod,
+							'LINK' => $link);
+        $mail->SendFileMail($sMailSource, $sMailEmailTo, $sMailSubject, $sMailEmailFrom, $sMailHeader, $aMailDataSet);
+	}
 }

@@ -41,10 +41,47 @@ class Site_StoreController extends Zend_Controller_Action
 		$this->view->cart = $cart;
 		//print_r($this->_userInfo);
 		$this->view->userInfo = $this->_userInfo;
-		//print_r($cart);
-		
-		
 	}
+	public function paymentselectedAction(){
 	
+		echo '<pre>';
+		if(($this->_request->getParam('pending'))){
+			$cart = new jCart();
+			//print_r($this->_request->getParams());
+			$orderId = $this->_request->getParam('orderId');
+			$tblOrder = new Kutu_Core_Orm_table_Order();
+			$items = $tblOrder->getOrderDetail($orderId);
+			for($i=0;$i<count($items);$i++){
+				$_SESSION['jCart']->total= $items[$i]['orderTotal'];
+				$_SESSION['jCart']->itemcount = count($items);
+				$_SESSION['jCart']->items[$i] = $items[$i]['itemId'];
+				$_SESSION['jCart']->itemprices[$_SESSION['jCart']->items[$i]] = $items[$i]['price'];
+				$_SESSION['jCart']->itemqtys[$_SESSION['jCart']->items[$i]] = $items[$i]['qty'];
+				$_SESSION['jCart']->iteminfo[$_SESSION['jCart']->items[$i]] = $items[$i]['documentName'];	
+				$data['taxNumber'] 	 = $items[$i]['taxNumber'];
+				$data['taxCompany']  = $items[$i]['taxCompany'];
+				$data['taxAddress']  = $items[$i]['taxAddress'];
+				$data['taxCity'] 	 = $items[$i]['taxCity'];
+				$data['taxZip'] 	 = $items[$i]['taxZip'];
+				$data['taxProvince'] = $items[$i]['taxProvince'];
+				$data['taxCountry']  = $items[$i]['taxCountryId'];
+				$data['method']		 = 'paypal';
+				$_SESSION['_orderIdNumber'] = $orderId;
+				$_SESSION['_method'] = 'paypal';
+			}
+			$cart =& $_SESSION['jCart'];
+		}else{
+			$cart =& $_SESSION['jCart']; if(!is_object($cart)) $cart = new jCart();
+			$data = array();
+			foreach($this->_request->getParams() as $key=>$value){
+				$data[$key] = $value;
+			}
+		}
+		$this->view->cart = $cart;
+		
+		$this->view->data = $data;
+		//print_r($_SESSION['jCart']);
+	}
+
 }
 ?>

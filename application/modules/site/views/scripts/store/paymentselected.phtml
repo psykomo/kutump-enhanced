@@ -1,0 +1,113 @@
+<?
+	// INITIALIZE JCART AFTER SESSION START
+	$cart =& $_SESSION['jCart']; if(!is_object($cart)) $cart = new jCart();
+	// INCLUDE CONFIG SO THIS SCRIPT HAS ACCESS USER FIELD NAMES
+	include(KUTU_ROOT_DIR.'/lib/jcart/jcart-config.php');
+	// INCLUDE DEFAULT VALUES SINCE WE NEED TO PASS THE VALUE OF THE UPDATE BUTTON BACK TO jcart.php IF UPDATING AN ITEM QTY
+	// IF NO VALUE IS SET IN CONFIG, THERE HAS TO BE A DEFAULT VALUE SINCE SIMPLY CHECKING FOR THE VAR ITSELF FAILS
+	include(KUTU_ROOT_DIR.'/lib/jcart/jcart-defaults.php');
+?>
+<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jcart/jcart-javascript.php"></script>
+<h2 class="alt">View Cart / Checkout</h2>
+<hr>
+<div class="span-24">
+	<h3>Please verify your purchased items, total charges and proceed to secure payment.</h3>
+</div>
+<hr>
+<div class="span-24" style="background:">
+	<div class="span-10">
+		<h4>Product Name</h4>
+	</div>
+	<div class="span-6">
+		<h4>Price</h4>
+	</div>
+	<div class="span-4">
+		<h4>Quantity</h4>
+	</div>
+	<div class="span-4 last">
+		<h4>Total</h4>
+	</div>
+</div>
+<hr>
+<?
+	$jcartId = $this->cart->items;
+	$jcartProductInfo = $this->cart->iteminfo;
+	
+	$iCart = 0;
+	for($iCart=0;$iCart<count($jcartId);$iCart++)
+	{
+?>
+		<div class="span-24" style="background:">
+			<div class="span-10">
+				<strong><?echo $jcartProductInfo[$jcartId[$iCart]];?></strong>
+				<br>
+				<?echo Kutu_Core_Util::getCatalogAttributeValue($jcartId[$iCart],'fixedSubTitle');	?>
+			</div>
+			<div class="span-6">
+				USD 20.00
+			</div>
+			<div class="span-4">
+				1
+			</div>
+			<div class="span-4 last">
+				USD 20.00
+			</div>
+		</div>
+		<hr>
+<?}?>
+<div class="span-24" style="background:">
+	<div class="span-4 prepend-16">
+		<h4>Sub Total</h4>
+	</div>
+	<div class="span-4 last">
+		<h4>USD <?echo number_format(count($jcartId)*20.00,2);?></h4>
+	</div>
+</div>
+<hr>
+<div class="span-24">
+	<h3>TAX INFORMATION</h3>
+	<div class="span-12 prepend-4">
+		<div class="span-5"><strong>Tax Number</strong></div>
+		<div class="span-7"><?=($this->data['taxNumber'])?$this->data['taxNumber']:'-';?>&nbsp;</div>
+	</div>	
+	<div class="span-12 prepend-4">
+		<div class="span-5"><strong>Company Name</strong></div>
+		<div class="span-7"><?=($this->data['taxCompany'])?$this->data['taxCompany']:'-';?>&nbsp;</div>
+	</div>
+	<div class="span-12 prepend-4">
+		<div class="span-5"><strong>Address</strong></div>
+		<div class="span-7"><?=($this->data['taxAddress'])?$this->data['taxAddress']:'-';?>&nbsp;</div>
+	</div>
+	<div class="span-12 prepend-4">
+		<div class="span-5"><strong>City</strong></div>
+		<div class="span-7"><?=($this->data['taxCity'])?$this->data['taxCity']:'-';?>&nbsp;</div>
+	</div>
+	<div class="span-12 prepend-4">
+		<div class="span-5"><strong>Zip</strong></div>
+		<div class="span-7"><?=($this->data['taxZip'])?$this->data['taxZip']:'-';?>&nbsp;</div>
+	</div>
+	<div class="span-12 prepend-4">
+		<div class="span-5"><strong>Province</strong></div>
+		<div class="span-7"><?=($this->data['taxProvince'])?$this->data['taxProvince']:'-';?>&nbsp;</div>
+	</div>
+	<div class="span-12 prepend-4">
+		<div class="span-5"><strong>Country</strong></div>
+		<div class="span-7"><?=($this->data['taxCountry'])?$this->data['taxCountry']:'-';?>&nbsp;</div>
+	</div>
+	<div class="span-12 prepend-4">
+		<div class="span-5"><strong>PaymentMethod</strong></div>
+		<div class="span-7"><h3><?=$this->data['method'];?>&nbsp;</h3></div>
+	</div>
+</div>
+<form method="post" action="<?=KUTU_ROOT_URL;?>/site/store_payment/index/type/<?=$this->data['method'];?>">
+<input type="hidden" name="taxNumber" value="<?=$this->data['taxNumber']; ?>">
+<input type="hidden"  name="taxCompany" value="<?=$this->data['taxCompany']; ?>">
+<input type="hidden"  name="taxAddress" value="<?=$this->data['taxAddress']; ?>">
+<input type="hidden"  name="taxCity" value="<?=$this->data['taxCity']; ?>">
+<input type="hidden"  name="taxZip" value="<?=$this->data['taxZip']; ?>">
+<input type="hidden"  name="taxProvince" value="<?=$this->data['taxProvince']; ?>">
+<input type="hidden"  name="taxCountry" value="<?=$this->data['taxCountry']; ?>">
+<input type="hidden"  name="paymentMethod" value="<?=($this->data['method']=='manual')?'Bank Transfer':$this->data['method']; ?>">
+<input type="button" onclick="javascript:history.back();" value="cancel">
+<input type="submit" value="Proceed">
+</form>

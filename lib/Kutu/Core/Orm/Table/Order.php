@@ -279,11 +279,7 @@ class Kutu_Core_Orm_Table_Order extends Zend_Db_Table_Abstract
                                 WHERE 
                                     KO.userId = '$userId' 
                                 AND 
-                                    ((
-                                    paymentmethod = 'postpaid' 
-                                OR 
-                                    paymentmethod = 'bank'
-                                    ) 
+                                    (paymentmethod = 'bank' 
                                 AND
                                     (
                                     orderstatus = 5 
@@ -363,6 +359,43 @@ class Kutu_Core_Orm_Table_Order extends Zend_Db_Table_Abstract
 										WHERE KUF.userId = '$userId' 
 										ORDER BY datePurchased DESC 
 										LIMIT 0,1");
+        //$db = $this->_db->query();
+    	$dataFetch = $db->fetchAll(Zend_Db::FETCH_ASSOC);        
+		    	
+        $data  = array(
+            'table'    => $this,
+            'data'     => $dataFetch,
+            'rowClass' => $this->_rowClass,
+            'stored'   => true
+        );
+        Zend_Loader::loadClass($this->_rowsetClass);
+        return new $this->_rowsetClass($data);
+	}
+	public function getAmount($orderId, $currency){
+		if($currency == 'IDR'){
+			$db = $this->_db->query("SELECT 
+                                    (currencyValue*ordertotal) AS mount 
+								FROM kutuorder 
+								WHERE
+									orderId = $orderId");
+		}else{
+			$db = $this->_db->query("SELECT 
+                                    ordertotal AS mount
+								FROM kutuorder 
+								WHERE
+									orderId = $orderId");
+		}
+    	
+    	$dataFetch = $db->fetchAll(Zend_Db::FETCH_ASSOC);
+    	
+    	return ($dataFetch[0]['mount']);
+	}
+	public function getOrderDetail($orderId){
+		$db = $this->_db->query("SELECT KO.*, KOD.*
+										FROM kutuOrder AS KO
+										JOIN kutuOrderDetail AS KOD
+										ON KOD.orderId = KO.orderId
+										WHERE KO.orderId = $orderId");
         //$db = $this->_db->query();
     	$dataFetch = $db->fetchAll(Zend_Db::FETCH_ASSOC);        
 		    	
