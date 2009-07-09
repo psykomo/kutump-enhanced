@@ -156,8 +156,10 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
                 $paymentObject->addField('currency_code',$this->_defaultCurrency);
                 
                 //$orderId=$this->saveOrder($cart);
-				$paymentObject->addField('invoice',$this->_orderIdNumber);
-                $this->updateInvoiceMethod('paypal', 1, 0, 'paid with paypal method');
+				//$paymentObject->addField('orderId1',$_SESSION['_orderIdNumber']);
+				//$paymentObject->addField('orderId2',$this->_orderIdNumber);
+				$paymentObject->addField('custom',$_SESSION['_orderIdNumber']);
+                $ivnum = $this->updateInvoiceMethod('paypal', 1, 0, 'paid with paypal method');
 				
 				//$paymentObject->dumpFields();
                 $paymentObject->submitPayment();
@@ -278,7 +280,72 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
     }
 	
     public function successAction(){
-        $this->_checkAuth();
+
+/*
+ echo 1, 2 dst
+ 
+*/
+        /*require_once('PaymentGateway/Paypal.php');
+        $myPaypal = new Paypal();
+        
+        // Log the IPN results
+        $myPaypal->ipnLog = TRUE;
+        
+        // Enable test mode if needed
+		if($this->_testMode){
+        $myPaypal->enableTestMode();
+        }
+        // Check validity, status, amount and tax amount and write down it
+
+				$config = new Zend_Config_Ini(KUTU_ROOT_DIR.'/application/config/mail.ini', 'general');
+
+				$options = array('auth' => $config->mail->auth,
+				                'username' => $config->mail->username,
+				                'password' => $config->mail->password);
+				$transport = new Zend_Mail_Transport_Smtp($config->mail->host, $options);
+
+				$mail = new Zend_Mail();
+				foreach($this->_request->getParams() as $key=>$val){
+					$data[$key] = $val;
+				}
+				$cxc = '';
+				foreach($data as $key=>$val){
+					$cxc .= $key.'='.$val.'|';
+				}
+				$mail->setBodyText("PAYPAL IS ACCESSING VERIFICATION PAGE".$cxc);
+				$mail->setFrom($config->mail->sender->support->email, $config->mail->sender->support->name);
+				$mail->addTo('royyan@notsolution.com', 'Himawan'.' '.'Putra');
+				$mail->setSubject('PAYPAL: COMPLETED ');//. $myPaypal->ipnData['invoice']);
+				try 
+				{
+					//echo $config->mail->auth;
+					//die();
+				 $this->paypalsave('SUCCESS', $data);
+				 $mail->send($transport);
+				}
+				catch (Zend_Exception $e)
+				{
+					//no need to do anything. The error is only about sending email.
+					//maybe, we may set status in table user indicating that we never send
+					// the user with welcome email.
+					echo $e->getMessage();
+				}
+				
+				
+				 //$this->_orderIdNumber = $myPaypal->ipnData['invoice'];
+                 //echo $myPaypal->ipnData['invoice'];
+				// $this->paypalsave('SUCCESS', $data);
+				 //$this->Mailer($data['orderId'], 'admin-paypal', 'admin');
+				 //$this->Mailer($data['orderId'], 'user-paypal', 'admin');
+			*/
+        $_SESSION['jCart'] = '';   
+    	
+		//die();
+        
+        //$this->_checkAuth();
+		//echo '<pre>';
+        //var_dump($this->_request->getParams());
+		unset($_SESSION['_orderIdNumber']);
             // This is where you would probably want to thank the user for their order
             // or what have you.  The order information at this point is in POST 
             // variables.  However, you don't want to "process" the order until you
@@ -332,24 +399,36 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
             //if ($myPaypal->ipnData['payment_status'] == 'Completed' && $myPaypal['']=='')
 			if ($myPaypal->ipnData['payment_status'] == 'Completed')
             {
-				$config = new Zend_Config_Ini(KUTU_ROOT_DIR.'/application/config/mail.ini', 'general');
+				/*$config = new Zend_Config_Ini(KUTU_ROOT_DIR.'/application/config/mail.ini', 'general');
 
 				$options = array('auth' => $config->mail->auth,
 				                'username' => $config->mail->username,
 				                'password' => $config->mail->password);
 				$transport = new Zend_Mail_Transport_Smtp($config->mail->host, $options);
 
-				$mail = new Zend_Mail();
-				$mail->setBodyText("PAYPAL IS ACCESSING VERIFICATION PAGE");
+				$mail = new Zend_Mail();*/
+				foreach($this->_request->getParams() as $key=>$val){
+					$data[$key] = $val;
+				}
+				/*$cxc = '';
+				foreach($data as $key=>$val){
+					$cxc .= '$data[\''.$key.'\']='.$val.';
+';
+				}
+				$mail->setBodyText("PAYPAL IS ACCESSING VERIFICATION PAGE".$cxc);
 				$mail->setFrom($config->mail->sender->support->email, $config->mail->sender->support->name);
-				$mail->addTo('ninjok@gmail.com', 'Himawan'.' '.'Putra');
-				$mail->setSubject('PAYPAL: COMPLETED '. $myPaypal->ipnData['invoice']);
-
-				try 
+				$mail->addTo('royyan@notsolution.com', 'Himawan'.' '.'Putra');
+				$mail->setSubject('PAYPAL: COMPLETED '. $myPaypal->ipnData['invoice']);*/
+				
+				 try 
 				{
 					//echo $config->mail->auth;
 					//die();
-					$mail->send($transport);
+				 //$mail->send($transport);
+				 $this->Mailer($data['custom'], 'admin-paypal', 'admin');
+				 $this->Mailer($data['custom'], 'user-paypal', 'admin');
+				 $this->paypalsave('SUCCESS', $data);
+				 $this->updateInvoiceMethod('paypal', 3, 0, 'paid with paypal method');
 				}
 				catch (Zend_Exception $e)
 				{
@@ -358,12 +437,9 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
 					// the user with welcome email.
 					echo $e->getMessage();
 				}
-				
-				
-				$this->_orderIdNumber = $myPaypal->ipnData['invoice'];
-				 $this->paypalsave('SUCCESS');
-				 $this->Mailer($data['orderId'], 'admin-paypal', 'admin');
-				 $this->Mailer($data['orderId'], 'user-paypal', 'admin');
+								
+				 /*$this->_orderIdNumber = $myPaypal->ipnData['invoice'];
+				 $this->paypalsave('SUCCESS');*/
             }
             else
             {
@@ -374,7 +450,7 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
         }
         $_SESSION['jCart'] = '';   
     	
-		die();
+		//die();
     }
     
     public function instructionAction(){
@@ -384,6 +460,7 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
 		$tblOrder = new Kutu_Core_Orm_Table_Order();
 		$rowset = $tblOrder->getLastOrder($userId);
 		$this->view->rowset = $rowset;
+		unset($_SESSION['_orderIdNumber']);
 		$_SESSION['jCart'] = '';         
     }
     
@@ -418,13 +495,13 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
         $row->orderTotal=$cart['grandTotal'];
         $row->orderTax=$cart['taxAmount'];
         $row->ipAddress= $this->getRealIpAddress();
-		echo '<pre>';
+		/*echo '<pre>';
 		//print_r($row);
-		echo '</pre>';
+		echo '</pre>';*/
         $row->save();
 		
         $orderId = $tblOrder->getLastInsertId();        
-		//$this->_orderIdNumber = $orderId;
+		$this->_orderIdNumber = $orderId;
 		$_SESSION['_orderIdNumber'] = $orderId;
         $tblOrderDetail=new Kutu_Core_Orm_Table_OrderDetail();
         for($iCart=0;$iCart<count($cart['items']);$iCart++){        
@@ -436,7 +513,7 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
             $rowDetail->documentName=$cart['items'][$iCart]['item_name'];
             $rowDetail->price=$cart['items'][$iCart]['itemPrice'];
 			$itemPrice = $rowDetail->price;
-            $rowDetail->tax=((($cart['grandTotal']-$cart['subTotal']))/$cart['subTotal'])*100;
+            @$rowDetail->tax=((($cart['grandTotal']-$cart['subTotal']))/$cart['subTotal'])*100;
             $rowDetail->qty=$cart['items'][$iCart]['qty'];
             $rowDetail->finalPrice=$itemPrice + ($itemPrice * $this->_paymentVars['taxRate'] / 100);                
             $rowDetail->save();
@@ -455,11 +532,10 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
 		//$this->saveOrder($cart);
 		$this->updateInvoiceMethod('postpaid', 5, 0, 'paid with postpaid method');
 		$tblOrder = new Kutu_core_Orm_Table_Order();
-		$orderId = $tblOrder->getLastInsertId();
-		
+		$orderId = $_SESSION['_orderIdNumber'];
 		$this->Mailer($orderId, 'admin-order', 'admin');
 		$this->Mailer($orderId, 'user-order', 'user');
-		
+		//var_dump($this->_orderIdNumber);
 		//setting payment and status as postpaid (5), notify = 0, notes = 'paid with...'
 		$this->_helper->redirector('postpaidSuccess');
 	}
@@ -472,6 +548,7 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
 		$rowset = $tblOrder->getLastOrder($userId);
 		$this->view->rowset = $rowset;
 		//print_r($rowset);
+		unset($_SESSION['_orderIdNumber']);
 		$_SESSION['jCart'] = '';  
 	}
 	public function postpaidlimitAction(){
@@ -485,9 +562,12 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
         $tblOrder = new Kutu_Core_Orm_Table_Order();
 		$orderId = $_SESSION['_orderIdNumber'];
 		
-		//$row = $tblOrder->find($orderId)->current();
+		$rows = $tblOrder->find($orderId)->current();
 		$row = array();
-		if($status==3 || $status==5 || $_SESSION['_method'] =='paypal')$ivnum = $this->getInvoiceNumber();
+		$ivnum = $rows->invoiceNumber;
+		if($ivnum == ''){
+			if($status==3 || $status==5 || (!empty($_SESSION['_method'])&&($_SESSION['_method'] =='paypal')))$ivnum = $this->getInvoiceNumber();
+		}
 		$row=array (
 			'invoiceNumber'	=> $ivnum,
 			'orderStatus'	=> $status);
@@ -495,7 +575,6 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
 		/*$this->_paymentMethod=$payMethod;//set payment method on table
 		$row->paymentMethod=$this->_paymentMethod;*/
 		$tblOrder->update($row, 'orderId = '. $orderId);
-		
 		
 		$tblHistory = new Kutu_Core_Orm_Table_OrderHistory();
 		$rowHistory = $tblHistory->fetchNew();
@@ -506,6 +585,7 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
 		$rowHistory->userNotified = $notify;
 		$rowHistory->note = $note;
 		$rowHistory->save();
+		return $ivnum;
 	}
 	protected function getRealIpAddress(){
 		if (!empty($_SERVER['HTTP_CLIENT_IP'])){   //check ip from share internet
@@ -698,67 +778,69 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
 		$this->view->listOrderDetail = $rowsetDetail;
 		$this->view->rowsetHistory = $rowsetHistory;		
 	}
-	public function paypalsave($status){
-        $tblOrder = new Kutu_Core_Orm_Table_Order();
-        $tblHistory = new Kutu_Core_Orm_Table_OrderHistory();
-        $orderId = $this->_orderIdNumber; //$_SESSION['orderIdNumber'];
+	public function paypalsave($status, $dataPaypal = array()){
+	
+		$tblOrder = new Kutu_Core_Orm_Table_Order();        
+        $orderId = $dataPaypal['custom'];//$_SESSION['_orderIdNumber'];//$this->_orderIdNumber;//$data['custom'];
+        //print_r($data['custom']);
         $dataPrice = $tblOrder->fetchAll($tblOrder->select()->where('orderId = '.$orderId));
-        if($dataPrice[0]->orderTotal == $this->_request->getParam('mc_gross')){	
+        if($dataPrice[0]->orderTotal == $data['mc_gross']){	
             $payStatus = 3; //paid - completed
         }else{
             $payStatus = 7; //payment error
         }
-		$this->updateInvoiceMethod('paypal', $payStatus, 0, 'paid with paypal method');
-		
+		//$this->updateInvoiceMethod('paypal', $payStatus, 0, 'paid with paypal method');
+       
 		$tblPaypal = new Kutu_Core_Orm_Table_Paypal();
 		$data = $tblPaypal->fetchNew();
-		//take return value to array
-		$data->mcGross  = $this->_request->getParam('mc_gross'); 
-        
-		$data->addressStatus  = $this->_request->getParam('address_status');  
-		$data->payerId  = $this->_request->getParam('payer_id');  
-		$data->addressStreet  = $this->_request->getParam('address_street');  
-		$data->paymentDate  = $this->_request->getParam('payment_date');
+		
+		$data->orderId= $orderId;
+		$data->mcGross  = $dataPaypal['mc_gross']; 
+        $data->addressStatus  = $dataPaypal['address_status'];  
+		$data->payerId  = $dataPaypal['payer_id'];  
+		$data->addressStreet  = $dataPaypal['address_street'];  
+		$data->paymentDate  = $dataPaypal['payment_date'];
 		$data->paymentStatus  = $status; 						
-		$data->addressZip  = $this->_request->getParam('address_zip'); 
-		$data->firstName  = $this->_request->getParam('first_name');  
-		$data->mcFee  = $this->_request->getParam('mc_fee');
-		$data->addressName  = $this->_request->getParam('address_name'); 
-		$data->notifyVersion  = $this->_request->getParam('notify_version'); 
-		$data->payerStatus  = $this->_request->getParam('payer_status'); 
-		$data->addressCountry  = $this->_request->getParam('address_country'); 
-		$data->addresCity  = $this->_request->getParam('address_city');  
-		$data->payerEmail  = $this->_request->getParam('payer_email');  
-		$data->verifySign  = $this->_request->getParam('verify_sign'); 
-		$data->paymentType  = $this->_request->getParam('payment_type');
-		$data->txnId  = $this->_request->getParam('txn_id');  
-		$data->lastName  = $this->_request->getParam('last_name');  
-		$data->receiverEmail  = $this->_request->getParam('receiver_email');  
-		$data->addressState  = $this->_request->getParam('address_state'); 
-		$data->receiverId  = $this->_request->getParam('receiver_id'); 
-		$data->txnType  = $this->_request->getParam('txn_type');  
-		$data->mcCurrency  = $this->_request->getParam('mc_currency'); 
-		$data->paymentGross  = $this->_request->getParam('payment_gross'); 
-		$data->paymentFee  = $this->_request->getParam('payment_fee'); 
-		$data->numCartItems  = $this->_request->getParam('num_cart_items');
-		$data->business  = $this->_request->getParam('business');
-		$data->parentTxnId  = $this->_request->getParam('txn_id');
+		$data->addressZip  = $dataPaypal['address_zip']; 
+		$data->firstName  = $dataPaypal['first_name'];  
+		$data->mcFee  = $dataPaypal['mc_fee'];
+		$data->addressName  = $dataPaypal['address_name']; 
+		$data->notifyVersion  = $dataPaypal['notify_version']; 
+		$data->payerStatus  = $dataPaypal['payer_status']; 
+		$data->addressCountry  = $dataPaypal['address_country']; 
+		$data->addresCity  = $dataPaypal['address_city'];  
+		$data->payerEmail  = $dataPaypal['payer_email'];  
+		$data->verifySign  = $dataPaypal['verify_sign']; 
+		$data->paymentType  = $dataPaypal['payment_type'];
+		$data->txnId  = $dataPaypal['txn_id'];  
+		$data->lastName  = $dataPaypal['last_name'];  
+		$data->receiverEmail  = $dataPaypal['receiver_email'];  
+		$data->addressState  = $dataPaypal['address_state']; 
+		$data->receiverId  = $dataPaypal['receiver_id']; 
+		$data->txnType  = $dataPaypal['txn_type'];  
+		$data->mcCurrency  = $dataPaypal['mc_currency']; 
+		$data->paymentGross  = $dataPaypal['payment_gross']; 
+		$data->paymentFee  = $dataPaypal['payment_fee']; 
+		$data->numCartItems  = $dataPaypal['num_cart_items'];
+		$data->business  = $dataPaypal['business'];
+		$data->parentTxnId  = $dataPaypal['txn_id'];
 		$data->lastModified = date('Y-m-d');
 		$data->dateAdded = date('Y-m-d');
-		
 		$data->save();
+        
 		//echo($tblPaypal->getLastInsertId());
-		$paypalHistory = new Kutu_Core_Orm_Table_PaypalPaymentHistory();
-		$row = $paypalHistory->fetchNew();
-		$row['paypalIpnId'] = $tblPaypal->getLastInsertId();
-		$row['txnId'] = $this->_request->getParam('txn_id');
-		$row['parentTxnId'] = $this->_request->getParam('txn_id');
-		$row['paymentStatus'] = $this->_request->getParam('payment_status');
-		$row['dateAdded'] = date('Y-m-d');
 		
+        $paypalHistory = new Kutu_Core_Orm_Table_PaypalPaymentHistory();
+		$row = $paypalHistory->fetchNew();
+		$row->paypalIpnId = $tblPaypal->getLastInsertId();
+        $row->orderId = $orderId;
+		$row->txnId = $this->_request->getParam('txn_id');
+		$row->parentTxnId = $this->_request->getParam('txn_id');
+		$row->paymentStatus = $this->_request->getParam('payment_status');
+		$row->dateAdded = date('Y-m-d');
 		$row->save();
         
-        
+        $tblHistory = new Kutu_Core_Orm_Table_OrderHistory();
         $rowHistory = $tblHistory->fetchNew();        
         $rowHistory->orderId = $orderId;
         $rowHistory->orderStatusId = $payStatus;
@@ -766,6 +848,7 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
         $rowHistory->userNotified = '0';
         $rowHistory->note = '';
         $rowHistory->save();
+        
 	}
     public function confirmAction(){
         $this->_checkAuth();
@@ -840,8 +923,12 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
 		
 		$tblOrder = new Kutu_Core_Orm_Table_Order;
         $tblOrderDetail = new Kutu_Core_Orm_Table_OrderDetail;
-        
+		/*if(empty($idOrder)){
+			$idOrder = $_SESSION['_orderIdNumber'];
+		}*/
         $rowset = $tblOrder->getOrderAndStatus($idOrder);
+		echo '<pre>';
+		//print_r($_SESSION['_orderIdNumber']);
         $rowsetDetail = $tblOrderDetail->fetchAll($tblOrderDetail->select()->where("orderId = ". $idOrder));
 		$tblConfirm = new Kutu_Core_Orm_Table_PaymentConfirmation;
 		
@@ -894,58 +981,5 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
             $this->view->username = $username;
         }
     }
-	public function xxAction(){
-		$idOrder = 394;
-		$key = 'admin-order';
-		$userTo= 'admin';
-		$mail = new PaymentGateway_HtmlMail();
-		
-		$tblSetting = new Kutu_Core_Orm_Table_PaymentSetting();
-		$template = $tblSetting->fetchAll($tblSetting->select()->where("settingKey = '$key'"));
-		
-		$tblOrder = new Kutu_Core_Orm_Table_Order;
-        $tblOrderDetail = new Kutu_Core_Orm_Table_OrderDetail;
-        
-        $rowset = $tblOrder->getOrderAndStatus($idOrder);
-        $rowsetDetail = $tblOrderDetail->fetchAll($tblOrderDetail->select()->where("orderId = ". $idOrder));
-		$tblConfirm = new Kutu_Core_Orm_Table_PaymentConfirmation;
-		
-		$unConfirmed = $tblConfirm->fetchAll($tblConfirm->select()->where("confirmed =0 AND orderId = ". $idOrder));
-		
-		$detail = "ORDER ID : ".$idOrder.'<br/>'
-					.'Detail : <br/><blockquote><ol>';
-		foreach($rowsetDetail as $row){
-				$detail .= '<li><ul>
-							<li>Document Name: '.$row->documentName.'</li>
-							<li>Quantity : '.$row->qty.'</li>
-							<li>Price : USD '.number_format($row->price,2).' </li>
-							<li>Tax : '.number_format($row->tax,2).' %</li>
-							<li>Final Price : '.number_format($row->finalPrice,2).'</li>
-							</ul></li>';
-		}
-		$detail .= '</ol></blockquote>';
-		
-		//print_r($unConfirmed); 
-		$sMailSource=$template[0]->note;
-		if( $userTo == 'admin'){
-			$sMailEmailTo= 'royyan@notsolution.com';
-			$sMailEmailFrom= '';
-			$link = '<a href="'.KUTU_ROOT_URL.'/admin/store/detailOrder/id/'.$idOrder.'">here</a>';
-		}else{
-			$sMailEmailTo= '';
-			$sMailEmailFrom= 'royyan@notsolution.com';
-			$link = '<a href="'.KUTU_ROOT_URL.'/site/store_payment/detail/id/'.$idOrder.'">here</a>';
-		}
-        $sMailSubject="Confirmation for user payment";
-        $sMailHeader='';
-        $aMailDataSet=array('PAYMENTDATE' 	=> @$unConfirmed[0]->paymentDate,
-                            'PAYMENT'	=> $rowset[0]->paymentMethod,
-							'DESCRIPTION'	=> $detail,
-							'TOTALORDER'	=> $rowset[0]->orderTotal,
-							'ORDERTIME'	=> $rowset[0]->datePurchased,
-							'INVOICE'	=>	$rowset[0]->invoiceNumber,
-							'METHOD' =>$rowset[0]->paymentMethod,
-							'LINK' => $link);
-        $mail->SendFileMail($sMailSource, $sMailEmailTo, $sMailSubject, $sMailEmailFrom, $sMailHeader, $aMailDataSet);
-	}
+	
 }

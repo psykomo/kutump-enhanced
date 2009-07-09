@@ -10,6 +10,13 @@ class PaymentGateway_HtmlMail{
 
 	//send html mail 
 	public function SendFileMail($sSource, $sEmailTo, $sSubject, $sEmailFrom, $sHeader, $aDataSet ){
+		$config = new Zend_Config_Ini(KUTU_ROOT_DIR.'/application/config/mail.ini', 'general');
+		$options = array('auth' => $config->mail->auth,
+				                'username' => $config->mail->username,
+				                'password' => $config->mail->password);
+		$transport = new Zend_Mail_Transport_Smtp($config->mail->host, $options);
+
+		$mail = new Zend_Mail();
 		/* example :
 			$sMailSource="My Name is {NAME}. Thank's for using {USING}.";
 			$sMailEmailTo='destination@email.com';
@@ -52,13 +59,21 @@ class PaymentGateway_HtmlMail{
 		$this->sHeader .= "From: $this->sEmailFrom \n";
 		$this->sHeader .= $this->sHeader;
 		
+		
+		
+		$mail->setBodyHtml($this->sMessages);
+		$mail->setFrom($config->mail->sender->support->email, $config->mail->sender->support->name);
+		$mail->addTo($this->sEmailTo, '');
+		$mail->setSubject($this->sSubject);
 		//send email
+		
         try {
-			ini_set(
-            $oSendMail = mail($this->sEmailTo, $this->sSubject, $this->sMessages, $this->sHeader);
-            return true;
+			$mail->send($transport);
+			//ini_set(
+            //$oSendMail = mail($this->sEmailTo, $this->sSubject, $this->sMessages, $this->sHeader);
+            //return true;
         } catch (Exception $e) {
-            return false;
+            echo $e->getMessage();
         }
         /*var_dump('to '.$this->sEmailTo,' subject '. $this->sSubject);
 		var_dump('MSG'.$this->sMessages, 'HEADER'.$this->sHeader);*/

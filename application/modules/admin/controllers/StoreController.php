@@ -73,7 +73,7 @@ class Admin_StoreController extends Kutu_Controller_Action
         
         if($this->_request->isPost($this->_request->getParam('save'))){
             $id = $this->_request->getParam('id');
-            $data['settingKey'] = $this->_request->getParam('key');
+            //$data['settingKey'] = $this->_request->getParam('key');
             $data['settingValue'] = $this->_request->getParam('value');
             $data['note'] = $this->_request->getParam('note');
             $update = $tblPaymentSetting->update($data, 'settingId = '.$id);

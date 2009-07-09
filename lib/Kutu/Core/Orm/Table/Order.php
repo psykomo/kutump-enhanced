@@ -311,11 +311,8 @@ class Kutu_Core_Orm_Table_Order extends Zend_Db_Table_Abstract
                                 WHERE 
                                     userId = '$userId' 
                                 AND 
-                                    ((
-                                    paymentmethod = 'postpaid' 
-                                OR 
+                                    (
                                     paymentmethod = 'bank'
-                                    ) 
                                 AND
                                     (
                                     orderstatus = 5 

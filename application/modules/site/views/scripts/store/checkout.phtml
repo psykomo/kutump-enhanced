@@ -8,6 +8,8 @@
 	include(KUTU_ROOT_DIR.'/lib/jcart/jcart-defaults.php');
 ?>
 <script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jcart/jcart-javascript.php"></script>
+<script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/dd.js"></script>
+<link rel="stylesheet" type="text/css" href="<?echo KUTU_ROOT_URL;?>/lib/jquery/dd.css" />
 <h2 class="alt">View Cart / Checkout</h2>
 <hr>
 <form name="formTax" method="post" action="paymentselected">
@@ -108,20 +110,30 @@ function setSubmitAction(newUrl)
       return true;
 }
 </script>
+ <script language="javascript">
+/*$(document).ready(function(e) {
+		try {
+			MSDropDown.init();
+		} catch(e) {
+			alert(e);
+		}
+	}
+)*/
+</script>
 <hr>
 <font size="+1" color="red">Please select payment method : </font>
-<select name="method">
+<select name="method" id="method" style="width:200px;">
+	<!-- <option value="paypal" icon="<?echo KUTU_ROOT_URL;?>/common/modules/site/images/US_AU_btn.gif">Paypal-->
 	<option value="paypal">Paypal
-	<option value="postpaid">Postpaid
-	<option value="manual">Bank Transfer
+	<option value="postpaid" >Postpaid
+	<option value="manual" >Bank Transfer
 </select>
 <input type="submit" value="Select" />
-<!--
- below logo to continue the payment with your preferred payment source</h3>
+</form>
+<hr class="space">
+<!--<h3>Or click below logo to continue the payment with your preferred payment source</h3>-->
 <div class="span-5"><a href="#"><IMG src="<?echo KUTU_ROOT_URL;?>/common/modules/site/images/US_AU_btn.gif" onClick="setSubmitAction('<?echo KUTU_ROOT_URL;?>/site/store_payment/index/type/paypal');"/></a></div>
 <div class="span-5"><a href="#"><IMG src="<?echo KUTU_ROOT_URL;?>/common/modules/site/images/logo-2co.gif" /></a></div>
 <div class="span-2 prepend-1"><h3><a href="#" onClick="setSubmitAction('<?echo KUTU_ROOT_URL;?>/site/store_payment/index/type/postpaid');">Postpaid</a></h3></div>
 <div class="span-3"><h3><a href="#" onClick="setSubmitAction('<?echo KUTU_ROOT_URL;?>/site/store_payment/index/type/manual');">Bank Transfer</a></h3></div>
 <div class="span-7 last"><h3>Or <a href="<?echo KUTU_ROOT_URL;?>/dms">continue browsing our database</a></h3></div>
--->
-</form>
