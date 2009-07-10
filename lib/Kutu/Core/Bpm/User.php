@@ -285,5 +285,11 @@ an e-mail at support@lgsonline.com.
 			
 		return $row;
 	}
+	public function delete()
+	{
+		//delete from KutuUser
+		//delete from PHPGACL (use PHPGACL function to delete user)
+		//delete from all table that Chenri made (Store related tables)
+	}
 }
 ?>

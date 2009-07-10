@@ -27,6 +27,12 @@ class Admin_IndexController extends Kutu_Controller_Action
 			// [TODO] else: check if user has access to admin page
 			$username = $auth->getIdentity()->username;
 			$this->view->username = $username;
+			
+			$acl = Kutu_Acl::manager();
+			if(!($acl->checkAcl("site",'all','user', $username, false,false)) && !($acl->checkAcl("site",'admin','user', $username, false,false)))
+			{
+				$this->_forward('restricted', "error", 'admin');
+			}
 		}
     }
     public function indexAction()
