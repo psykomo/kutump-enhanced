@@ -405,12 +405,15 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
 		
 		$rows = $tblOrder->find($orderId)->current();
 		$row = array();
+		
 		$ivnum = $rows->invoiceNumber;
-		if($ivnum == ''){
-			if($status==3 || $status==5 || (!empty($_SESSION['_method'])&&($_SESSION['_method'] =='paypal')))$ivnum = $this->getInvoiceNumber();
-			$row=array ('invoiceNumber'	=> $ivnum);
+		if(empty($ivnum)){
+			if($status==3 || $status==5 || (!empty($_SESSION['_method'])&&($_SESSION['_method'] =='paypal')))
+			$ivnum = $this->getInvoiceNumber();
+			//$row=array ('invoiceNumber'	=> $ivnum);
 		}
-		$row=array ('orderStatus'	=> $status);
+		//if( )$ivnum = $this->getInvoiceNumber();
+		$row=array ('invoiceNumber'	=> $ivnum,'orderStatus'	=> $status);
 		$_SESSION['_method'] = '';
 		/*$this->_paymentMethod=$payMethod;//set payment method on table
 		$row->paymentMethod=$this->_paymentMethod;*/
@@ -685,15 +688,15 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
 		$row->dateAdded = date('Y-m-d');
 		$row->save();
         
-        $tblHistory = new Kutu_Core_Orm_Table_OrderHistory();
+        /*$tblHistory = new Kutu_Core_Orm_Table_OrderHistory();
         $rowHistory = $tblHistory->fetchNew();        
         $rowHistory->orderId = $orderId;
         $rowHistory->orderStatusId = $payStatus;
         $rowHistory->dateCreated = date('YmdHis');
         $rowHistory->userNotified = '0';
         $rowHistory->note = '';
-        $rowHistory->save();
-        $this->updateInvoiceMethod('paypal', $payStatus, 0, 'paid with paypal method');
+        $rowHistory->save();*/
+        $this->updateInvoiceMethod('paypal', $payStatus, 0, 'paid with paypal methode');
 	}
     public function confirmAction(){
         $this->_checkAuth();
