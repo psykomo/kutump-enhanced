@@ -280,12 +280,21 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
             }
             else
             {
-				 $this->paypalsave('FAILED');
+				 $data=$myPaypal->ipnData;
+                 $this->Mailer($data['custom'], 'admin-paypal', 'admin');
+				 $this->Mailer($data['custom'], 'user-paypal', 'admin');                 
+				 $this->paypalsave('FAILED', $data);
+				 /*$this->paypalsave('FAILED');
 				 $this->Mailer($data['orderId'], 'admin-paypal', 'admin');
-				 $this->Mailer($data['orderId'], 'user-paypal', 'admin');
+				 $this->Mailer($data['orderId'], 'user-paypal', 'admin');*/
             }
         }else{
-            //send all post variables to admin email 
+            foreach($this->_request->getParams() as $key=>$val){
+				$data[$key] = $val;
+			}
+			//all data and key are same with ipnData
+			$this->Mailer($data['custom'], 'admin-paypal', 'admin');
+			//send all post variables to admin email 
         }
         $_SESSION['jCart'] = '';   
     	
@@ -612,14 +621,18 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
 		$tblOrder = new Kutu_Core_Orm_Table_Order();
 		$tblOrderDetail = new Kutu_Core_Orm_Table_OrderDetail();
 		$tblOrderHistory = new Kutu_Core_Orm_Table_OrderHistory();
+		$tblOrderPaypalHistory = new Kutu_Core_Orm_Table_PaypalPaymentHistory();
 		
 		$rowset = $tblOrder->getOrderAndStatus($orderId);
 		$rowsetDetail = $tblOrderDetail->fetchAll($tblOrderDetail->select()->where("orderId='".$orderId."'"));
 		$rowsetHistory = $tblOrderHistory->getUserHistory($orderId);
+		$rowsetPaypalHistory = $tblOrderPaypalHistory->fetchAll($tblOrderPaypalHistory->select()->where("orderId='".$orderId."'"));
+		
 		//print_r($rowsetHistory);
 		$this->view->listOrder = $rowset;
 		$this->view->listOrderDetail = $rowsetDetail;
 		$this->view->rowsetHistory = $rowsetHistory;		
+		$this->view->rowsetPaypalHistory = $rowsetPaypalHistory;		
 	}
 	public function paypalsave($status, $dataPaypal = array()){
 	

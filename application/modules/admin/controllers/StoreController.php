@@ -334,14 +334,18 @@ class Admin_StoreController extends Kutu_Controller_Action
 		$tblOrder = new Kutu_Core_Orm_Table_Order();
 		$tblOrderDetail = new Kutu_Core_Orm_Table_OrderDetail();
 		$tblOrderHistory = new Kutu_Core_Orm_Table_OrderHistory();
+		$tblOrderPaypalHistory = new Kutu_Core_Orm_Table_PaypalPaymentHistory();
 		
 		$rowset = $tblOrder->fetchAll($tblOrder->select()->where("orderID ='".$orderId."'"));
 		$rowsetDetail = $tblOrderDetail->fetchAll($tblOrderDetail->select()->where("orderId='".$orderId."'"));
 		$rowsetHistory = $tblOrderHistory->getUserHistory($orderId);
+		$rowsetPaypalHistory = $tblOrderPaypalHistory->fetchAll($tblOrderPaypalHistory->select()->where("orderId='".$orderId."'"));
+		
 		//print_r($rowsetHistory);
 		$this->view->listOrder = $rowset;
 		$this->view->listOrderDetail = $rowsetDetail;
-		$this->view->rowsetHistory = $rowsetHistory;		
+		$this->view->rowsetHistory = $rowsetHistory;	
+		$this->view->rowsetPaypalHistory = $rowsetPaypalHistory;	
 		
 	}
     public function postpaidAction(){
