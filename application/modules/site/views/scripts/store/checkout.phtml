@@ -10,39 +10,47 @@
 <script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jcart/jcart-javascript.php"></script>
 <script type="text/javascript" src="<?echo KUTU_ROOT_URL;?>/lib/jquery/dd.js"></script>
 <link rel="stylesheet" type="text/css" href="<?echo KUTU_ROOT_URL;?>/lib/jquery/dd.css" />
-<h2 class="alt">View Cart / Checkout</h2>
-<hr>
+<hr class="space">
 <form name="formTax" method="post" action="paymentselected">
-<div class="span-24">
+<div class="span-35 prepend-1 append-1 last">
+	<h2 class="alt">View Cart / Checkout</h2>
+	<hr>
 	<h3>Please verify your purchased items, total charges and proceed to secure payment.</h3>
 	<h4>for previous orders you can view at <a href="<?=KUTU_ROOT_URL?>/site/store_payment/list">order history</a></h4>
 </div>
-<hr>
-<div class="span-24" style="background:">
-	<div class="span-10">
+<div class="span-35 prepend-1 append-1 last">
+	<hr>
+	<div class="span-19">
 		<h4>Product Name</h4>
 	</div>
 	<div class="span-6">
 		<h4>Price</h4>
 	</div>
-	<div class="span-4">
+	<div class="span-5">
 		<h4>Quantity</h4>
 	</div>
-	<div class="span-4 last">
+	<div class="span-5 last">
 		<h4>Total</h4>
 	</div>
 </div>
-<hr>
-<?
-	$jcartId = $this->cart->items;
-	$jcartProductInfo = $this->cart->iteminfo;
-	
-	$iCart = 0;
-	for($iCart=0;$iCart<count($jcartId);$iCart++)
-	{
-?>
-		<div class="span-24" style="background:">
-			<div class="span-10">
+
+<div class="span-35 prepend-1 append-1 last">
+	<hr>
+	<?
+		$bpmCatalog = new Kutu_Core_Bpm_Catalog();
+		
+		$jcartId = $this->cart->items;
+		$jcartProductInfo = $this->cart->iteminfo;
+
+		$iCart = 0;
+		$cartTotal = 0;
+		$price = 0;
+		for($iCart=0;$iCart<count($jcartId);$iCart++)
+		{
+			$price = $bpmCatalog->getPrice($jcartId[$iCart]);
+			$cartTotal += $price;
+	?>
+			<div class="span-18 append-1">
 				<strong><?echo $jcartProductInfo[$jcartId[$iCart]];?></strong>
 				<br>
 				<?echo Kutu_Core_Util::getCatalogAttributeValue($jcartId[$iCart],'fixedSubTitle');	?>
@@ -50,57 +58,61 @@
 				<br>&nbsp;
 			</div>
 			<div class="span-6">
-				USD 20.00
+				USD <?echo number_format($price,2);?>
 			</div>
-			<div class="span-4">
+			<div class="span-5">
 				1
 			</div>
-			<div class="span-4 last">
-				USD 20.00
+			<div class="span-5 last">
+				USD <?echo number_format($price,2);?>
 			</div>
-		</div>
-		<hr>
-<?}?>
-<div class="span-24" style="background:">
-	<div class="span-4 prepend-16">
+			<hr>
+	<?	}?>
+</div>
+
+<div class="span-35 prepend-1 append-1 last">
+	<div class="span-5 prepend-25">
 		<h4>Sub Total</h4>
 	</div>
-	<div class="span-4 last">
-		<h4>USD <?echo number_format(count($jcartId)*20.00,2);?></h4>
+	<div class="span-5 last">
+		<h4>USD <?echo number_format($cartTotal,2);?></h4>
+	</div>
+	<hr>
+</div>
+<div class="span-35 prepend-1 append-1 last">
+	<h3>BILLING INFORMATION</h3>
+	<div class="span-15 append-3">
+		Tax Number
+		<br>
+		<input name="taxNumber" value="<?=$this->userInfo->taxNumber?>">
+		<br>
+		Company Name
+		<br>
+		<input name="taxCompany" value="<?=$this->userInfo->taxCompany?>">
+		<br>
+		Address
+		<br>
+		<textarea name="taxAddress"><?=$this->userInfo->taxAddress?></textarea>
+	</div>
+	<div class="span-15 last">
+		City
+		<br>
+		<input name="taxCity" value="<?=$this->userInfo->taxCity?>">
+		<br>
+		Zip
+		<br>
+		<input name="taxZip" value="<?=$this->userInfo->taxZip?>">
+		<br>
+		Province
+		<br>
+		<input name="taxProvince" value="<?=$this->userInfo->taxProvince?>">
+		<br>
+		Country
+		<br>
+		<input name="taxCountry" value="<?=$this->userInfo->taxCountryId?>">
 	</div>
 </div>
-<hr>
-<div class="span-24">
-	<h3>TAX INFORMATION</h3>
-	<div class="span-12 prepend-4">
-		<div class="span-5">Tax Number</div>
-		<div class="span-7"><input name="taxNumber" value="<?=$this->userInfo->taxNumber?>"></div>
-	</div>	
-	<div class="span-12 prepend-4">
-		<div class="span-5">Company Name</div>
-		<div class="span-7"><input name="taxCompany" value="<?=$this->userInfo->taxCompany?>"></div>
-	</div>
-	<div class="span-12 prepend-4">
-		<div class="span-5">Address</div>
-		<div class="span-7"><textarea name="taxAddress"><?=$this->userInfo->taxAddress?></textarea></div>
-	</div>
-	<div class="span-12 prepend-4">
-		<div class="span-5">City</div>
-		<div class="span-7"><input name="taxCity" value="<?=$this->userInfo->taxCity?>"></div>
-	</div>
-	<div class="span-12 prepend-4">
-		<div class="span-5">Zip</div>
-		<div class="span-7"><input name="taxZip" value="<?=$this->userInfo->taxZip?>"></div>
-	</div>
-	<div class="span-12 prepend-4">
-		<div class="span-5">Province</div>
-		<div class="span-7"><input name="taxProvince" value="<?=$this->userInfo->taxProvince?>"></div>
-	</div>
-	<div class="span-12 prepend-4">
-		<div class="span-5">Country</div>
-		<div class="span-7"><input name="taxCountry" value="<?=$this->userInfo->taxCountryId?>"></div>
-	</div>
-</div>
+<hr class="white">
 <script type="text/javascript" language="javascript">
 function setSubmitAction(newUrl)
 {
@@ -120,20 +132,28 @@ function setSubmitAction(newUrl)
 	}
 )*/
 </script>
-<hr>
-<font size="+1" color="red">Please select payment method : </font>
-<select name="method" id="method" style="width:200px;">
-	<!-- <option value="paypal" icon="<?echo KUTU_ROOT_URL;?>/common/modules/site/images/US_AU_btn.gif">Paypal-->
-	<option value="paypal">Paypal
-	<option value="postpaid" >Postpaid
-	<option value="manual" >Bank Transfer
-</select>
-<input type="submit" value="Select" />
+
+<div class="span-35 prepend-1 append-1 last">
+	<hr>
+	<font size="+1" color="red">Please select payment method : </font>
+	<select name="method" id="method" style="width:200px;">
+		<!-- <option value="paypal" icon="<?echo KUTU_ROOT_URL;?>/common/modules/site/images/US_AU_btn.gif">Paypal-->
+		<option value="paypal">Paypal
+		<option value="postpaid" >Postpaid
+		<option value="manual" >Bank Transfer
+	</select>
+	<input type="submit" value="Select" />
+	<hr class="white">
+</div>
 </form>
-<hr class="space">
-<!--<h3>Or click below logo to continue the payment with your preferred payment source</h3>-->
-<div class="span-5"><a href="#"><IMG src="<?echo KUTU_ROOT_URL;?>/common/modules/site/images/US_AU_btn.gif" onClick="setSubmitAction('<?echo KUTU_ROOT_URL;?>/site/store_payment/index/type/paypal');"/></a></div>
-<div class="span-5"><a href="#"><IMG src="<?echo KUTU_ROOT_URL;?>/common/modules/site/images/logo-2co.gif" /></a></div>
-<div class="span-2 prepend-1"><h3><a href="#" onClick="setSubmitAction('<?echo KUTU_ROOT_URL;?>/site/store_payment/index/type/postpaid');">Postpaid</a></h3></div>
-<div class="span-3"><h3><a href="#" onClick="setSubmitAction('<?echo KUTU_ROOT_URL;?>/site/store_payment/index/type/manual');">Bank Transfer</a></h3></div>
-<div class="span-7 last"><h3>Or <a href="<?echo KUTU_ROOT_URL;?>/dms">continue browsing our database</a></h3></div>
+
+<div class="span-35 prepend-1 append-1 last">
+	<hr class="space">
+	<div class="span-6"><a href="#"><IMG src="<?echo KUTU_ROOT_URL;?>/common/modules/site/images/US_AU_btn.gif" onClick="setSubmitAction('<?echo KUTU_ROOT_URL;?>/site/store_payment/index/type/paypal');"/></a></div>
+	<div class="span-8"><a href="#"><IMG src="<?echo KUTU_ROOT_URL;?>/common/modules/site/images/logo-2co.gif" /></a></div>
+	<div class="span-4"><h3><a href="#" onClick="setSubmitAction('<?echo KUTU_ROOT_URL;?>/site/store_payment/index/type/postpaid');">Postpaid</a></h3></div>
+	<div class="span-4"><h3><a href="#" onClick="setSubmitAction('<?echo KUTU_ROOT_URL;?>/site/store_payment/index/type/manual');">Bank Transfer</a></h3></div>
+	<div class="span-13 last"><h3>Or <a href="<?echo KUTU_ROOT_URL;?>/dms">continue browsing our database</a></h3></div>
+</div>
+<div class="append-top">&nbsp;</div>
+

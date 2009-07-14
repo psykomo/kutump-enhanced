@@ -4,7 +4,7 @@ class Site_StoreController extends Zend_Controller_Action
 	protected $_userInfo;
 	function preDispatch()
 	{
-		$this->_helper->layout()->setLayout('layout-iht');
+		$this->_helper->layout()->setLayout('layout-final-inside');
 		
 		$saveHandlerManager = new Kutu_Session_SaveHandler_Manager();
 		$saveHandlerManager->setSaveHandler();

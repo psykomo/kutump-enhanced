@@ -71,7 +71,10 @@
 				</fieldset>
 			</form>
 		</div>
-	<?php foreach ($this->hits->response->docs as $hit) { ?>
+	<?php foreach ($this->hits->response->docs as $hit) 
+		{ 
+			$itemPrice = $this->bpm->getPrice($hit->id);
+	?>
 		<div class='span-2'><IMG src='<?php echo KUTU_ROOT_URL.'/common/images/fb/note.png' ?>' width=24 height=24 border=0 align=absmiddle /></div>
 		<div class='span-17'>
 			<p>
@@ -84,7 +87,7 @@
 				<br>
 				Last modified on: <?php try {echo @$hit->modifiedDate;} catch (Exception $e) {echo '';}?>
 				<br>
-				<strong>PRICE:</strong> USD <?php echo $this->bpm->getPrice($hit->id);?>
+				<strong>PRICE:</strong> USD <?php echo $itemPrice;?>
 			</p>
 		</div>
 		<div class='span-4 last'>
@@ -92,7 +95,7 @@
 				<div style='display:none'>
 					<input type='hidden' name='my_item_id' value='<?echo $hit->id;?>' />
 					<input type='hidden' name='my_item_name' value='<?echo $hit->title;?>' />
-					<input type='hidden' name='my_item_price' value='20.00' />
+					<input type='hidden' name='my_item_price' value='<?=$itemPrice;?>' />
 					<input type='text' name='my_item_qty' value='1' size='3' />
 				</div>
 				<input type='submit' name='my_add_button' value='add to cart' class='button' />
