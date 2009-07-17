@@ -1,9 +1,10 @@
+<div class="span-35 prepend-1 append-1 last">
 <h2 class="alt">Payment Confirmation</h2>
 <?if(!empty($this->sended)):?>
 <div class="span-23 success" align="center"><h3><?=$this->sended?></h3></div>
 <?endif;?>
 <hr>
-<div class="span-10">
+<div class="span-35 prepend-1 append-1 last">
 	<a href="<? echo KUTU_ROOT_URL;?>/site/myaccount">My Account</a> || 
 	<!-- <input type="button" value= "My Account" onclick="javascript:history.back();" /> -->
 	<a href="<? echo KUTU_ROOT_URL;?>/site/store_payment/list">Order </a> || 
@@ -111,12 +112,12 @@
 <? $i++; endforeach;  ?>
 </fieldset>
 <hr/>
-<fieldset class="span-14">
-    <div class="span-14">
+<fieldset class="span-16">
+    <div class="span-15">
 	<div class="span-5"><strong>Order ID/Total/Qty</strong></div>
-    <div class="span-5 last"><textarea id="invoicex" name="invoicex">&nbsp;</textarea></div>
+    <div class="span-7 last"><textarea id="invoicex" name="invoicex">&nbsp;</textarea></div>
     <div class="span-5"><strong>Payment Method</strong></div>
-	<div class="span-5 last">
+	<div class="span-7 last">
         <select name="paymentMethod">
             <option value="atm transfer">ATM Transfer
             <option value="cash bank">Cash Bank
@@ -126,7 +127,7 @@
     </div>
 <hr>
     <div class="span-5"><strong>Bank Account Destination</strong></div>
-    <div class="span-5 last">
+    <div class="span-7 last">
     <select name="destinationAccount">
         <? foreach($this->bankAccount as $destAccount){
             $acc = explode("|", $destAccount->settingValue);
@@ -139,26 +140,26 @@
     </div>
 <hr>
     <div class="span-5"><strong>Date</strong></div>
-    <div class="span-5 last">
+    <div class="span-7 last">
     <input type="text" name="paymentDate" id="paymentDate" value="<?=date('Y-m-d')?>"><input class="button" type="reset" value="..." onclick="return showCalendar('paymentDate');" name="cmddprebiddate"/></div>
 <hr>
     <div class="span-5"><strong>Amount</strong></div>
-    <div class="span-5 last">
+    <div class="span-7 last">
 	<input class="span-1" type="radio" name="currency" value="IDR"><strong>IDR :</strong> <div class="span-1" name="amountid" id="amountid">0</div><hr class="space" />
 	<input class="span-1" type="radio" name="currency" checked="checked" value="USD"><strong>USD :</strong> <div class="span-1" name="amountus" id="amountus">0</div>
 	</div>
 <hr>
     <div class="span-5"><strong>Sender Account</strong></div>
-    <div class="span-5 last"><input type="text" name="senderAccount"></div>
+    <div class="span-7 last"><input type="text" name="senderAccount"></div>
 <hr>
     <div class="span-5"><strong>Sender Account Name</strong></div>
-    <div class="span-5 last"><input type="text" name="senderAccountName"></div>
+    <div class="span-7 last"><input type="text" name="senderAccountName"></div>
 <hr>
     <div class="span-5"><strong>Bank Name</strong></div>
-    <div class="span-5 last"><input type="text" name="bankName"></div>
+    <div class="span-7 last"><input type="text" name="bankName"></div>
 <hr>
     <div class="span-5"><strong>Notes</strong></div>
-    <div class="span-5 last"><textarea name="note"></textarea></div>
+    <div class="span-7 last"><textarea name="note"></textarea></div>
 <hr>
     <div class="span-8"><input type="submit" value="Confirm Payment"/></div>
 </div>
@@ -171,3 +172,4 @@
 		<td align=right><div id='catalogPagination' class="pagination">&nbsp;</div></td>
 	</tr>
 </table>
+</div>

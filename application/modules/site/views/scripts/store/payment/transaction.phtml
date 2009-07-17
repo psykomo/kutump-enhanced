@@ -1,6 +1,7 @@
+<div class="span-35 prepend-1 append-1 last">
 <h2 class="alt">Transaction History</h2>
 <hr>
-<div class="span-10">
+<div class="span-17 prepend-1 append-1 last">
 	<a href="<? echo KUTU_ROOT_URL;?>/site/myaccount">My Account</a> || 
 	<!-- <input type="button" value= "My Account" onclick="javascript:history.back();" /> -->
 	<a href="<? echo KUTU_ROOT_URL;?>/site/store_payment/list">Order </a> || 
@@ -9,7 +10,7 @@
 	<a href="<? echo KUTU_ROOT_URL;?>/site/store_payment/billing">Billing Info</a> || 
 	<a href="<? echo KUTU_ROOT_URL;?>/site/store_payment/document">Documents</a>
 </div>
-<div class="span-14 last" align="right">
+<div class="span-16 last" align="right">
 <form id="frmSearch" name="frmSearch" method="POST">
 	<input id="Query" name="Query" size=30 value='<?echo $this->Query;?>'> 
 	<input type="hidden" id="Limit" name="Limit" value="10">
@@ -106,3 +107,4 @@ $(document).ready(function(){
 		<td align=right><div id='catalogPagination' class="pagination">&nbsp;</div></td>
 	</tr>
 </table>
+</div>

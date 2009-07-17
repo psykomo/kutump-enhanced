@@ -10,6 +10,7 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
     protected $_userInfo;
     protected $_orderIdNumber;
     protected $_defaultCurrency;
+    protected $_currencyValue;
 	protected $_userDetailInfo;
 	protected $_lgsMail;
         
@@ -20,6 +21,10 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
         */
         $this->_testMode=true;
 		$this->_defaultCurrency='USD';
+		$tblPaymentSetting = new Kutu_Core_Orm_Table_PaymentSetting();
+		$usdIdrEx = $tblPaymentSetting->fetchAll();
+		$this->_currencyValue = $usdIdrEx[16]->settingValue;
+		
         $this->_helper->layout()->setLayout('layout-final-inside');
         
         $saveHandlerManager = new Kutu_Session_SaveHandler_Manager();
@@ -85,6 +90,9 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
             $this->saveOrder($cart,$methode);
 		}else{
             $this->_orderIdNumber=$_SESSION['_orderIdNumber'];
+			if($methode == 'paypal'){
+				$this->updateOrder($cart,$methode, $this->_orderIdNumber);
+			}
         }
         $paymentMethod=$this->_request->getParam('type');
         $this->_paymentMethod=$paymentMethod;
@@ -127,6 +135,7 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
                 $ivnum = $this->updateInvoiceMethod('paypal', 1, 0, 'paid with paypal method');
 				
 				//$paymentObject->dumpFields();
+				
                 $paymentObject->submitPayment();
 				
 				//setting payment and status as pending (1), notify = 0, notes = 'paid with...'
@@ -320,7 +329,7 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
 		$tblOrder=new Kutu_Core_Orm_Table_Order();
         $row=$tblOrder->fetchNew();
         
-        $row->invoiceNumber= ''; 
+		$row->invoiceNumber= ''; 
 		//empty invoice for first initialisation
 		$row->userId=$this->_userInfo->userId;
         //get value from post var (store/checkout.phtml)
@@ -340,6 +349,7 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
         $row->datePurchased=date('YmdHis');
         $row->orderStatus=1; //pending
         $row->currency=$this->_defaultCurrency;        
+        $row->currencyValue=$this->_currencyValue;        
         $row->orderTotal=$cart['grandTotal'];
         $row->orderTax=$cart['taxAmount'];
         $row->ipAddress= $this->getRealIpAddress();
@@ -354,6 +364,63 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
         $this->_orderIdNumber = $orderId;
         
         $tblOrderDetail=new Kutu_Core_Orm_Table_OrderDetail();
+        for($iCart=0;$iCart<count($cart['items']);$iCart++){        
+            $rowDetail=$tblOrderDetail->fetchNew();
+            
+            $itemId=$cart['items'][$iCart]['itemId'];        
+            $rowDetail->orderId=$orderId;
+            $rowDetail->itemId=$itemId;
+            $rowDetail->documentName=$cart['items'][$iCart]['item_name'];
+            $rowDetail->price=$cart['items'][$iCart]['itemPrice'];
+			$itemPrice = $rowDetail->price;
+            @$rowDetail->tax=((($cart['grandTotal']-$cart['subTotal']))/$cart['subTotal'])*100;
+            $rowDetail->qty=$cart['items'][$iCart]['qty'];
+            $rowDetail->finalPrice=$itemPrice + ($itemPrice * $this->_paymentVars['taxRate'] / 100);                
+            $rowDetail->save();
+        }
+        return $orderId;
+    }
+	
+	private function updateOrder($cart,$method,$orderId){
+		$tblOrder=new Kutu_Core_Orm_Table_Order();
+        //$row=$tblOrder->fetchNew();
+        $row = array();
+		$orderId = $orderId;
+		
+        $row['invoiceNumber']= ''; 
+		//empty invoice for first initialisation
+		$row['userId']=$this->_userInfo->userId;
+        //get value from post var (store/checkout.phtml)
+		if($this->getRequest()->getPost()){
+				$value = $this->getRequest()->getPost(); 
+				// get posted value
+				
+				$row['taxNumber']=$value['taxNumber'];
+				$row['taxCompany']=$value['taxCompany'];
+				$row['taxAddress']=$value['taxAddress'];
+				$row['taxCity']=$value['taxCity'];
+				$row['taxZip']=$value['taxZip'];
+				$row['taxProvince']=$value['taxProvince'];
+				$row['taxCountryId']=$value['taxCountry'];
+				$row['paymentMethod']=$method;
+        }
+        $row['datePurchased']=date('YmdHis');
+        $row['orderStatus']=1; //pending
+        $row['currency']=$this->_defaultCurrency;         
+        $row['currencyValue']=$this->_currencyValue;         
+        $row['orderTotal']=$cart['grandTotal'];
+        $row['orderTax']=$cart['taxAmount'];
+        $row['ipAddress']= $this->getRealIpAddress();
+		/*echo '<pre>';
+		//print_r($row);
+		echo '</pre>';*/
+        $tblOrder->update($row, 'orderId = '.$orderId);
+		
+        /*$_SESSION['_orderIdNumber'] = $orderId;
+        $this->_orderIdNumber = $orderId;*/
+        
+        $tblOrderDetail=new Kutu_Core_Orm_Table_OrderDetail();
+		$tblOrderDetail->delete('orderId = '.$orderId);
         for($iCart=0;$iCart<count($cart['items']);$iCart++){        
             $rowDetail=$tblOrderDetail->fetchNew();
             

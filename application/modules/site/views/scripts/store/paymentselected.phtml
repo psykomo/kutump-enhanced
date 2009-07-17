@@ -110,7 +110,7 @@
 <div class="span-35 prepend-1 append-1 last">
 	<h3>PAYMENT METHOD: <?=$this->data['method'];?></h3>
 </div>
-<div class="span-5 prepend-15 append-1 last">
+<div class="span-35 prepend-1 append-1 last" align="center">
 	<form method="post" action="<?=KUTU_ROOT_URL;?>/site/store_payment/index/type/<?=$this->data['method'];?>">
 	<input type="hidden" name="taxNumber" value="<?=$this->data['taxNumber']; ?>">
 	<input type="hidden"  name="taxCompany" value="<?=$this->data['taxCompany']; ?>">
@@ -119,9 +119,8 @@
 	<input type="hidden"  name="taxZip" value="<?=$this->data['taxZip']; ?>">
 	<input type="hidden"  name="taxProvince" value="<?=$this->data['taxProvince']; ?>">
 	<input type="hidden"  name="taxCountry" value="<?=$this->data['taxCountry']; ?>">
-	<input type="hidden"  name="paymentMethod" value="<?=($this->data['method']=='manual')?'Bank Transfer':$this->data['method']; ?>">
-	<input type="button" onclick="javascript:history.back();" value="cancel">
-	<input type="submit" value="Proceed">
+	<input type="hidden"  name="paymentMethod" value="<?=($this->data['method']=='manual')?'bank':$this->data['method']; ?>">
+	<input type="button" onclick="javascript:history.back();" value="cancel"><input type="submit" value="Proceed">
 	</form>
 </div>
 <div class="append-top">&nbsp;</div>
