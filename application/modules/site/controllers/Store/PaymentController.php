@@ -78,8 +78,6 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
     1. Calculate Tax, Save Order and Order Detail
     2. Set Payment Method
     3. Submit Variable to Payment Gateway or Manual 
-
-
 */    
       // Process and order...
         $this->_checkAuth();
@@ -248,12 +246,8 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
     }
 	
     public function successAction(){
-
- 
         $_SESSION['jCart'] = '';   
 		unset($_SESSION['_orderIdNumber']);
-
-            
     }
     
 	public function verificationAction(){		
@@ -533,7 +527,8 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
 			$query = " AND KOD.documentName LIKE '%$Query%' ";
 		}
 		$tblOrder = new Kutu_Core_Orm_Table_Order();
-		
+		//echo '<pre>';
+		//var_dump($this);
         $where=$this->_userInfo->userId;
 		$rowsetTotal = $tblOrder->countOrders ($query,"'".$where."'");
 		$rowset = $tblOrder->getOrderSummary($query,"'".$where."'",$limit,$offset);
@@ -621,7 +616,7 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
 	public function billingAction(){
 		$this->_checkAuth();
         $userFinance = new Kutu_Core_Orm_Table_UserFinance();
-		$userId = $this->_userInfo->userId;
+		$userId = @$this->_userInfo->userId;
 		$rowset = $userFinance->getUserFinance($userId);
 		/*echo '<pre>';
 		print_r($rowset);
@@ -629,7 +624,7 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
 		$tblOrder = new Kutu_Core_Orm_Table_Order(); 
 		//table kutuOrder
 		//select previous transaction that are postpaid based on userid
-		$outstandingAmount = $tblOrder->outstandingUserAmout($this->_userInfo->userId);
+		$outstandingAmount = @$tblOrder->outstandingUserAmout($this->_userInfo->userId);
 		$this->view->rowset = $rowset;
 		$this->view->outstandingAmount = $outstandingAmount;
 		//print_r($this->_request->getParams());
@@ -914,12 +909,18 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
             $this->view->username = $username;
         }
         //$userId=$auth->getIdentity()->guid;
-        $tblUserFinance= new Kutu_Core_Orm_Table_UserFinance();
-        $this->_userInfo=$tblUserFinance->find($userId)->current();
-		
 		$tblUser= new Kutu_Core_Orm_Table_User();
-        $this->_userDetailInfo=$tblUser->find($userId)->current();
-        
+        $this->_userDetailInfo=$tblUser->find($userId)->current(); 
+		
+        $tblUserFinance= new Kutu_Core_Orm_Table_UserFinance();
+		$this->_userInfo=$tblUserFinance->find($userId)->current();
+        if(empty($this->_userInfo)){
+			$finance = $tblUserFinance->fetchNew();
+			$finance['userId'] = $userId;
+			$finance->save();
+		}
+		$this->_userInfo=$tblUserFinance->find($userId)->current();
+		
     }
 	
 }

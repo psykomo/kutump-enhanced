@@ -18,7 +18,9 @@
 <fieldset class="span-15">
 <legend>Edit Info</legend>
 <form method="post">
-<? foreach($this->rowset as $row) :?>
+<? 
+foreach($this->rowset as $row) :
+?>
 <input type="hidden" name="userId" value="<?=$row->userId; ?>" >
 <input type="hidden" name="createdDate" value="<?=$row->createdDate; ?>" >
 <input type="hidden" name="createdBy" value="<?=$row->createdBy; ?>" >
