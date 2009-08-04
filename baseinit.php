@@ -142,6 +142,12 @@ class Kutu_BaseInit
 		);
 		$router->addRoute('downloadfile', $route);
 		
+		$route = new Zend_Controller_Router_Route(
+		    'bb/:action/*',
+		    array('module'=>'site','controller' => 'bb')
+		);
+		$router->addRoute('bb', $route);
+		
 		
 		
 		//print_r ($front->getParam('action'));
