@@ -146,23 +146,58 @@ class Site_DmsController extends Zend_Controller_Action
 		//$this->_helper->layout()->setLayout('layout-iht');
 		
 		$r = $this->getRequest();
-		$sQuery = $r->getParam('sQuery');
+		
+		$query = $r->getQuery(); 
+		if (empty($query)) 
+		{ 
+			// no parameters passed in query string
+		 	if(!empty($_SESSION['sQuery']))
+				$sQuery = $_SESSION['sQuery'];
+			else
+				$sQuery = 'xxyyzz';
+		}
+		else
+		{
+			$sQuery = $r->getParam('sQuery');
+			if(empty($sQuery))
+				$sQuery = 'xxyyzz';
+			$_SESSION['sQuery'] = $sQuery;
+		}
+		
 		$this->view->sQuery = $sQuery;
-		$sOffset = $r->getParam('sOffset');
-		$this->view->sOffset = $sOffset;
-		$sLimit = $r->getParam('sLimit');
-		$this->view->sLimit = $sLimit;
+		
+		
+		//Get ready ZEND paginator 
+		
+		$limit = ($r->getParam('limit'))?$r->getParam('limit'):10;
+		$this->view->limit =$limit;
+		$currentPage = $this->_getParam('page',1);
+		$sort = ($r->getParam('sort'))?$r->getParam('sort'):"createdDate desc";  //"regulationType desc, year desc";
+		$this->view->sort = $sort;
+		
+		//----
+		
+		
 		
 		$indexingEngine = Kutu_Search::manager();
     	
-		$hits = $indexingEngine->find($sQuery,$sOffset, $sLimit);
+		$offset = ($currentPage-1) * $limit;
+		$hits = $indexingEngine->find($sQuery,$offset, $limit);
 		
 		$this->view->hits = $hits;
 		
 		$bpm = new Kutu_Core_Bpm_Catalog();
 		$this->view->bpm = $bpm;
 		
-		//print_r($hits);
+		
+		//ZEND PAGINATOR
+		
+		$adapter = new Zend_Paginator_Adapter_Null($hits->response->numFound);
+		
+		$paginator = new Zend_Paginator($adapter);
+		$paginator->setCurrentPageNumber($currentPage);
+		$paginator->setItemCountPerPage($limit);
+		$this->view->paginator = $paginator;
 	}
 }
 ?>
