@@ -60,6 +60,8 @@ APACHE MOD_DEFLATE/COMPRESSION TESTING:
 http://www.whatsmyip.org/http_compression/
 http://www.cyberciti.biz/tips/speed-up-apache-20-web-access-or-downloads-with-mod_deflate.html
 
+Javascript:
+HOVER: onMouseOver="this.style.backgroundColor='#F9F9F9';" onMouseOut="this.style.backgroundColor='#FFFFFF';"
 
 
 
