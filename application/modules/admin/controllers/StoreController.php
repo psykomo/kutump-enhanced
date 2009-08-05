@@ -887,7 +887,7 @@ class Admin_StoreController extends Kutu_Controller_Action
         $mail->SendFileMail($sMailSource, $sMailEmailTo, $sMailSubject, $sMailEmailFrom, $sMailHeader, $aMailDataSet);
     }
     
-	protected function xlAction(){
+	public function xlAction(){
 		//print_r($this->_request->getParams());
 		$where = $this->_request->getParam('where');
 		$name = $this->_request->getParam('name');

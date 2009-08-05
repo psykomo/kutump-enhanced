@@ -22,10 +22,9 @@ class Site_Store_PaymentController extends Zend_Controller_Action{
         $this->_testMode=true;
 		$this->_defaultCurrency='USD';
 		$tblPaymentSetting = new Kutu_Core_Orm_Table_PaymentSetting();
-		$usdIdrEx = $tblPaymentSetting->fetchAll();
-		$this->_currencyValue = $usdIdrEx[16]->settingValue;
-		
-        $this->_helper->layout()->setLayout('layout-final-inside');
+		$usdIdrEx = $tblPaymentSetting->fetchAll($tblPaymentSetting->select()->where(" settingKey= 'USDIDR'"));
+		$this->_currencyValue = $usdIdrEx[0]->settingValue;
+		$this->_helper->layout()->setLayout('layout-final-inside');
         
         $saveHandlerManager = new Kutu_Session_SaveHandler_Manager();
         $saveHandlerManager->setSaveHandler();
